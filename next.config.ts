@@ -1,6 +1,13 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
+  experimental: {
+    turbopack: {
+      resolve: {
+        preferRelative: true,
+      },
+    },
+  },
   images: {
     remotePatterns: [
       {

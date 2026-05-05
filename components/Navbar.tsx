@@ -1,11 +1,11 @@
 'use client';
 
 import Link from 'next/link';
-import { useState } from 'react';
+import { useState, useRef, useEffect } from 'react';
 
 const primaryLinks = [
   { name: 'Platform', href: '/#platform' },
-  { name: 'Services', href: '/#services' },
+  { name: 'Services', href: '/services' },
   { name: 'Partners', href: '/#partners' },
   { name: 'Testimonials', href: '/#testimonials' },
   { name: 'Careers', href: '/careers' },
@@ -22,35 +22,51 @@ const mobileLinks = [
 export default function Navbar() {
   const [activeMenu, setActiveMenu] = useState<string | null>(null);
   const [mobileOpen, setMobileOpen] = useState(false);
+  const [platformDropdownOpen, setPlatformDropdownOpen] = useState(false);
+  const dropdownRef = useRef<HTMLDivElement>(null);
+  const platformButtonRef = useRef<HTMLButtonElement>(null);
 
   const megaMenuData = {
     col1: [
-      { title: "Growth Platform", desc: "Integrated strategy across SEO, content, paid media, and conversion optimization.", href: '/#platform' },
-      { title: 'Service Stack', desc: 'Explore the digital marketing, design, PPC, and web capabilities behind the system.', href: '/#services' },
-      { title: 'Proof & Trust', desc: 'See the client signals, testimonials, and credibility markers that support our approach.', href: '/#partners' },
+      { title: "Growth Platform", desc: "Integrated strategy across SEO, content, paid media, and conversion optimization.", href: '/platform/growth-platform' },
+      { title: 'Service Stack', desc: 'Explore the digital marketing, design, PPC, and web capabilities behind the system.', href: '/platform/service-stack' },
+      { title: 'Proof & Trust', desc: 'See the client signals, testimonials, and credibility markers that support our approach.', href: '/platform/proof-trust' },
       { title: 'Meet CyberTech', desc: 'Learn how our agency combines creative execution with data-driven growth frameworks.', href: '/about' },
     ],
     col2: [
-      { label: 'Digital Marketing', href: '/#services' },
-      { label: 'Graphic Design', href: '/#services' },
-      { label: 'E-commerce Marketing', href: '/#services' },
-      { label: 'Pay Per Click', href: '/#services' },
-      { label: 'Web Design', href: '/#services' },
-      { label: 'Content Writing', href: '/#services' },
+      { label: 'Digital Marketing', href: '/services/digital-marketing' },
+      { label: 'Graphic Design', href: '/services/graphic-design' },
+      { label: 'E-commerce Marketing', href: '/services/ecommerce-marketing' },
+      { label: 'Pay Per Click', href: '/services/pay-per-click' },
+      { label: 'Web Design', href: '/services/web-design' },
+      { label: 'Content Writing', href: '/services/content-writing' },
       { label: 'Pricing Plans', href: '/pricing' },
       { label: 'Contact Strategy Team', href: '/contact' },
     ],
     col3: [
-      { label: 'SaaS Growth', href: '/blog' },
-      { label: 'E-commerce Brands', href: '/blog' },
-      { label: 'Healthcare Marketing', href: '/contact' },
-      { label: 'Education Campaigns', href: '/contact' },
-      { label: 'Real Estate Lead Gen', href: '/contact' },
-      { label: 'Finance & B2B', href: '/contact' },
-      { label: 'Hospitality Visibility', href: '/contact' },
-      { label: 'D2C Performance', href: '/blog' },
+      { label: 'SaaS Growth', href: '/focus-areas/saas-growth' },
+      { label: 'E-commerce Brands', href: '/focus-areas/ecommerce-brands' },
+      { label: 'Healthcare Marketing', href: '/focus-areas/healthcare-marketing' },
+      { label: 'Education Campaigns', href: '/focus-areas/education-campaigns' },
+      { label: 'Real Estate Lead Gen', href: '/focus-areas/real-estate-lead-gen' },
+      { label: 'Finance & B2B', href: '/focus-areas/finance-b2b' },
+      { label: 'Hospitality Visibility', href: '/focus-areas/hospitality-visibility' },
+      { label: 'D2C Performance', href: '/focus-areas/d2c-performance' },
     ],
   };
+
+  // Close dropdown when clicking outside
+  useEffect(() => {
+    function handleClickOutside(event: MouseEvent) {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node) && 
+          platformButtonRef.current && !platformButtonRef.current.contains(event.target as Node)) {
+        setPlatformDropdownOpen(false);
+      }
+    }
+
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => document.removeEventListener('mousedown', handleClickOutside);
+  }, []);
 
   return (
     <>
@@ -102,48 +118,110 @@ export default function Navbar() {
                   <div
                     key={item.name}
                     className="relative h-full flex items-center"
-                    onMouseEnter={() => setActiveMenu(isDropdown ? item.name : null)}
-                    onMouseLeave={() => setActiveMenu(null)}
+                    onMouseEnter={() => isDropdown && setActiveMenu(item.name)}
+                    onMouseLeave={() => isDropdown && setActiveMenu(null)}
                   >
-                    <Link href={item.href} className={`flex items-center gap-1.5 rounded-full px-3 py-2 text-[14px] font-bold transition-colors ${activeMenu === item.name ? 'bg-red-50 text-red-700' : 'text-slate-800 hover:bg-red-50/80 hover:text-red-700'}`}>
-                      {item.name}
-                      {isDropdown && (
-                        <svg className={`w-3 h-3 transition-transform ${activeMenu === item.name ? 'rotate-180' : ''}`} fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="3">
+                    {isDropdown ? (
+                      <button
+                        ref={platformButtonRef}
+                        onClick={() => setPlatformDropdownOpen(!platformDropdownOpen)}
+                        onMouseEnter={() => setActiveMenu(item.name)}
+                        onMouseLeave={() => setActiveMenu(null)}
+                        className={`flex items-center gap-1.5 rounded-full px-3 py-2 text-[14px] font-bold transition-colors ${
+                          activeMenu === item.name || platformDropdownOpen
+                            ? 'bg-red-50 text-red-700'
+                            : 'text-slate-800 hover:bg-red-50/80 hover:text-red-700'
+                        }`}
+                        aria-expanded={activeMenu === item.name || platformDropdownOpen}
+                      >
+                        {item.name}
+                        <svg
+                          className={`w-3 h-3 transition-transform ${
+                            activeMenu === item.name || platformDropdownOpen ? 'rotate-180' : ''
+                          }`}
+                          fill="none"
+                          viewBox="0 0 24 24"
+                          stroke="currentColor"
+                          strokeWidth="3"
+                          aria-hidden="true"
+                        >
                           <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" />
                         </svg>
-                      )}
-                    </Link>
+                      </button>
+                    ) : (
+                      <Link
+                        href={item.href}
+                        className={`flex items-center gap-1.5 rounded-full px-3 py-2 text-[14px] font-bold transition-colors ${
+                          activeMenu === item.name
+                            ? 'bg-red-50 text-red-700'
+                            : 'text-slate-800 hover:bg-red-50/80 hover:text-red-700'
+                        }`}
+                      >
+                        {item.name}
+                      </Link>
+                    )}
 
-                    {activeMenu === item.name && isDropdown && (
-                      <div className="absolute top-[72px] left-1/2 -translate-x-1/2 w-[900px] bg-[#fffaf8] border border-red-100 shadow-[0_24px_60px_rgba(127,29,29,0.12)] rounded-[1.5rem] py-8 px-10 grid grid-cols-3 gap-8 cursor-default animate-fade-up">
-                        <div className="absolute top-0 left-0 w-full h-1 rounded-t-[1.5rem] bg-gradient-to-r from-red-800 via-red-600 to-orange-500"></div>
+                    {(activeMenu === item.name || platformDropdownOpen) && isDropdown && (
+                      <div
+                        ref={dropdownRef}
+                        className="absolute top-[72px] left-1/2 -translate-x-1/2 w-[900px] max-w-[calc(100vw-2rem)] bg-[#fffaf8] border border-red-100 shadow-[0_24px_60px_rgba(127,29,29,0.12)] rounded-[1.5rem] py-8 px-8 xl:px-10 grid grid-cols-3 gap-6 xl:gap-8 cursor-default animate-fade-up z-50"
+                        onMouseEnter={() => setActiveMenu(item.name)}
+                        onMouseLeave={() => {
+                          setActiveMenu(null);
+                          setPlatformDropdownOpen(false);
+                        }}
+                        role="menu"
+                      >
+                        <div className="absolute top-0 left-0 w-full h-1 rounded-t-[1.5rem] bg-gradient-to-r from-red-800 via-red-600 to-orange-500" aria-hidden="true"></div>
 
-                        <div>
-                          <h4 className="text-slate-900 font-bold mb-6 pb-4 border-b border-red-100 text-[15px]">CyberTech Advantage</h4>
+                        <div role="none">
+                          <h4 className="text-slate-900 font-bold mb-6 pb-4 border-b border-red-100 text-[15px]">
+                            CyberTech Advantage
+                          </h4>
                           <div className="space-y-6">
                             {megaMenuData.col1.map((link) => (
-                              <Link href={link.href} key={link.title} className="block group">
-                                <h5 className="text-slate-900 font-bold text-[14px] group-hover:text-red-700 transition-colors">{link.title}</h5>
+                              <Link href={link.href} key={link.title} className="block group" role="menuitem">
+                                <h5 className="text-slate-900 font-bold text-[14px] group-hover:text-red-700 transition-colors">
+                                  {link.title}
+                                </h5>
                                 <p className="text-slate-500 text-[12px] leading-snug mt-1">{link.desc}</p>
                               </Link>
                             ))}
                           </div>
                         </div>
 
-                        <div>
-                          <h4 className="text-slate-900 font-bold mb-6 pb-4 border-b border-red-100 text-[15px]">Core Services</h4>
+                        <div role="none">
+                          <h4 className="text-slate-900 font-bold mb-6 pb-4 border-b border-red-100 text-[15px]">
+                            Core Services
+                          </h4>
                           <div className="space-y-3">
                             {megaMenuData.col2.map((link) => (
-                              <Link href={link.href} key={link.label} className="block text-[13px] font-bold text-slate-700 hover:text-red-700 transition-colors">{link.label}</Link>
+                              <Link
+                                href={link.href}
+                                key={link.label}
+                                className="block text-[13px] font-bold text-slate-700 hover:text-red-700 transition-colors"
+                                role="menuitem"
+                              >
+                                {link.label}
+                              </Link>
                             ))}
                           </div>
                         </div>
 
-                        <div>
-                          <h4 className="text-slate-900 font-bold mb-6 pb-4 border-b border-red-100 text-[15px]">Focus Areas</h4>
+                        <div role="none">
+                          <h4 className="text-slate-900 font-bold mb-6 pb-4 border-b border-red-100 text-[15px]">
+                            Focus Areas
+                          </h4>
                           <div className="space-y-3">
                             {megaMenuData.col3.map((link) => (
-                              <Link href={link.href} key={link.label} className="block text-[13px] font-bold text-slate-700 hover:text-red-700 transition-colors">{link.label}</Link>
+                              <Link
+                                href={link.href}
+                                key={link.label}
+                                className="block text-[13px] font-bold text-slate-700 hover:text-red-700 transition-colors"
+                                role="menuitem"
+                              >
+                                {link.label}
+                              </Link>
                             ))}
                           </div>
                         </div>
@@ -175,25 +253,99 @@ export default function Navbar() {
           </div>
         </div>
 
-        <div className={`lg:hidden overflow-hidden transition-[max-height,opacity] duration-300 ${mobileOpen ? 'max-h-[80vh] opacity-100 border-t border-red-100/70' : 'max-h-0 opacity-0'}`}>
-          <div className="px-4 sm:px-6 py-5 bg-[#fff8f6]">
+        <div className={`lg:hidden overflow-hidden transition-[max-height,opacity] duration-300 ${mobileOpen ? 'max-h-[85vh] opacity-100 border-t border-red-100/70' : 'max-h-0 opacity-0'}`}>
+          <div className="px-4 sm:px-6 py-5 bg-[#fff8f6] overflow-y-auto max-h-[85vh]">
             <div className="rounded-3xl border border-red-100 bg-gradient-to-br from-white via-red-50/70 to-orange-50 p-5 shadow-[0_18px_45px_rgba(127,29,29,0.12)]">
               <div className="mb-4">
                 <p className="text-xs font-extrabold uppercase tracking-[0.3em] text-red-700">Navigation</p>
                 <h3 className="mt-2 text-2xl font-black text-slate-900">Explore every section</h3>
               </div>
 
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                {mobileLinks.map((item) => (
-                  <Link
-                    key={item.name}
-                    href={item.href}
-                    onClick={() => setMobileOpen(false)}
-                    className="rounded-2xl border border-white/80 bg-white/90 px-4 py-3 text-sm font-bold text-slate-800 shadow-sm transition-all hover:-translate-y-0.5 hover:border-red-200 hover:bg-red-50/70 hover:text-red-700"
-                  >
-                    {item.name}
-                  </Link>
-                ))}
+              <div className="space-y-3">
+                {mobileLinks.map((item) => {
+                  const isPlatform = item.name === 'Platform';
+                  
+                  if (isPlatform) {
+                    return (
+                      <div key={item.name}>
+                        <button
+                          onClick={() => setPlatformDropdownOpen(!platformDropdownOpen)}
+                          className="w-full rounded-2xl border border-white/80 bg-white/90 px-4 py-3 text-sm font-bold text-slate-800 shadow-sm transition-all hover:-translate-y-0.5 hover:border-red-200 hover:bg-red-50/70 hover:text-red-700 flex items-center justify-between"
+                        >
+                          {item.name}
+                          <svg
+                            className={`w-4 h-4 transition-transform ${platformDropdownOpen ? 'rotate-180' : ''}`}
+                            fill="none"
+                            viewBox="0 0 24 24"
+                            stroke="currentColor"
+                            strokeWidth="2"
+                          >
+                            <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" />
+                          </svg>
+                        </button>
+                        
+                        {platformDropdownOpen && (
+                          <div className="mt-2 ml-2 pl-3 border-l-2 border-red-200 space-y-2">
+                            {megaMenuData.col1.map((link) => (
+                              <Link
+                                href={link.href}
+                                key={link.title}
+                                onClick={() => {
+                                  setMobileOpen(false);
+                                  setPlatformDropdownOpen(false);
+                                }}
+                                className="block text-xs font-bold text-slate-700 hover:text-red-700 transition-colors py-2"
+                              >
+                                {link.title}
+                              </Link>
+                            ))}
+                            <div className="pt-2 border-t border-red-100">
+                              {megaMenuData.col2.map((link) => (
+                                <Link
+                                  href={link.href}
+                                  key={link.label}
+                                  onClick={() => {
+                                    setMobileOpen(false);
+                                    setPlatformDropdownOpen(false);
+                                  }}
+                                  className="block text-xs font-bold text-slate-700 hover:text-red-700 transition-colors py-1.5"
+                                >
+                                  {link.label}
+                                </Link>
+                              ))}
+                            </div>
+                            <div className="pt-2 border-t border-red-100">
+                              {megaMenuData.col3.map((link) => (
+                                <Link
+                                  href={link.href}
+                                  key={link.label}
+                                  onClick={() => {
+                                    setMobileOpen(false);
+                                    setPlatformDropdownOpen(false);
+                                  }}
+                                  className="block text-xs font-bold text-slate-700 hover:text-red-700 transition-colors py-1.5"
+                                >
+                                  {link.label}
+                                </Link>
+                              ))}
+                            </div>
+                          </div>
+                        )}
+                      </div>
+                    );
+                  }
+                  
+                  return (
+                    <Link
+                      key={item.name}
+                      href={item.href}
+                      onClick={() => setMobileOpen(false)}
+                      className="block rounded-2xl border border-white/80 bg-white/90 px-4 py-3 text-sm font-bold text-slate-800 shadow-sm transition-all hover:-translate-y-0.5 hover:border-red-200 hover:bg-red-50/70 hover:text-red-700"
+                    >
+                      {item.name}
+                    </Link>
+                  );
+                })}
               </div>
 
               <div className="mt-5 flex flex-col sm:flex-row gap-3">

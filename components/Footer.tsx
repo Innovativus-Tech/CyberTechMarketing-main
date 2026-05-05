@@ -33,7 +33,6 @@ export default function Footer() {
           <div>
             <h3 className="text-gray-900 font-bold mb-4 text-lg">Company</h3>
             <ul className="space-y-3 font-medium">
-              <li><Link href="/" className="text-gray-600 hover:text-[var(--color-brand-primary)] transition-colors">Home</Link></li>
               <li><Link href="/about" className="text-gray-600 hover:text-[var(--color-brand-primary)] transition-colors">About Us</Link></li>
               <li><Link href="/services" className="text-gray-600 hover:text-[var(--color-brand-primary)] transition-colors">Services</Link></li>
               <li><Link href="/careers" className="text-gray-600 hover:text-[var(--color-brand-primary)] transition-colors">Careers</Link></li>

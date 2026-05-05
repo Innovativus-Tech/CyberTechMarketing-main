@@ -9,9 +9,10 @@ export default function ServicesPage() {
       <div className="page-top-red-gradient relative w-full h-[500px] flex items-center justify-center overflow-hidden mb-12">
         <div className="absolute inset-0 z-0">
           <Image 
-            src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?q=80&w=2015&auto=format&fit=crop" 
+            src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?q=80&w=2070&auto=format&fit=crop" 
             alt="Digital Marketing Analytics" 
             fill 
+            sizes="100vw"
             className="object-cover opacity-25 mix-blend-screen" 
           />
           <div className="absolute inset-0 bg-gradient-to-t from-gray-50 to-transparent"></div>
