@@ -1,65 +1,138 @@
 import { NextResponse } from 'next/server';
 
+type ChatMessage = {
+  role: 'user' | 'assistant';
+  content: string;
+};
+
+const OPENAI_API_URL = 'https://api.openai.com/v1/responses';
+const DEFAULT_MODEL = process.env.OPENAI_MODEL || 'gpt-5.2-mini';
+const MAX_MESSAGES = 12;
+const SYSTEM_PROMPT = `You are the Cybertech AI assistant for Cybertech Marketing, a digital marketing agency.
+
+Your job is to help website visitors understand the company's services, process, contact options, and value proposition.
+
+Guidelines:
+- Be professional, warm, concise, and helpful.
+- Stay focused on Cybertech Marketing and related customer questions.
+- If pricing is requested, explain that pricing depends on scope and invite the user to contact the team for a tailored quote.
+- If a question needs business-specific details you do not know, say so clearly and direct the user to contact the team.
+- Do not invent guarantees, case studies, or policies that were not provided.
+- Where relevant, mention these services: Digital Marketing, Graphic Design, E-commerce Marketing, Pay Per Click (PPC), Web Design, SEO, and Content Writing.
+- If the user asks for contact details, mention phone 7428768779 and email info@cybertechmarketing.com.
+- Keep answers easy to read for a website chat widget.`;
+
+function isValidMessage(value: unknown): value is ChatMessage {
+  if (!value || typeof value !== 'object') {
+    return false;
+  }
+
+  const message = value as Partial<ChatMessage>;
+
+  return (
+    (message.role === 'user' || message.role === 'assistant') &&
+    typeof message.content === 'string' &&
+    message.content.trim().length > 0
+  );
+}
+
+function normalizeMessages(messages: unknown): ChatMessage[] {
+  if (!Array.isArray(messages)) {
+    return [];
+  }
+
+  return messages
+    .filter(isValidMessage)
+    .slice(-MAX_MESSAGES)
+    .map((message) => ({
+      role: message.role,
+      content: message.content.trim(),
+    }));
+}
+
 export async function POST(req: Request) {
   try {
-    const { messages } = await req.json();
+    const body = await req.json();
+    const messages = normalizeMessages(body?.messages);
+
+    if (messages.length === 0) {
+      return NextResponse.json(
+        { error: 'At least one valid message is required.' },
+        { status: 400 }
+      );
+    }
+
     const openAiKey = process.env.OPENAI_API_KEY;
-    
-    // ============================================================================
-    // 🛑 ATTENTION: TO USE A REAL LLM (LIKE OPENAI OR GEMINI) UNCOMMENT THIS BLOCK
-    // AND ADD YOUR API KEY TO .env.local AS OPENAI_API_KEY
-    // ============================================================================
-    /*
-    const response = await fetch('https://api.openai.com/v1/chat/completions', {
+
+    if (!openAiKey) {
+      return NextResponse.json(
+        {
+          error:
+            'The chatbot is not configured yet. Add OPENAI_API_KEY to the server environment to enable live AI replies.',
+        },
+        { status: 503 }
+      );
+    }
+
+    const response = await fetch(OPENAI_API_URL, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        'Authorization': `Bearer ${process.env.OPENAI_API_KEY}`
+        Authorization: `Bearer ${openAiKey}`,
       },
       body: JSON.stringify({
-        model: 'gpt-4o-mini', // or your preferred model
-        messages: [
-          { 
-            role: 'system', 
-            content: 'You are a helpful and professional AI assistant for Cybertech Marketing, a premium digital marketing agency. You help users understand services like SEO, web design, and PPC.' 
-          },
-          ...messages
-        ]
-      })
+        model: DEFAULT_MODEL,
+        instructions: SYSTEM_PROMPT,
+        input: messages.map((message) => ({
+          role: message.role,
+          content: [
+            {
+              type: 'input_text',
+              text: message.content,
+            },
+          ],
+        })),
+      }),
     });
-    
-    if (!response.ok) {
-      throw new Error('API response was not ok');
-    }
-    
+
     const data = await response.json();
-    return NextResponse.json({ reply: data.choices[0].message.content });
-    */
 
-    // ============================================================================
-    // MOCK RESPONSE LOGIC (REMOVE WHEN USING REAL LLM ABOVE)
-    // ============================================================================
-    const lastMessage = messages[messages.length - 1]?.content.toLowerCase() || "";
-    let reply = "Hello! I am the Cybertech AI assistant. I can help you learn more about our Digital Marketing, Web Design, and SEO services. How can I assist you today?";
-    
-    if (lastMessage.includes('service') || lastMessage.includes('marketing') || lastMessage.includes('what do you do')) {
-      reply = "We offer a wide array of digital services designed to transform clicks into conversions. This includes Digital Marketing, Graphic Design, E-commerce Marketing, Pay Per Click (PPC), Web Design, and Content Writing. Would you like details on any specific service?";
-    } else if (lastMessage.includes('contact') || lastMessage.includes('phone') || lastMessage.includes('email') || lastMessage.includes('reach')) {
-      reply = "You can reach our team anytime by calling 7428768779 or emailing info@cybertechmarketing.com. We're here to help!";
-    } else if (lastMessage.includes('pricing') || lastMessage.includes('cost') || lastMessage.includes('quote')) {
-      reply = "Our pricing is highly customized to fit your unique business goals and the scope of your project. I recommend filling out the 'Get a Free Quote' form on our homepage so our experts can provide a detailed estimate.";
-    } else if (lastMessage.includes('hello') || lastMessage.includes('hi ')) {
-      reply = "Hi there! Welcome to Cybertech Marketing. How can I help accelerate your digital growth today?";
-    } else if (!openAiKey && (lastMessage.includes('ai') || lastMessage.includes('openai') || lastMessage.includes('assistant'))) {
-      reply = "The live AI integration is not configured yet, but the assistant shell is ready. Once OPENAI_API_KEY is added, this chat can be connected to a real model.";
+    if (!response.ok) {
+      const apiError =
+        data?.error?.message ||
+        data?.message ||
+        'OpenAI request failed.';
+
+      console.error('OpenAI chat error:', {
+        status: response.status,
+        error: apiError,
+      });
+
+      return NextResponse.json(
+        { error: 'The chatbot could not generate a reply right now.' },
+        { status: 502 }
+      );
     }
 
-    // Simulate network delay for realism
-    await new Promise(resolve => setTimeout(resolve, 1500));
+    const reply =
+      typeof data?.output_text === 'string' ? data.output_text.trim() : '';
 
-    return NextResponse.json({ reply });
+    if (!reply) {
+      console.error('OpenAI chat error: empty output_text', data);
+
+      return NextResponse.json(
+        { error: 'The chatbot returned an empty response.' },
+        { status: 502 }
+      );
+    }
+
+    return NextResponse.json({ reply }, { status: 200 });
   } catch (error) {
-    console.error('Chat API Error:', error);
-    return NextResponse.json({ error: 'Failed to process chat request' }, { status: 500 });
+    console.error('Chat API error:', error);
+
+    return NextResponse.json(
+      { error: 'Failed to process chat request.' },
+      { status: 500 }
+    );
   }
 }

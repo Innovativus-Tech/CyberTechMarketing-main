@@ -44,7 +44,12 @@ export default function Chatbot() {
       if (response.ok && data.reply) {
         setMessages(prev => [...prev, { role: 'assistant', content: data.reply }]);
       } else {
-        setMessages(prev => [...prev, { role: 'assistant', content: 'Sorry, I encountered an error. Please try again later or contact support.' }]);
+        const fallbackMessage =
+          typeof data?.error === 'string' && data.error.trim()
+            ? data.error
+            : 'Sorry, I encountered an error. Please try again later or contact support.';
+
+        setMessages(prev => [...prev, { role: 'assistant', content: fallbackMessage }]);
       }
     } catch {
       setMessages(prev => [...prev, { role: 'assistant', content: 'Connection error. Please check your internet connection.' }]);
