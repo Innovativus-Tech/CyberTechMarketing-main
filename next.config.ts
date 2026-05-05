@@ -1,13 +1,11 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-  experimental: {
-    turbopack: {
-      resolve: {
-        preferRelative: true,
-      },
-    },
-  },
+  // Allow HMR from local network and ngrok tunnel
+  allowedDevOrigins: [
+    '192.168.1.12',
+    'detection-hemstitch-work.ngrok-free.dev',
+  ],
   images: {
     remotePatterns: [
       {
