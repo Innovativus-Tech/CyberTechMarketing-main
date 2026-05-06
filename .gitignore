@@ -34,8 +34,4 @@ yarn-error.log*
 next-env.d.ts
 
 # Dotenv and similar local-only files
-.env
-.env*.local
-.env.development.local
-.env.test.local
-.env.production.local
+# .env and .env.local are now allowed to be pushed as per user request
