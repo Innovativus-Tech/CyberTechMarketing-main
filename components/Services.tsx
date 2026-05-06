@@ -1,66 +1,72 @@
 import Link from 'next/link';
 import { getAllServices, type ServiceDocument } from '@/lib/queries';
-import { urlFor } from '@/lib/sanity';
 import { defaultHomePageContent } from '@/lib/homePage';
 
 const fallbackServices = [
-    {
-      title: "Digital Marketing & Growth",
-      desc: "Comprehensive digital marketing strategies to accelerate your business growth and maximize ROI.",
-      image: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?q=80&w=1600&auto=format&fit=crop",
-      tag: "Growth Strategy",
-      metric: "SEO + Paid Media + Funnels",
-      href: "/services/digital-marketing-growth"
-    },
-    {
-      title: "Web Development",
-      desc: "Custom, responsive, and high-performance websites tailored to your brand and business goals.",
-      image: "https://images.unsplash.com/photo-1498050108023-c5249f4df085?q=80&w=1600&auto=format&fit=crop",
-      tag: "Digital Presence",
-      metric: "Modern Sites That Convert",
-      href: "/services/web-development"
-    },
-    {
-      title: "Software Development",
-      desc: "Robust and scalable software solutions designed to streamline operations and drive innovation.",
-      image: "https://images.unsplash.com/photo-1555066931-4365d14bab8c?q=80&w=1600&auto=format&fit=crop",
-      tag: "Enterprise Solutions",
-      metric: "Scalable Architecture",
-      href: "/services/software-development"
-    },
-    {
-      title: "AI & Intelligent Solutions",
-      desc: "Cutting-edge artificial intelligence tools to automate processes and enhance decision-making.",
-      image: "https://images.unsplash.com/photo-1677442136019-21780ecad995?q=80&w=1600&auto=format&fit=crop",
-      tag: "Automation & AI",
-      metric: "Process Optimization",
-      href: "/services/ai-intelligent-solutions"
-    },
-    {
-      title: "Machine Learning & Data",
-      desc: "Unlock the power of your data with advanced machine learning models and predictive analytics.",
-      image: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?q=80&w=1600&auto=format&fit=crop",
-      tag: "Data Science",
-      metric: "Predictive Insights",
-      href: "/services/machine-learning-data"
-    },
-    {
-      title: "Mobile App Development",
-      desc: "Engaging and intuitive mobile applications for iOS and Android platforms.",
-      image: "https://images.unsplash.com/photo-1512941937669-90a1b58e7e9c?q=80&w=1600&auto=format&fit=crop",
-      tag: "Mobile First",
-      metric: "iOS + Android Native",
-      href: "/services/mobile-app-development"
-    }
-  ];
+  {
+    title: 'Digital Marketing & Growth',
+    desc: 'Campaign strategy, SEO, paid media, content systems and conversion improvements built around measurable demand.',
+    tag: 'GROWTH',
+    metric: 'SEO + PAID + FUNNELS',
+    href: '/#services',
+    icon: 'DM',
+    gradient: 'from-red-600 to-orange-600',
+  },
+  {
+    title: 'Web Development',
+    desc: 'Fast, responsive websites and landing pages designed to convert visitors into qualified enquiries.',
+    tag: 'WEB',
+    metric: 'MODERN SITES',
+    href: '/#services',
+    icon: 'WD',
+    gradient: 'from-blue-600 to-cyan-600',
+  },
+  {
+    title: 'Software Development',
+    desc: 'Custom platforms, dashboards, portals and internal tools that support real business workflows.',
+    tag: 'SOFTWARE',
+    metric: 'SCALABLE BUILDS',
+    href: '/#services',
+    icon: 'SD',
+    gradient: 'from-indigo-600 to-blue-600',
+  },
+  {
+    title: 'AI & Intelligent Solutions',
+    desc: 'Automation, assistants and intelligent workflows that reduce repetitive work and speed up decisions.',
+    tag: 'AI',
+    metric: 'SMART WORKFLOWS',
+    href: '/#services',
+    icon: 'AI',
+    gradient: 'from-purple-600 to-pink-600',
+  },
+  {
+    title: 'Machine Learning & Data',
+    desc: 'Data pipelines, prediction models and reporting layers that make growth signals easier to act on.',
+    tag: 'DATA',
+    metric: 'PREDICTIVE INSIGHTS',
+    href: '/#services',
+    icon: 'ML',
+    gradient: 'from-green-600 to-emerald-600',
+  },
+  {
+    title: 'Mobile App Development',
+    desc: 'iOS and Android product experiences with clean interfaces, reliable performance and scalable foundations.',
+    tag: 'MOBILE',
+    metric: 'IOS + ANDROID',
+    href: '/#services',
+    icon: 'AP',
+    gradient: 'from-amber-600 to-orange-600',
+  },
+];
 
 type ServiceCard = {
   title: string;
   desc: string;
-  image: string;
   tag: string;
   metric: string;
   href: string;
+  icon: string;
+  gradient: string;
 };
 
 type ServicesProps = {
@@ -69,7 +75,25 @@ type ServicesProps = {
   services?: ServiceCard[];
 };
 
-function mapServiceToCard(service: ServiceDocument): ServiceCard | null {
+const iconMap: Record<string, string> = {
+  'digital-marketing': 'DM',
+  'graphic-design': 'GD',
+  'ecommerce-marketing': 'EC',
+  'pay-per-click': 'PC',
+  'web-design': 'WD',
+  'content-writing': 'CW',
+};
+
+const gradientMap: Record<number, string> = {
+  0: 'from-red-600 to-orange-600',
+  1: 'from-purple-600 to-pink-600',
+  2: 'from-blue-600 to-cyan-600',
+  3: 'from-green-600 to-emerald-600',
+  4: 'from-indigo-600 to-blue-600',
+  5: 'from-amber-600 to-orange-600',
+};
+
+function mapServiceToCard(service: ServiceDocument, index: number): ServiceCard | null {
   const slug = service.slug?.current;
 
   if (!slug || !service.title || !service.description) {
@@ -79,12 +103,11 @@ function mapServiceToCard(service: ServiceDocument): ServiceCard | null {
   return {
     title: service.title,
     desc: service.description,
-    image: service.image
-      ? urlFor(service.image).width(1600).quality(80).url()
-      : fallbackServices[0].image,
-    tag: service.cardTag || service.title,
-    metric: service.cardMetric || service.category || 'Growth System',
-    href: `/services/cms/${slug}`,
+    tag: service.cardTag || service.category || 'SERVICE',
+    metric: service.cardMetric || 'EXPERT SOLUTIONS',
+    href: `/services/${slug}`,
+    icon: iconMap[slug] || 'CT',
+    gradient: gradientMap[index % 6] || 'from-red-600 to-orange-600',
   };
 }
 
@@ -95,57 +118,68 @@ export default async function Services({
 }: ServicesProps) {
   const resolvedServices = services
     ? services
-    : ((await getAllServices()).map(mapServiceToCard).filter(Boolean) as ServiceCard[]);
+    : ((await getAllServices()).map((s, i) => mapServiceToCard(s, i)).filter(Boolean) as ServiceCard[]);
 
   const cards = resolvedServices.length > 0 ? resolvedServices : fallbackServices;
 
   return (
-    <section id="services" className="py-32 bg-white relative border-y border-gray-100">
+    <section id="services" className="py-32 bg-gradient-to-b from-white to-gray-50 relative">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center md:text-left mb-16 max-w-3xl">
-          <h2 className="text-4xl md:text-5xl font-semibold tracking-[-0.02em] text-gray-900 mb-6">
+        <div className="text-center mb-16">
+          <div className="inline-block px-4 py-2 bg-red-100 rounded-full mb-6">
+            <span className="text-red-700 font-bold text-sm uppercase tracking-wider">Our Services</span>
+          </div>
+          <h2 className="text-4xl md:text-5xl font-bold tracking-tight text-gray-900 mb-6">
             {title}
           </h2>
-          <p className="text-lg md:text-xl text-gray-500 font-light max-w-2xl">
+          <p className="text-xl text-gray-600 font-medium max-w-3xl mx-auto">
             {description}
           </p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {cards.map((service, idx) => (
             <Link
               key={idx}
               href={service.href}
-              className="service-card h-[400px] border border-gray-200/60 group cursor-pointer shadow-sm hover:shadow-2xl focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gray-300 rounded-2xl overflow-hidden bg-gray-50/50"
+              className="group relative overflow-hidden rounded-3xl bg-white border-2 border-gray-200 hover:border-transparent shadow-lg hover:shadow-2xl transition-all duration-300 hover:-translate-y-2"
             >
-              <div
-                className="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-105 group-focus-visible:scale-105"
-                style={{ backgroundImage: `url(${service.image})` }}
-              ></div>
-              <div className="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-105 group-focus-visible:scale-105" style={{ backgroundImage: `url(${service.image})` }}></div>
-              <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-black/5"></div>
-              <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(255,255,255,0.1),transparent_40%)]"></div>
+              <div className={`absolute inset-0 bg-gradient-to-br ${service.gradient} opacity-0 group-hover:opacity-100 transition-opacity duration-300`} />
 
-              <div className="absolute top-8 left-8 right-8 z-10">
-                <div className="inline-flex rounded-full border border-white/20 bg-white/10 px-3 py-1.5 text-[10px] font-bold uppercase tracking-widest text-white backdrop-blur-md rounded-full">
-                  {service.tag}
+              <div className="relative z-10 p-8">
+                <div className="mb-6">
+                  <div className={`w-16 h-16 rounded-2xl bg-gradient-to-br ${service.gradient} flex items-center justify-center text-white text-xl font-black shadow-lg group-hover:scale-110 transition-transform duration-300`}>
+                    {service.icon}
+                  </div>
                 </div>
-                <h3 className="mt-5 text-2xl font-bold text-white mb-2 tracking-tight">{service.title}</h3>
-                <p className="text-sm font-semibold uppercase tracking-[0.18em] text-white/70">
+
+                <div className="mb-4">
+                  <span className="inline-block px-3 py-1 bg-gray-100 group-hover:bg-white/20 text-gray-700 group-hover:text-white text-xs font-bold rounded-full uppercase tracking-wider transition-colors duration-300">
+                    {service.tag}
+                  </span>
+                </div>
+
+                <h3 className="text-2xl font-bold text-gray-900 group-hover:text-white mb-3 transition-colors duration-300">
+                  {service.title}
+                </h3>
+
+                <p className="text-sm font-bold text-gray-500 group-hover:text-white/80 mb-4 uppercase tracking-wider transition-colors duration-300">
                   {service.metric}
                 </p>
-              </div>
 
-              <div className="service-card-content z-10">
-                <div className="w-12 h-1 bg-white mb-4 rounded-full opacity-50"></div>
-                <p className="service-card-desc text-gray-300 text-sm leading-relaxed font-light">
+                <p className="text-gray-600 group-hover:text-white/90 mb-6 leading-relaxed transition-colors duration-300">
                   {service.desc}
                 </p>
-                <span className="mt-6 inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/5 px-5 py-2.5 text-xs font-semibold tracking-wide text-white backdrop-blur-md transition-all duration-300 group-hover:bg-white group-hover:text-black rounded-full group-focus-visible:bg-white group-focus-visible:text-red-700">
-                  Explore Service
-                  <span aria-hidden="true">→</span>
-                </span>
+
+                <div className="flex items-center gap-2 text-red-600 group-hover:text-white font-bold transition-colors duration-300">
+                  <span>Explore Service</span>
+                  <svg className="w-5 h-5 group-hover:translate-x-2 transition-transform duration-300" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                  </svg>
+                </div>
               </div>
+
+              <div className="absolute -bottom-10 -right-10 w-40 h-40 bg-white/10 rounded-full blur-3xl group-hover:bg-white/20 transition-colors duration-300" />
             </Link>
           ))}
         </div>
