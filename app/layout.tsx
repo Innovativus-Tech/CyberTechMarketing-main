@@ -1,28 +1,35 @@
 import type { Metadata } from "next";
+import { headers } from 'next/headers';
 import "./globals.css";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import Chatbot from "@/components/Chatbot";
+import { getSiteSettings } from '@/lib/siteSettings';
 
 export const metadata: Metadata = {
   title: "Cybertech Marketing | AI-Powered Digital Agency",
   description: "Transforming clicks into conversions with cutting-edge digital marketing strategies.",
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const headerStore = await headers();
+  const pathname = headerStore.get('x-pathname') || '';
+  const isStudioRoute = pathname.startsWith('/studio');
+  const siteSettings = await getSiteSettings();
+
   return (
     <html lang="en" className="h-full antialiased scroll-smooth" data-scroll-behavior="smooth">
       <body className="min-h-full flex flex-col bg-[var(--background)] relative">
-        <Navbar />
+        {!isStudioRoute && <Navbar settings={siteSettings} />}
         <main className="flex-grow">
           {children}
         </main>
-        <Footer />
-        <Chatbot />
+        {!isStudioRoute && <Footer settings={siteSettings} />}
+        {!isStudioRoute && <Chatbot />}
       </body>
     </html>
   );

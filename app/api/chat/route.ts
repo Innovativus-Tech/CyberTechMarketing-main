@@ -1,26 +1,15 @@
 import { NextResponse } from 'next/server';
+import { sanityClient } from '@/lib/sanity';
 
 type ChatMessage = {
   role: 'user' | 'assistant';
   content: string;
 };
 
-const OPENAI_API_URL = 'https://api.openai.com/v1/responses';
-const DEFAULT_MODEL = process.env.OPENAI_MODEL || 'gpt-5.2-mini';
+const OLLAMA_BASE_URL =
+  process.env.OLLAMA_BASE_URL || 'http://127.0.0.1:11434';
+const DEFAULT_MODEL = process.env.OLLAMA_MODEL || 'llama3.1:8b';
 const MAX_MESSAGES = 12;
-const SYSTEM_PROMPT = `You are the Cybertech AI assistant for Cybertech Marketing, a digital marketing agency.
-
-Your job is to help website visitors understand the company's services, process, contact options, and value proposition.
-
-Guidelines:
-- Be professional, warm, concise, and helpful.
-- Stay focused on Cybertech Marketing and related customer questions.
-- If pricing is requested, explain that pricing depends on scope and invite the user to contact the team for a tailored quote.
-- If a question needs business-specific details you do not know, say so clearly and direct the user to contact the team.
-- Do not invent guarantees, case studies, or policies that were not provided.
-- Where relevant, mention these services: Digital Marketing, Graphic Design, E-commerce Marketing, Pay Per Click (PPC), Web Design, SEO, and Content Writing.
-- If the user asks for contact details, mention phone 7428768779 and email info@cybertechmarketing.com.
-- Keep answers easy to read for a website chat widget.`;
 
 function isValidMessage(value: unknown): value is ChatMessage {
   if (!value || typeof value !== 'object') {
@@ -62,36 +51,51 @@ export async function POST(req: Request) {
       );
     }
 
-    const openAiKey = process.env.OPENAI_API_KEY;
+    // Fetch latest contact details from Sanity Site Settings
+    const settings = await sanityClient.fetch(`*[_type == "siteSettings"][0]{
+      footerEmail,
+      footerPhone
+    }`);
 
-    if (!openAiKey) {
+    const phone = settings?.footerPhone || '7428768779';
+    const email = settings?.footerEmail || 'info@cybertechmarketing.com';
+
+    const SYSTEM_PROMPT = `You are the CyberTech marketing assistant for CyberTech Marketing.
+
+Your job:
+- Help users with digital marketing questions.
+- Explain SEO, web development, branding, ads, and AI automation.
+- Talk professionally and confidently.
+- Keep answers concise and business-focused.
+- If a user asks unrelated questions, politely redirect them back to digital marketing or CyberTech Marketing services.
+
+Guidelines:
+- Be professional, warm, and helpful.
+- Mention services when relevant: Digital Marketing, Graphic Design, E-commerce Marketing, PPC, Web Design, SEO, and AI Automation.
+- If pricing is requested, explain that it depends on scope and invite them to contact the team for a tailored quote.
+- If a question needs specific business details you do not know, direct the user to contact the team.
+- Contact details: Phone ${phone}, Email ${email}.
+- Keep answers easy to read for a website chat widget.`;
+
+    if (!DEFAULT_MODEL.trim()) {
       return NextResponse.json(
         {
           error:
-            'The chatbot is not configured yet. Add OPENAI_API_KEY to the server environment to enable live AI replies.',
+            'The chatbot is not configured yet. Add OLLAMA_MODEL to the server environment to enable live AI replies.',
         },
         { status: 503 }
       );
     }
 
-    const response = await fetch(OPENAI_API_URL, {
+    const response = await fetch(`${OLLAMA_BASE_URL}/api/chat`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        Authorization: `Bearer ${openAiKey}`,
       },
       body: JSON.stringify({
         model: DEFAULT_MODEL,
-        instructions: SYSTEM_PROMPT,
-        input: messages.map((message) => ({
-          role: message.role,
-          content: [
-            {
-              type: 'input_text',
-              text: message.content,
-            },
-          ],
-        })),
+        stream: false,
+        messages: [{ role: 'system', content: SYSTEM_PROMPT }, ...messages],
       }),
     });
 
@@ -101,9 +105,10 @@ export async function POST(req: Request) {
       const apiError =
         data?.error?.message ||
         data?.message ||
-        'OpenAI request failed.';
+        data?.error ||
+        'Ollama request failed.';
 
-      console.error('OpenAI chat error:', {
+      console.error('Ollama chat error:', {
         status: response.status,
         error: apiError,
       });
@@ -115,10 +120,12 @@ export async function POST(req: Request) {
     }
 
     const reply =
-      typeof data?.output_text === 'string' ? data.output_text.trim() : '';
+      typeof data?.message?.content === 'string'
+        ? data.message.content.trim()
+        : '';
 
     if (!reply) {
-      console.error('OpenAI chat error: empty output_text', data);
+      console.error('Ollama chat error: empty message.content', data);
 
       return NextResponse.json(
         { error: 'The chatbot returned an empty response.' },

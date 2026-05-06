@@ -1,11 +1,12 @@
 import Link from 'next/link';
+import { getAllServices, type ServiceDocument } from '@/lib/queries';
+import { urlFor } from '@/lib/sanity';
+import { defaultHomePageContent } from '@/lib/homePage';
 
-export default function Services() {
-  const services = [
+const fallbackServices = [
     {
       title: "Digital Marketing",
       desc: "Our services leverage online channels to promote businesses, products, or services. These encompass SEO, social media, email marketing, PPC advertising, and content marketing to reach and engage target audiences effectively.",
-      color: "from-red-600 to-red-950",
       image: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?q=80&w=1600&auto=format&fit=crop",
       tag: "Growth Strategy",
       metric: "SEO + Paid Media + Funnels",
@@ -58,20 +59,65 @@ export default function Services() {
     }
   ];
 
+type ServiceCard = {
+  title: string;
+  desc: string;
+  image: string;
+  tag: string;
+  metric: string;
+  href: string;
+};
+
+type ServicesProps = {
+  title?: string;
+  description?: string;
+  services?: ServiceCard[];
+};
+
+function mapServiceToCard(service: ServiceDocument): ServiceCard | null {
+  const slug = service.slug?.current;
+
+  if (!slug || !service.title || !service.description) {
+    return null;
+  }
+
+  return {
+    title: service.title,
+    desc: service.description,
+    image: service.image
+      ? urlFor(service.image).width(1600).quality(80).url()
+      : fallbackServices[0].image,
+    tag: service.cardTag || service.title,
+    metric: service.cardMetric || service.category || 'Growth System',
+    href: `/services/cms/${slug}`,
+  };
+}
+
+export default async function Services({
+  title = defaultHomePageContent.servicesTitle,
+  description = defaultHomePageContent.servicesDescription,
+  services,
+}: ServicesProps) {
+  const resolvedServices = services
+    ? services
+    : ((await getAllServices()).map(mapServiceToCard).filter(Boolean) as ServiceCard[]);
+
+  const cards = resolvedServices.length > 0 ? resolvedServices : fallbackServices;
+
   return (
     <section id="services" className="py-32 bg-gray-50 relative border-y border-gray-200">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center md:text-left mb-16 max-w-3xl">
           <h2 className="text-4xl md:text-5xl font-bold tracking-tight text-gray-900 mb-6">
-            Marketing Systems Built to Grow Your Business
+            {title}
           </h2>
           <p className="text-xl text-gray-600 font-medium">
-            Explore our integrated services designed to increase visibility, conversions, and long-term revenue.
+            {description}
           </p>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {services.map((service, idx) => (
+          {cards.map((service, idx) => (
             <Link
               key={idx}
               href={service.href}

@@ -2,8 +2,10 @@ import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import { getAllPosts, getPostBySlug } from '@/lib/blog';
 
-export function generateStaticParams() {
-  return getAllPosts().map((post) => ({
+export async function generateStaticParams() {
+  const posts = await getAllPosts();
+
+  return posts.map((post) => ({
     slug: post.slug,
   }));
 }
@@ -14,7 +16,7 @@ export async function generateMetadata({
   params: Promise<{ slug: string }>;
 }) {
   const { slug } = await params;
-  const post = getPostBySlug(slug);
+  const post = await getPostBySlug(slug);
 
   if (!post) {
     return {
@@ -34,13 +36,15 @@ export default async function BlogPostPage({
   params: Promise<{ slug: string }>;
 }) {
   const { slug } = await params;
-  const post = getPostBySlug(slug);
+  const post = await getPostBySlug(slug);
 
   if (!post) {
     notFound();
   }
 
-  const relatedPosts = getAllPosts().filter((item) => item.slug !== post.slug).slice(0, 2);
+  const relatedPosts = (await getAllPosts())
+    .filter((item) => item.slug !== post.slug)
+    .slice(0, 2);
 
   return (
     <main className="min-h-screen bg-[#f8f6f3] pb-20">

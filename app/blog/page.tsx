@@ -6,8 +6,8 @@ export const metadata = {
   description: 'Insights on AI marketing, content strategy, conversion design, and performance growth.',
 };
 
-export default function BlogPage() {
-  const posts = getAllPosts();
+export default async function BlogPage() {
+  const posts = await getAllPosts();
   const [featuredPost, ...otherPosts] = posts;
 
   return (

@@ -1,30 +1,34 @@
 import Link from "next/link";
+import { type HomePageContent, defaultHomePageContent } from '@/lib/homePage';
 
-export default function Hero() {
+type HeroProps = {
+  content?: HomePageContent;
+};
+
+export default function Hero({ content = defaultHomePageContent }: HeroProps) {
   return (
     <section id="platform" className="relative pt-[160px] pb-24 md:pt-[180px] md:pb-32 flex flex-col items-center hero-red-gradient overflow-hidden">
       <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 w-full text-center">
         
         <h1 className="text-4xl md:text-7xl lg:text-[80px] font-normal tracking-tight mb-6 md:mb-8 leading-[1.1] text-white drop-shadow-lg">
-          <span className="block mb-2">Built to Convert.</span>
-          <span className="block">Engineered for Growth.</span>
+          <span className="block mb-2">{content.heroLineOne}</span>
+          <span className="block">{content.heroLineTwo}</span>
         </h1>
         
         <p className="text-lg md:text-[22px] text-gray-200 mb-8 md:mb-10 max-w-3xl mx-auto leading-snug font-medium">
-          AI-powered marketing systems built for campaign velocity, stronger attribution, and revenue growth.<br className="hidden md:block" />
-          See clearer. Scale faster. Win the market.
+          {content.heroDescription}
         </p>
         
         <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
           <Link
-            href="/contact"
+            href={content.heroPrimaryCtaHref}
             className="px-8 py-3.5 rounded-full bg-red-600 hover:bg-red-700 text-white font-bold transition-colors flex items-center justify-center gap-2 w-full sm:w-auto shadow-lg shadow-red-950/30"
           >
-            Free Growth Audit
+            {content.heroPrimaryCtaLabel}
             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M5 12h14M12 5l7 7-7-7"/></svg>
           </Link>
-          <Link href="/blog" className="flex items-center justify-between bg-white/15 backdrop-blur-sm rounded-full p-1 pl-6 w-full sm:w-auto border border-white/10">
-            <span className="text-white font-bold mr-4">See Campaign Wins</span>
+          <Link href={content.heroSecondaryCtaHref} className="flex items-center justify-between bg-white/15 backdrop-blur-sm rounded-full p-1 pl-6 w-full sm:w-auto border border-white/10">
+            <span className="text-white font-bold mr-4">{content.heroSecondaryCtaLabel}</span>
             <span className="w-10 h-10 rounded-full bg-red-600 hover:bg-red-700 text-white flex items-center justify-center transition-colors">
                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M5 12h14M12 5l7 7-7-7"/></svg>
             </span>
@@ -50,18 +54,18 @@ export default function Hero() {
           </div>
 
           <div className="absolute left-1/2 top-[12%] z-10 hidden -translate-x-1/2 rounded-full border border-white/15 bg-white/10 px-5 py-2 text-xs font-extrabold uppercase tracking-[0.28em] text-white/85 backdrop-blur-md md:block">
-            CyberTech Marketing Live
+            {content.heroBadgeText}
           </div>
 
           <div className="absolute left-[6%] top-[22%] hero-ui-panel hero-float-slow w-[30%] min-w-[220px] max-w-[320px] rounded-[1.5rem] p-5">
-            <p className="text-xs font-bold uppercase tracking-[0.22em] text-white/70">Lead Surge</p>
+            <p className="text-xs font-bold uppercase tracking-[0.22em] text-white/70">{content.heroCardLabel}</p>
             <div className="mt-3 flex items-end justify-between gap-3">
               <div>
-                <p className="text-4xl font-black text-white">56</p>
-                <p className="mt-1 text-sm font-medium text-emerald-300">Qualified leads this week</p>
+                <p className="text-4xl font-black text-white">{content.heroCardValue}</p>
+                <p className="mt-1 text-sm font-medium text-emerald-300">{content.heroCardCaption}</p>
               </div>
               <div className="rounded-full bg-red-500/15 px-3 py-1 text-xs font-bold uppercase tracking-[0.18em] text-red-200">
-                +24%
+                {content.heroCardDelta}
               </div>
             </div>
             <div className="mt-5 flex items-end gap-2">
@@ -106,9 +110,9 @@ export default function Hero() {
           <div className="absolute left-[12%] bottom-[14%] hero-ui-panel hero-float-fast hidden w-[34%] min-w-[280px] max-w-[420px] rounded-[1.5rem] p-5 lg:block">
             <div className="flex items-start justify-between gap-4">
               <div>
-                <p className="text-lg font-black text-white">CyberTech Campaign Flow</p>
+                <p className="text-lg font-black text-white">{content.heroFlowTitle}</p>
                 <p className="mt-1 text-sm leading-6 text-white/70">
-                  Launch creative, route paid traffic, score intent, and trigger follow-up automations in one motion.
+                  {content.heroFlowDescription}
                 </p>
               </div>
               <span className="rounded-full border border-emerald-300/30 bg-emerald-400/10 px-3 py-1 text-xs font-bold text-emerald-200">
@@ -117,18 +121,18 @@ export default function Hero() {
             </div>
             <div className="mt-5 flex items-center justify-between gap-4">
               <div className="text-sm font-medium text-white/75">Growth Engine V11</div>
-              <button className="rounded-full bg-red-600 px-4 py-2 text-sm font-extrabold text-white shadow-lg shadow-red-950/30 hover:bg-red-700 transition-colors">
-                Launch Strategy
-              </button>
+              <Link href={content.heroFlowButtonHref} className="rounded-full bg-red-600 px-4 py-2 text-sm font-extrabold text-white shadow-lg shadow-red-950/30 hover:bg-red-700 transition-colors">
+                {content.heroFlowButtonLabel}
+              </Link>
             </div>
           </div>
 
           <div className="absolute right-[3%] bottom-[4%] z-10">
             <Link
-              href="/services"
+              href={content.heroBottomCtaHref}
               className="flex items-center gap-4 rounded-full border border-white/30 bg-white/18 px-6 py-3 text-white backdrop-blur-md shadow-[0_16px_40px_rgba(15,23,42,0.25)] transition-transform duration-300 hover:-translate-y-1"
             >
-              <span className="text-xl md:text-2xl font-semibold tracking-tight">Explore Growth Engine</span>
+              <span className="text-xl md:text-2xl font-semibold tracking-tight">{content.heroBottomCtaLabel}</span>
               <span className="grid h-12 w-12 place-items-center rounded-full bg-red-600 text-white shadow-lg shadow-red-950/30">
                 <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
                   <path d="M5 12h14M12 5l7 7-7-7" />

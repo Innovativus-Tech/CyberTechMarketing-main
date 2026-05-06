@@ -2,53 +2,41 @@
 
 import Link from 'next/link';
 import { useState, useRef, useEffect } from 'react';
+import { type SiteSettings, defaultSiteSettings } from '@/lib/siteSettings';
 
-const primaryLinks = [
-  { id: 'platform', name: 'Platform', href: '/#platform' },
-  { id: 'services', name: 'Services', href: '/services' },
-  { id: 'partners', name: 'Partners', href: '/#partners' },
-  { id: 'testimonials', name: 'Testimonials', href: '/#testimonials' },
-  { id: 'careers', name: 'Careers', href: '/careers' },
-  { id: 'about', name: 'About', href: '/about' },
-  { id: 'pricing', name: 'Pricing', href: '/pricing' },
-];
-
-const mobileLinks = [
-  ...primaryLinks,
-  { id: 'contact', name: 'Contact', href: '/contact' },
-  { id: 'blog', name: 'Blog', href: '/blog' },
-];
-
-const megaMenuData = {
-  col1: [
-    { title: 'Growth Platform', desc: 'Integrated strategy across SEO, content, paid media, and conversion optimization.', href: '/platform/growth-platform' },
-    { title: 'Service Stack', desc: 'Explore the digital marketing, design, PPC, and web capabilities behind the system.', href: '/platform/service-stack' },
-    { title: 'Proof & Trust', desc: 'See the client signals, testimonials, and credibility markers that support our approach.', href: '/platform/proof-trust' },
-    { title: 'Meet CyberTech', desc: 'Learn how our agency combines creative execution with data-driven growth frameworks.', href: '/about' },
-  ],
-  col2: [
-    { label: 'Digital Marketing', href: '/services/digital-marketing' },
-    { label: 'Graphic Design', href: '/services/graphic-design' },
-    { label: 'E-commerce Marketing', href: '/services/ecommerce-marketing' },
-    { label: 'Pay Per Click', href: '/services/pay-per-click' },
-    { label: 'Web Design', href: '/services/web-design' },
-    { label: 'Content Writing', href: '/services/content-writing' },
-    { label: 'Pricing Plans', href: '/pricing' },
-    { label: 'Contact Strategy Team', href: '/contact' },
-  ],
-  col3: [
-    { label: 'SaaS Growth', href: '/focus-areas/saas-growth' },
-    { label: 'E-commerce Brands', href: '/focus-areas/ecommerce-brands' },
-    { label: 'Healthcare Marketing', href: '/focus-areas/healthcare-marketing' },
-    { label: 'Education Campaigns', href: '/focus-areas/education-campaigns' },
-    { label: 'Real Estate Lead Gen', href: '/focus-areas/real-estate-lead-gen' },
-    { label: 'Finance & B2B', href: '/focus-areas/finance-b2b' },
-    { label: 'Hospitality Visibility', href: '/focus-areas/hospitality-visibility' },
-    { label: 'D2C Performance', href: '/focus-areas/d2c-performance' },
-  ],
+type NavbarProps = {
+  settings?: SiteSettings;
 };
 
-export default function Navbar() {
+export default function Navbar({ settings = defaultSiteSettings }: NavbarProps) {
+  const primaryLinks = settings.primaryNavLinks.map((link) => ({
+    id: link.id || link.label.toLowerCase().replace(/\s+/g, '-'),
+    name: link.label,
+    href: link.href,
+  }));
+
+  const mobileLinks = [
+    ...primaryLinks,
+    { id: 'contact', name: settings.mobileCtaLabel, href: settings.mobileCtaHref },
+    { id: 'blog', name: 'Blog', href: '/blog' },
+  ];
+
+  const megaMenuData = {
+    col1: settings.platformAdvantageLinks.map((link) => ({
+      title: link.title,
+      desc: link.description || '',
+      href: link.href,
+    })),
+    col2: settings.platformServiceLinks.map((link) => ({
+      label: link.label,
+      href: link.href,
+    })),
+    col3: settings.platformFocusLinks.map((link) => ({
+      label: link.label,
+      href: link.href,
+    })),
+  };
+
   // ── Desktop state ──────────────────────────────────────────────────────────
   const [activeMenu, setActiveMenu] = useState<string | null>(null);
   const [desktopDropdownOpen, setDesktopDropdownOpen] = useState(false);
@@ -90,9 +78,9 @@ export default function Navbar() {
       {/* ── Announcement bar ─────────────────────────────────────────────── */}
       <div className="w-full z-40 flex flex-col relative">
         <div className="bg-gradient-to-r from-red-700 via-red-600 to-orange-500 text-white px-4 py-2 text-center text-[12px] sm:text-[13px] font-bold flex flex-wrap justify-center items-center gap-2 shadow-[0_10px_30px_rgba(185,28,28,0.22)]">
-          <span>Don&apos;t Miss the CyberTech Marketing Forum — Learn How AI Is Changing the Marketing Landscape.</span>
-          <Link href="/contact" className="underline decoration-white/60 underline-offset-4 flex items-center gap-1 hover:text-red-100 transition-colors whitespace-nowrap">
-            Register Now
+          <span>{settings.announcementText}</span>
+          <Link href={settings.announcementCtaHref} className="underline decoration-white/60 underline-offset-4 flex items-center gap-1 hover:text-red-100 transition-colors whitespace-nowrap">
+            {settings.announcementCtaLabel}
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
               <path d="M5 12h14M12 5l7 7-7-7" />
             </svg>
@@ -104,10 +92,21 @@ export default function Navbar() {
       <header className="sticky top-0 z-50 w-full bg-[#fff8f6]/95 backdrop-blur-xl shadow-[0_12px_30px_rgba(15,23,42,0.06)] border-b border-red-100/70">
         {/* Desktop utility bar */}
         <div className="hidden md:flex max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8 py-2 justify-end items-center gap-6 text-[13px] font-bold text-slate-600 border-b border-red-100/70">
-          <Link href="/contact" className="hover:text-red-700 transition-colors">Experiencing a Breach?</Link>
-          <Link href="/blog" className="hover:text-red-700 transition-colors">Blog</Link>
-          <Link href="/blog" className="bg-gradient-to-r from-red-700 to-red-500 text-white px-4 py-1.5 rounded-full hover:from-red-800 hover:to-red-600 transition-all shadow-[0_10px_24px_rgba(220,38,38,0.25)]">Get Started</Link>
-          <Link href="/contact" className="border-2 border-slate-900 text-slate-900 px-4 py-1.5 rounded-full hover:border-red-700 hover:text-red-700 hover:bg-red-50/70 transition-colors">Contact Us</Link>
+          {settings.utilityLinks.map((link) => (
+            <Link
+              key={link.label}
+              href={link.href}
+              className={
+                link.variant === 'filled'
+                  ? 'bg-gradient-to-r from-red-700 to-red-500 text-white px-4 py-1.5 rounded-full hover:from-red-800 hover:to-red-600 transition-all shadow-[0_10px_24px_rgba(220,38,38,0.25)]'
+                  : link.variant === 'outline'
+                    ? 'border-2 border-slate-900 text-slate-900 px-4 py-1.5 rounded-full hover:border-red-700 hover:text-red-700 hover:bg-red-50/70 transition-colors'
+                    : 'hover:text-red-700 transition-colors'
+              }
+            >
+              {link.label}
+            </Link>
+          ))}
         </div>
 
         <div className="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8">
@@ -231,8 +230,8 @@ export default function Navbar() {
 
             {/* Mobile hamburger button */}
             <div className="flex items-center gap-3 lg:hidden">
-              <Link href="/contact" className="hidden sm:inline-flex border border-red-200 bg-red-50 text-red-700 px-4 py-2 rounded-full text-sm font-bold hover:bg-red-100 transition-colors">
-                Contact
+              <Link href={settings.mobileCtaHref} className="hidden sm:inline-flex border border-red-200 bg-red-50 text-red-700 px-4 py-2 rounded-full text-sm font-bold hover:bg-red-100 transition-colors">
+                {settings.mobileCtaLabel}
               </Link>
               <button
                 type="button"
@@ -301,12 +300,20 @@ export default function Navbar() {
 
           {/* Utility links row */}
           <div className="flex items-center gap-3 px-5 py-3 bg-red-50 border-b border-red-100 flex-shrink-0">
-            <Link href="/contact" onClick={closeMobileMenu} className="flex-1 text-center text-xs font-bold text-red-700 py-1.5 rounded-full border border-red-200 bg-white hover:bg-red-100 transition-colors">
-              Experiencing a Breach?
-            </Link>
-            <Link href="/blog" onClick={closeMobileMenu} className="flex-1 text-center text-xs font-bold text-slate-700 py-1.5 rounded-full border border-slate-200 bg-white hover:bg-slate-50 transition-colors">
-              Blog
-            </Link>
+            {settings.utilityLinks.slice(0, 2).map((link) => (
+              <Link
+                key={link.label}
+                href={link.href}
+                onClick={closeMobileMenu}
+                className={`flex-1 text-center text-xs font-bold py-1.5 rounded-full border bg-white transition-colors ${
+                  link.variant === 'filled' || link.variant === 'outline'
+                    ? 'text-red-700 border-red-200 hover:bg-red-100'
+                    : 'text-slate-700 border-slate-200 hover:bg-slate-50'
+                }`}
+              >
+                {link.label}
+              </Link>
+            ))}
           </div>
 
           {/* Scrollable nav links */}

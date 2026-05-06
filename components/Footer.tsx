@@ -1,6 +1,11 @@
 import Link from 'next/link';
+import { type SiteSettings, defaultSiteSettings } from '@/lib/siteSettings';
 
-export default function Footer() {
+type FooterProps = {
+  settings?: SiteSettings;
+};
+
+export default function Footer({ settings = defaultSiteSettings }: FooterProps) {
   const currentYear = new Date().getFullYear();
 
   return (
@@ -27,31 +32,37 @@ export default function Footer() {
               </div>
             </Link>
             <p className="text-gray-600 max-w-sm mb-6 leading-relaxed font-medium">
-              Save Costs And Grow Fast With Cybertech Marketing. Transforming Clicks into Conversions through AI-powered digital strategies.
+              {settings.footerDescription}
             </p>
           </div>
           <div>
             <h3 className="text-gray-900 font-bold mb-4 text-lg">Company</h3>
             <ul className="space-y-3 font-medium">
-              <li><Link href="/about" className="text-gray-600 hover:text-[var(--color-brand-primary)] transition-colors">About Us</Link></li>
-              <li><Link href="/services" className="text-gray-600 hover:text-[var(--color-brand-primary)] transition-colors">Services</Link></li>
-              <li><Link href="/careers" className="text-gray-600 hover:text-[var(--color-brand-primary)] transition-colors">Careers</Link></li>
-              <li><Link href="/contact" className="text-gray-600 hover:text-[var(--color-brand-primary)] transition-colors">Contact</Link></li>
+              {settings.footerCompanyLinks.map((link) => (
+                <li key={link.label}>
+                  <Link href={link.href} className="text-gray-600 hover:text-[var(--color-brand-primary)] transition-colors">
+                    {link.label}
+                  </Link>
+                </li>
+              ))}
             </ul>
           </div>
           <div>
             <h3 className="text-gray-900 font-bold mb-4 text-lg">Get In Touch</h3>
             <ul className="space-y-3 font-medium">
-              <li><a href="mailto:info@cybertechmarketing.com" className="text-gray-600 hover:text-[var(--color-brand-primary)] transition-colors">info@cybertechmarketing.com</a></li>
-              <li><a href="tel:+917428768779" className="text-gray-600 hover:text-[var(--color-brand-primary)] transition-colors">+91 7428768779</a></li>
+              <li><a href={`mailto:${settings.footerEmail}`} className="text-gray-600 hover:text-[var(--color-brand-primary)] transition-colors">{settings.footerEmail}</a></li>
+              <li><a href={`tel:${settings.footerPhone.replace(/\s+/g, '')}`} className="text-gray-600 hover:text-[var(--color-brand-primary)] transition-colors">{settings.footerPhone}</a></li>
             </ul>
           </div>
         </div>
         <div className="border-t border-gray-200 pt-8 flex flex-col md:flex-row justify-between items-center">
           <p className="text-gray-500 text-sm font-medium">© {currentYear} Cybertech Marketing. All Rights Reserved.</p>
           <div className="flex space-x-6 mt-4 md:mt-0 font-medium">
-            <Link href="/contact" className="text-gray-500 hover:text-gray-900 text-sm transition-colors">Privacy Policy</Link>
-            <Link href="/contact" className="text-gray-500 hover:text-gray-900 text-sm transition-colors">Terms of Service</Link>
+            {settings.footerLegalLinks.map((link) => (
+              <Link key={link.label} href={link.href} className="text-gray-500 hover:text-gray-900 text-sm transition-colors">
+                {link.label}
+              </Link>
+            ))}
           </div>
         </div>
       </div>

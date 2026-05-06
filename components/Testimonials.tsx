@@ -1,5 +1,7 @@
-export default function Testimonials() {
-  const testimonials = [
+import { getAllTestimonials, type TestimonialDocument } from '@/lib/queries';
+import { defaultHomePageContent } from '@/lib/homePage';
+
+const fallbackTestimonials = [
     { name: "Ananya", text: "As a startup, we needed a digital marketing partner who could understand our unique needs. They not only understood but also delivered outstanding results through their marketing strategies." },
     { name: "Ajay", text: "Working with Cybertech Marketing has been a game-changer for my business. Their team's expertise and dedication to results have helped us achieve a 200% increase in website traffic. I highly recommend them!" },
     { name: "Simran", text: "We've been partners for years, and they continue to exceed our expectations. Their campaigns have consistently delivered a high ROI, and their attention to detail is unmatched." },
@@ -7,18 +9,53 @@ export default function Testimonials() {
     { name: "Jai", text: "It's a pleasure to work with the team. Their dedication to our success is evident in the consistent growth of our email marketing campaigns. They're responsive, professional, and results-driven." }
   ];
 
+type TestimonialCard = {
+  name: string;
+  text: string;
+  role?: string;
+};
+
+type TestimonialsProps = {
+  title?: string;
+  subtitle?: string;
+  testimonials?: TestimonialCard[];
+};
+
+function mapTestimonial(doc: TestimonialDocument): TestimonialCard | null {
+  if (!doc.authorName || !doc.content) {
+    return null;
+  }
+
+  return {
+    name: doc.authorName,
+    text: doc.content,
+    role: doc.authorRole || 'Client',
+  };
+}
+
+export default async function Testimonials({
+  title = defaultHomePageContent.testimonialsTitle,
+  subtitle = defaultHomePageContent.testimonialsSubtitle,
+  testimonials,
+}: TestimonialsProps) {
+  const resolvedTestimonials = testimonials
+    ? testimonials
+    : ((await getAllTestimonials()).map(mapTestimonial).filter(Boolean) as TestimonialCard[]);
+
+  const cards = resolvedTestimonials.length > 0 ? resolvedTestimonials : fallbackTestimonials;
+
   return (
     <section id="testimonials" className="py-32 bg-gray-50 relative border-t border-gray-200">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-16">
           <h2 className="text-4xl md:text-5xl font-bold tracking-tight text-gray-900 mb-6">
-            What They’re Talking About Agency?
+            {title}
           </h2>
-          <p className="text-xl text-gray-600 font-medium">OUR TESTIMONIALS</p>
+          <p className="text-xl text-gray-600 font-medium">{subtitle}</p>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {testimonials.map((t, idx) => (
+          {cards.map((t, idx) => (
             <div key={idx} className="p-8 rounded-2xl bg-white border border-gray-200 shadow-sm relative group overflow-hidden hover:shadow-lg transition-all">
               <div className="absolute -top-10 -right-10 w-32 h-32 bg-red-100 rounded-full blur-[30px] group-hover:bg-red-200 transition-colors duration-500"></div>
               
@@ -36,7 +73,7 @@ export default function Testimonials() {
                 </div>
                 <div>
                   <h4 className="text-gray-900 font-bold">{t.name}</h4>
-                  <p className="text-gray-500 text-sm">Client</p>
+                  <p className="text-gray-500 text-sm">{t.role || 'Client'}</p>
                 </div>
               </div>
             </div>
