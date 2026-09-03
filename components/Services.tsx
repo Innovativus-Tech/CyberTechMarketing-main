@@ -5,57 +5,52 @@ import { defaultHomePageContent } from '@/lib/homePage';
 
 const fallbackServices = [
     {
-      title: "Digital Marketing",
-      desc: "Our services leverage online channels to promote businesses, products, or services. These encompass SEO, social media, email marketing, PPC advertising, and content marketing to reach and engage target audiences effectively.",
+      title: "Digital Marketing & Growth",
+      desc: "Comprehensive digital marketing strategies to accelerate your business growth and maximize ROI.",
       image: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?q=80&w=1600&auto=format&fit=crop",
       tag: "Growth Strategy",
       metric: "SEO + Paid Media + Funnels",
-      href: "/services/digital-marketing"
+      href: "/services/digital-marketing-growth"
     },
     {
-      title: "Graphic Design",
-      desc: "We craft visual elements like logos, images, and layouts to communicate messages effectively. We enhance branding, marketing materials, and websites to engage and leave lasting impressions on audiences.",
-      color: "from-rose-600 to-red-900",
-      image: "https://images.unsplash.com/photo-1522542550221-31fd19575a2d?q=80&w=1600&auto=format&fit=crop",
-      tag: "Creative Systems",
-      metric: "Branding + Campaign Visuals",
-      href: "/services/graphic-design"
-    },
-    {
-      title: "E-commerce Marketing",
-      desc: "We specialize in promoting online stores, enhancing visibility, driving traffic, and optimizing conversions. Strategies include SEO, SEM, email marketing, social media ads, and product listing optimization for e-commerce success.",
-      color: "from-red-500 to-rose-950",
-      image: "https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?q=80&w=1600&auto=format&fit=crop",
-      tag: "Revenue Engine",
-      metric: "Store Growth + Retention",
-      href: "/services/ecommerce-marketing"
-    },
-    {
-      title: "Pay Per Click",
-      desc: "PPC marketing services manage online advertising campaigns, paying only when users click on ads. We target keywords, demographics, and platforms to maximize ROI and drive targeted traffic to websites.",
-      color: "from-orange-600 to-red-950",
-      image: "https://images.unsplash.com/photo-1516321318423-f06f85e504b3?q=80&w=1600&auto=format&fit=crop",
-      tag: "Performance Ads",
-      metric: "Clicks + ROAS Optimization",
-      href: "/services/pay-per-click"
-    },
-    {
-      title: "Web Design",
-      desc: "We create visually appealing, user-friendly websites. We focus on layout, graphics, navigation, and responsiveness to provide an engaging online experience, optimizing branding and customer engagement.",
-      color: "from-pink-600 to-red-950",
+      title: "Web Development",
+      desc: "Custom, responsive, and high-performance websites tailored to your brand and business goals.",
       image: "https://images.unsplash.com/photo-1498050108023-c5249f4df085?q=80&w=1600&auto=format&fit=crop",
-      tag: "UX + Conversion",
+      tag: "Digital Presence",
       metric: "Modern Sites That Convert",
-      href: "/services/web-design"
+      href: "/services/web-development"
     },
     {
-      title: "Content Writing",
-      desc: "Content writing services create high-quality, relevant, and engaging written content for websites, blogs, and marketing materials. We aim to inform, entertain, and persuade, boosting online visibility and audience engagement.",
-      color: "from-red-700 to-red-950",
-      image: "https://images.unsplash.com/photo-1455390582262-044cdead277a?q=80&w=1600&auto=format&fit=crop",
-      tag: "Content Engine",
-      metric: "Authority + Organic Reach",
-      href: "/services/content-writing"
+      title: "Software Development",
+      desc: "Robust and scalable software solutions designed to streamline operations and drive innovation.",
+      image: "https://images.unsplash.com/photo-1555066931-4365d14bab8c?q=80&w=1600&auto=format&fit=crop",
+      tag: "Enterprise Solutions",
+      metric: "Scalable Architecture",
+      href: "/services/software-development"
+    },
+    {
+      title: "AI & Intelligent Solutions",
+      desc: "Cutting-edge artificial intelligence tools to automate processes and enhance decision-making.",
+      image: "https://images.unsplash.com/photo-1677442136019-21780ecad995?q=80&w=1600&auto=format&fit=crop",
+      tag: "Automation & AI",
+      metric: "Process Optimization",
+      href: "/services/ai-intelligent-solutions"
+    },
+    {
+      title: "Machine Learning & Data",
+      desc: "Unlock the power of your data with advanced machine learning models and predictive analytics.",
+      image: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?q=80&w=1600&auto=format&fit=crop",
+      tag: "Data Science",
+      metric: "Predictive Insights",
+      href: "/services/machine-learning-data"
+    },
+    {
+      title: "Mobile App Development",
+      desc: "Engaging and intuitive mobile applications for iOS and Android platforms.",
+      image: "https://images.unsplash.com/photo-1512941937669-90a1b58e7e9c?q=80&w=1600&auto=format&fit=crop",
+      tag: "Mobile First",
+      metric: "iOS + Android Native",
+      href: "/services/mobile-app-development"
     }
   ];
 

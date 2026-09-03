@@ -59,7 +59,7 @@ export default function Chatbot() {
   };
 
   return (
-    <div className="fixed bottom-4 right-4 z-50 sm:bottom-6 sm:right-6">
+    <div className="fixed bottom-24 right-4 z-50 sm:bottom-28 sm:right-6">
       {/* Chat Window */}
       {isOpen && (
         <div className="absolute bottom-18 right-0 h-[min(500px,calc(100vh-7rem))] w-[min(24rem,calc(100vw-2rem))] flex flex-col rounded-2xl bg-white border border-gray-200 overflow-hidden shadow-2xl animate-in fade-in slide-in-from-bottom-4 duration-300">

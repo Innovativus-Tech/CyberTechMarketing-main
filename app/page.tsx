@@ -3,6 +3,7 @@ import Partners from "@/components/Partners";
 import Services from "@/components/Services";
 import WhyChooseUs from "@/components/WhyChooseUs";
 import Testimonials from "@/components/Testimonials";
+import ContactFormSection from "@/components/ContactFormSection";
 import { getHomePageContent } from '@/lib/homePage';
 
 export default async function Home() {
@@ -29,6 +30,7 @@ export default async function Home() {
         title={homePageContent.testimonialsTitle}
         subtitle={homePageContent.testimonialsSubtitle}
       />
+      <ContactFormSection />
     </>
   );
 }

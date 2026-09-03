@@ -113,7 +113,7 @@ export const defaultSiteSettings: SiteSettings = {
     {label: 'Contact', href: '/contact'},
   ],
   footerEmail: 'info@cybertechmarketing.com',
-  footerPhone: '+91 7428768779',
+  footerPhone: '7428768779',
   footerLegalLinks: [
     {label: 'Privacy Policy', href: '/contact'},
     {label: 'Terms of Service', href: '/contact'},

@@ -4,6 +4,7 @@ import "./globals.css";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import Chatbot from "@/components/Chatbot";
+import WhatsAppWidget from "@/components/WhatsAppWidget";
 import { getSiteSettings } from '@/lib/siteSettings';
 
 export const metadata: Metadata = {
@@ -30,6 +31,7 @@ export default async function RootLayout({
         </main>
         {!isStudioRoute && <Footer settings={siteSettings} />}
         {!isStudioRoute && <Chatbot />}
+        {!isStudioRoute && <WhatsAppWidget />}
       </body>
     </html>
   );
