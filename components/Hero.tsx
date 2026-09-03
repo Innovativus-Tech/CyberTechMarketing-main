@@ -10,26 +10,26 @@ export default function Hero({ content = defaultHomePageContent }: HeroProps) {
     <section id="platform" className="relative pt-[160px] pb-24 md:pt-[180px] md:pb-32 flex flex-col items-center hero-red-gradient overflow-hidden">
       <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 w-full text-center">
         
-        <h1 className="text-4xl md:text-7xl lg:text-[80px] font-normal tracking-tight mb-6 md:mb-8 leading-[1.1] text-white drop-shadow-lg">
+        <h1 className="text-5xl md:text-7xl lg:text-[90px] font-light tracking-[-0.04em] mb-6 md:mb-8 leading-[1.05] text-white">
           <span className="block mb-2">{content.heroLineOne}</span>
           <span className="block">{content.heroLineTwo}</span>
         </h1>
         
-        <p className="text-lg md:text-[22px] text-gray-200 mb-8 md:mb-10 max-w-3xl mx-auto leading-snug font-medium">
+        <p className="text-lg md:text-2xl text-gray-400 mb-10 max-w-3xl mx-auto leading-relaxed font-light">
           {content.heroDescription}
         </p>
         
         <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
           <Link
             href={content.heroPrimaryCtaHref}
-            className="px-8 py-3.5 rounded-full bg-red-600 hover:bg-red-700 text-white font-bold transition-colors flex items-center justify-center gap-2 w-full sm:w-auto shadow-lg shadow-red-950/30"
+            className="px-8 py-4 rounded-full bg-white hover:bg-gray-100 text-black font-semibold transition-all duration-300 flex items-center justify-center gap-2 w-full sm:w-auto shadow-[0_0_40px_rgba(255,255,255,0.1)]"
           >
             {content.heroPrimaryCtaLabel}
             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M5 12h14M12 5l7 7-7-7"/></svg>
           </Link>
-          <Link href={content.heroSecondaryCtaHref} className="flex items-center justify-between bg-white/15 backdrop-blur-sm rounded-full p-1 pl-6 w-full sm:w-auto border border-white/10">
-            <span className="text-white font-bold mr-4">{content.heroSecondaryCtaLabel}</span>
-            <span className="w-10 h-10 rounded-full bg-red-600 hover:bg-red-700 text-white flex items-center justify-center transition-colors">
+          <Link href={content.heroSecondaryCtaHref} className="flex items-center justify-between bg-white/5 hover:bg-white/10 backdrop-blur-md rounded-full p-1.5 pl-8 w-full sm:w-auto border border-white/10 transition-all duration-300">
+            <span className="text-white font-medium mr-6">{content.heroSecondaryCtaLabel}</span>
+            <span className="w-10 h-10 rounded-full bg-transparent border border-white/20 text-white flex items-center justify-center transition-colors">
                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M5 12h14M12 5l7 7-7-7"/></svg>
             </span>
           </Link>
@@ -40,12 +40,12 @@ export default function Hero({ content = defaultHomePageContent }: HeroProps) {
       <div className="w-full max-w-[1200px] mx-auto px-4 sm:px-6 lg:px-8 mt-24 relative z-20">
         <div className="hero-live-card w-full aspect-[16/10] md:aspect-video rounded-[1.75rem] overflow-hidden bg-black shadow-2xl relative border border-white/10">
           <div className="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1552664730-d307ca884978?q=80&w=2070&auto=format&fit=crop')] bg-cover bg-center scale-105 opacity-55"></div>
-          <div className="absolute inset-0 bg-gradient-to-r from-slate-950/70 via-red-950/45 to-slate-950/55"></div>
+          <div className="absolute inset-0 bg-gradient-to-tr from-black/80 via-black/40 to-transparent"></div>
           <div className="absolute inset-0 bg-gradient-to-t from-[#180406] via-transparent to-white/8"></div>
 
-          <div className="absolute left-[8%] top-[12%] h-32 w-32 rounded-full bg-red-500/18 blur-3xl"></div>
-          <div className="absolute right-[10%] top-[14%] h-40 w-40 rounded-full bg-orange-400/12 blur-3xl"></div>
-          <div className="absolute bottom-[10%] left-1/2 h-36 w-36 -translate-x-1/2 rounded-full bg-white/10 blur-3xl"></div>
+          <div className="absolute left-[8%] top-[12%] h-32 w-32 rounded-full bg-red-500/20 blur-[80px]"></div>
+          <div className="absolute right-[10%] top-[14%] h-40 w-40 rounded-full bg-red-600/10 blur-[80px]"></div>
+          <div className="absolute bottom-[10%] left-1/2 h-36 w-36 -translate-x-1/2 rounded-full bg-white/5 blur-[80px]"></div>
 
           <div className="absolute inset-x-[6%] top-[10%] hidden h-16 grid-cols-12 gap-3 md:grid">
             {Array.from({ length: 12 }).map((_, idx) => (

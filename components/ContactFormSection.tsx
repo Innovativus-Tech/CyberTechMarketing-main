@@ -64,13 +64,13 @@ export default function ContactFormSection() {
   };
 
   return (
-    <section id="contact" className="py-20 bg-gray-50 border-t border-gray-200">
+    <section id="contact" className="py-20 bg-white border-t border-gray-100">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center md:text-left mb-16 max-w-3xl">
-          <h2 className="text-4xl md:text-5xl font-bold tracking-tight text-gray-900 mb-6">
+          <h2 className="text-4xl md:text-5xl font-semibold tracking-[-0.02em] text-gray-900 mb-6">
             Get in Touch
           </h2>
-          <p className="text-xl text-gray-600 font-medium">
+          <p className="text-lg text-gray-500 font-light">
             Have a question or want to work together? Leave us a message.
           </p>
         </div>
@@ -78,37 +78,37 @@ export default function ContactFormSection() {
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-12">
           {/* Contact Information */}
           <div className="lg:col-span-1 space-y-8">
-            <div className="bg-white p-8 rounded-2xl shadow-sm border border-gray-100 h-full">
+            <div className="bg-white p-8 rounded-2xl border border-gray-200/60 shadow-[0_8px_30px_rgba(0,0,0,0.04)] h-full">
               <h3 className="text-2xl font-bold text-gray-900 mb-8">Contact Info</h3>
               
               <div className="space-y-6">
                 <div className="flex items-start gap-4">
-                  <div className="w-12 h-12 rounded-full bg-red-50 flex items-center justify-center flex-shrink-0">
-                    <Mail className="w-5 h-5 text-red-600" />
+                  <div className="w-12 h-12 rounded-full bg-gray-50 flex items-center justify-center flex-shrink-0">
+                    <Mail className="w-5 h-5 text-gray-900" strokeWidth={1.5} />
                   </div>
                   <div>
                     <h4 className="text-lg font-semibold text-gray-900 mb-1">Email</h4>
-                    <a href="mailto:info@cybertechmarketing.com" className="text-gray-600 hover:text-red-600 transition-colors">
+                    <a href="mailto:info@cybertechmarketing.com" className="text-gray-600 hover:text-gray-900 transition-colors">
                       info@cybertechmarketing.com
                     </a>
                   </div>
                 </div>
 
                 <div className="flex items-start gap-4">
-                  <div className="w-12 h-12 rounded-full bg-red-50 flex items-center justify-center flex-shrink-0">
-                    <Phone className="w-5 h-5 text-red-600" />
+                  <div className="w-12 h-12 rounded-full bg-gray-50 flex items-center justify-center flex-shrink-0">
+                    <Phone className="w-5 h-5 text-gray-900" strokeWidth={1.5} />
                   </div>
                   <div>
                     <h4 className="text-lg font-semibold text-gray-900 mb-1">Phone</h4>
-                    <a href="tel:7428768779" className="text-gray-600 hover:text-red-600 transition-colors">
+                    <a href="tel:7428768779" className="text-gray-600 hover:text-gray-900 transition-colors">
                       7428768779
                     </a>
                   </div>
                 </div>
 
                 <div className="flex items-start gap-4">
-                  <div className="w-12 h-12 rounded-full bg-red-50 flex items-center justify-center flex-shrink-0">
-                    <Building2 className="w-5 h-5 text-red-600" />
+                  <div className="w-12 h-12 rounded-full bg-gray-50 flex items-center justify-center flex-shrink-0">
+                    <Building2 className="w-5 h-5 text-gray-900" strokeWidth={1.5} />
                   </div>
                   <div>
                     <h4 className="text-lg font-semibold text-gray-900 mb-1">Office</h4>
@@ -123,10 +123,10 @@ export default function ContactFormSection() {
 
           {/* Contact Form */}
           <div className="lg:col-span-2">
-            <div className="bg-white p-8 md:p-10 rounded-2xl shadow-sm border border-gray-100">
+            <div className="bg-white p-8 md:p-10 rounded-2xl border border-gray-200/60 shadow-[0_8px_30px_rgba(0,0,0,0.04)]">
               <form onSubmit={handleSubmit} className="space-y-6">
                 {error && (
-                  <div className="rounded-xl border border-red-200 bg-red-50 px-4 py-3 text-sm font-medium text-red-700">
+                  <div className="rounded-xl border border-red-200 bg-gray-50 px-4 py-3 text-sm font-medium text-red-700">
                     {error}
                   </div>
                 )}
@@ -138,8 +138,8 @@ export default function ContactFormSection() {
 
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
                   <div>
-                    <label className="block text-sm font-semibold text-gray-700 mb-2">
-                      First Name <span className="text-red-500">*</span>
+                    <label className="block text-sm font-medium text-gray-700 mb-2">
+                      First Name <span className="text-gray-400">*</span>
                     </label>
                     <input
                       type="text"
@@ -148,12 +148,12 @@ export default function ContactFormSection() {
                       onChange={handleChange}
                       placeholder="e.g., John"
                       required
-                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500 transition-all"
+                      className="w-full px-4 py-3 border border-gray-200 rounded-xl bg-gray-50/50 focus:bg-white focus:outline-none focus:ring-1 focus:ring-gray-900 focus:border-gray-900 transition-all"
                     />
                   </div>
                   <div>
-                    <label className="block text-sm font-semibold text-gray-700 mb-2">
-                      Last Name <span className="text-red-500">*</span>
+                    <label className="block text-sm font-medium text-gray-700 mb-2">
+                      Last Name <span className="text-gray-400">*</span>
                     </label>
                     <input
                       type="text"
@@ -162,15 +162,15 @@ export default function ContactFormSection() {
                       onChange={handleChange}
                       placeholder="e.g., Smith"
                       required
-                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500 transition-all"
+                      className="w-full px-4 py-3 border border-gray-200 rounded-xl bg-gray-50/50 focus:bg-white focus:outline-none focus:ring-1 focus:ring-gray-900 focus:border-gray-900 transition-all"
                     />
                   </div>
                 </div>
 
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
                   <div>
-                    <label className="block text-sm font-semibold text-gray-700 mb-2">
-                      Email Address <span className="text-red-500">*</span>
+                    <label className="block text-sm font-medium text-gray-700 mb-2">
+                      Email Address <span className="text-gray-400">*</span>
                     </label>
                     <input
                       type="email"
@@ -179,11 +179,11 @@ export default function ContactFormSection() {
                       onChange={handleChange}
                       placeholder="e.g., john@company.com"
                       required
-                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500 transition-all"
+                      className="w-full px-4 py-3 border border-gray-200 rounded-xl bg-gray-50/50 focus:bg-white focus:outline-none focus:ring-1 focus:ring-gray-900 focus:border-gray-900 transition-all"
                     />
                   </div>
                   <div>
-                    <label className="block text-sm font-semibold text-gray-700 mb-2">
+                    <label className="block text-sm font-medium text-gray-700 mb-2">
                       Phone Number
                     </label>
                     <input
@@ -192,13 +192,13 @@ export default function ContactFormSection() {
                       value={formData.phone}
                       onChange={handleChange}
                       placeholder="e.g., +1 (555) 123-4567"
-                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500 transition-all"
+                      className="w-full px-4 py-3 border border-gray-200 rounded-xl bg-gray-50/50 focus:bg-white focus:outline-none focus:ring-1 focus:ring-gray-900 focus:border-gray-900 transition-all"
                     />
                   </div>
                 </div>
 
                 <div>
-                  <label className="block text-sm font-semibold text-gray-700 mb-2">
+                  <label className="block text-sm font-medium text-gray-700 mb-2">
                     Company
                   </label>
                   <input
@@ -207,13 +207,13 @@ export default function ContactFormSection() {
                     value={formData.company}
                     onChange={handleChange}
                     placeholder="Enter company name"
-                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500 transition-all"
+                    className="w-full px-4 py-3 border border-gray-200 rounded-xl bg-gray-50/50 focus:bg-white focus:outline-none focus:ring-1 focus:ring-gray-900 focus:border-gray-900 transition-all"
                   />
                 </div>
 
                 <div>
-                  <label className="block text-sm font-semibold text-gray-700 mb-2">
-                    Message <span className="text-red-500">*</span>
+                  <label className="block text-sm font-medium text-gray-700 mb-2">
+                    Message <span className="text-gray-400">*</span>
                   </label>
                   <textarea
                     name="message"
@@ -222,14 +222,14 @@ export default function ContactFormSection() {
                     placeholder="Tell us about your project, goals, or inquiry..."
                     rows={5}
                     required
-                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500 transition-all resize-y"
+                    className="w-full px-4 py-3 border border-gray-200 rounded-xl bg-gray-50/50 focus:bg-white focus:outline-none focus:ring-1 focus:ring-gray-900 focus:border-gray-900 transition-all resize-y"
                   />
                 </div>
 
                 <button
                   type="submit"
                   disabled={loading || success}
-                  className="w-full py-4 px-6 rounded-lg font-bold text-white transition-all duration-300 bg-red-600 hover:bg-red-700 disabled:opacity-50"
+                  className="w-full py-4 px-6 rounded-lg font-bold text-white transition-all duration-300 bg-black hover:bg-gray-900 text-white rounded-xl shadow-md disabled:opacity-50"
                 >
                   {loading ? 'Sending...' : 'Send Message'}
                 </button>
