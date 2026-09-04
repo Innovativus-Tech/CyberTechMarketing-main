@@ -2,7 +2,7 @@ import { createImageUrlBuilder } from '@sanity/image-url';
 import { createClient } from 'next-sanity';
 import { apiVersion, dataset, projectId } from '@/sanity/env';
 
-export const sanityConfigured = Boolean(projectId);
+export const sanityConfigured = Boolean(projectId && projectId !== 'placeholder');
 
 export const sanityClient = createClient({
   projectId: projectId || 'placeholder',

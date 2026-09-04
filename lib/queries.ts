@@ -1,4 +1,4 @@
-import { sanityClient } from './sanity';
+import { sanityClient, sanityConfigured } from './sanity';
 
 export type ServiceDocument = {
   _id: string;
@@ -108,12 +108,14 @@ export type BlogPostDocument = {
 
 // Fetch all services
 export async function getAllServices() {
+  if (!sanityConfigured) return [];
   const query = `*[_type == "service"] | order(displayOrder asc)`;
   return await sanityClient.fetch<ServiceDocument[]>(query);
 }
 
 // Fetch a single service by slug
 export async function getServiceBySlug(slug: string) {
+  if (!sanityConfigured) return null;
   const query = `*[_type == "service" && slug.current == $slug][0] {
     ...,
     features[] {
@@ -127,36 +129,42 @@ export async function getServiceBySlug(slug: string) {
 
 // Fetch services by category
 export async function getServicesByCategory(category: string) {
+  if (!sanityConfigured) return [];
   const query = `*[_type == "service" && category == $category] | order(displayOrder asc)`;
   return await sanityClient.fetch(query, { category });
 }
 
 // Fetch all pricing plans
 export async function getAllPricingPlans() {
+  if (!sanityConfigured) return [];
   const query = `*[_type == "pricingPlan"] | order(displayOrder asc)`;
   return await sanityClient.fetch<PricingPlanDocument[]>(query);
 }
 
 // Fetch all testimonials
 export async function getAllTestimonials() {
+  if (!sanityConfigured) return [];
   const query = `*[_type == "testimonial"] | order(displayOrder asc)`;
   return await sanityClient.fetch<TestimonialDocument[]>(query);
 }
 
 // Fetch testimonials with limit
 export async function getTestimonials(limit: number = 6) {
+  if (!sanityConfigured) return [];
   const query = `*[_type == "testimonial"] | order(displayOrder asc)[0...$limit]`;
   return await sanityClient.fetch<TestimonialDocument[]>(query, { limit: limit - 1 });
 }
 
 // Fetch all focus areas
 export async function getAllFocusAreas() {
+  if (!sanityConfigured) return [];
   const query = `*[_type == "focusArea"] | order(displayOrder asc)`;
   return await sanityClient.fetch<FocusAreaDocument[]>(query);
 }
 
 // Fetch a single focus area by slug
 export async function getFocusAreaBySlug(slug: string) {
+  if (!sanityConfigured) return null;
   const query = `*[_type == "focusArea" && slug.current == $slug][0] {
     ...,
     caseStudies[]->
@@ -166,12 +174,14 @@ export async function getFocusAreaBySlug(slug: string) {
 
 // Fetch all case studies
 export async function getAllCaseStudies() {
+  if (!sanityConfigured) return [];
   const query = `*[_type == "caseStudy"] | order(_createdAt desc)`;
   return await sanityClient.fetch<CaseStudyDocument[]>(query);
 }
 
 // Fetch a single case study by slug
 export async function getCaseStudyBySlug(slug: string) {
+  if (!sanityConfigured) return null;
   const query = `*[_type == "caseStudy" && slug.current == $slug][0] {
     ...,
     services[]->,
@@ -182,48 +192,56 @@ export async function getCaseStudyBySlug(slug: string) {
 
 // Fetch all team members
 export async function getAllTeamMembers() {
+  if (!sanityConfigured) return [];
   const query = `*[_type == "teamMember"] | order(displayOrder asc)`;
   return await sanityClient.fetch<TeamMemberDocument[]>(query);
 }
 
 // Fetch all open job postings
 export async function getAllOpenPositions() {
+  if (!sanityConfigured) return [];
   const query = `*[_type == "jobPosting" && isOpen == true] | order(postedDate desc)`;
   return await sanityClient.fetch<JobPostingDocument[]>(query);
 }
 
 // Fetch a single job posting by slug
 export async function getJobPostingBySlug(slug: string) {
+  if (!sanityConfigured) return null;
   const query = `*[_type == "jobPosting" && slug.current == $slug][0]`;
   return await sanityClient.fetch<JobPostingDocument>(query, { slug });
 }
 
 // Fetch page content by page name
 export async function getPageContent(page: string) {
+  if (!sanityConfigured) return null;
   const query = `*[_type == "pageContent" && page == $page][0]`;
   return await sanityClient.fetch<PageContentDocument>(query, { page });
 }
 
 // Fetch all blog posts
 export async function getAllBlogPosts() {
+  if (!sanityConfigured) return [];
   const query = `*[_type == "post"] | order(publishedAt desc)`;
   return await sanityClient.fetch<BlogPostDocument[]>(query);
 }
 
 // Fetch a single blog post by slug
 export async function getBlogPostBySlug(slug: string) {
+  if (!sanityConfigured) return null;
   const query = `*[_type == "post" && slug.current == $slug][0]`;
   return await sanityClient.fetch<BlogPostDocument>(query, { slug });
 }
 
 // Fetch recent blog posts
 export async function getRecentBlogPosts(limit: number = 3) {
+  if (!sanityConfigured) return [];
   const query = `*[_type == "post"] | order(publishedAt desc)[0...$limit]`;
   return await sanityClient.fetch<BlogPostDocument[]>(query, { limit: limit - 1 });
 }
 
 // Fetch blog posts by category
 export async function getBlogPostsByCategory(category: string) {
+  if (!sanityConfigured) return [];
   const query = `*[_type == "post" && category == $category] | order(publishedAt desc)`;
   return await sanityClient.fetch<BlogPostDocument[]>(query, { category });
 }
