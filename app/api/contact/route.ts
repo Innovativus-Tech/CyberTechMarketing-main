@@ -22,7 +22,7 @@ export async function POST(request: NextRequest) {
 
     if (!validation.success) {
       // Format Zod errors for better user experience
-      const errors = validation.error.errors.map((err) => ({
+      const errors = validation.error.issues.map((err) => ({
         field: err.path.join('.'),
         message: err.message,
       }));
@@ -50,6 +50,7 @@ export async function POST(request: NextRequest) {
       jobTitle: 'jobTitle' in validatedData ? validatedData.jobTitle : undefined,
       country: 'country' in validatedData ? validatedData.country : undefined,
       companySize: 'companySize' in validatedData ? validatedData.companySize : undefined,
+      serviceInterest: validatedData.serviceInterest || undefined,
       message: validatedData.message,
     });
 
@@ -63,6 +64,7 @@ export async function POST(request: NextRequest) {
           id: submission._id,
           category: submission.category,
           email: submission.email,
+          serviceInterest: submission.serviceInterest,
         },
       },
       { status: 201 }
@@ -75,7 +77,7 @@ export async function POST(request: NextRequest) {
       return NextResponse.json(
         {
           error: 'Validation error',
-          details: error.errors,
+          details: error.issues,
         },
         { status: 400 }
       );

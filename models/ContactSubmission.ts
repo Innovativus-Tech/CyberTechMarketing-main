@@ -10,6 +10,7 @@ export interface IContactSubmission extends Document {
   jobTitle: string;
   country: string;
   companySize: string;
+  serviceInterest: string;
   message: string;
   createdAt: Date;
 }
@@ -50,6 +51,10 @@ const ContactSubmissionSchema = new Schema<IContactSubmission>(
       default: '',
     },
     companySize: {
+      type: String,
+      default: '',
+    },
+    serviceInterest: {
       type: String,
       default: '',
     },

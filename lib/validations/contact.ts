@@ -39,6 +39,19 @@ const baseContactSchema = z.object({
     .max(20, 'Phone number must not exceed 20 characters')
     .regex(phoneRegex, 'Please provide a valid phone number (e.g., +1 555-123-4567 or 5551234567)')
     .transform((val) => val.replace(/\s+/g, ' ').trim()), // Normalize spaces
+
+  serviceInterest: z
+    .enum([
+      'Digital Marketing & Growth',
+      'Web Development',
+      'Software Development',
+      'AI & Intelligent Solutions',
+      'Machine Learning & Data',
+      'Mobile App Development',
+      '',
+    ])
+    .optional()
+    .or(z.literal('')),
   
   message: z
     .string()
@@ -73,9 +86,7 @@ export const salesContactSchema = baseContactSchema.extend({
     .or(z.literal('')),
   
   companySize: z
-    .enum(['1-10', '11-50', '51-200', '201-500', '500+', ''], {
-      errorMap: () => ({ message: 'Please select a valid company size' }),
-    })
+    .enum(['1-10', '11-50', '51-200', '201-500', '500+', ''])
     .optional()
     .or(z.literal('')),
 });
