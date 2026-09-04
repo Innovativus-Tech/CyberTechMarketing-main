@@ -59,8 +59,22 @@ export default function ContactForm({ compact = false }: ContactFormProps) {
       setMessage("Thanks. Your enquiry has been sent to Cybertech Marketing.");
       form.reset();
     } catch (error) {
+      const subject = encodeURIComponent(`Cybertech Marketing enquiry from ${payload.firstName} ${payload.lastName}`.trim());
+      const body = encodeURIComponent(
+        [
+          `Name: ${payload.firstName} ${payload.lastName}`,
+          `Email: ${payload.email}`,
+          `Phone: ${payload.phone}`,
+          payload.company ? `Company: ${payload.company}` : "",
+          payload.serviceInterest ? `Service interest: ${payload.serviceInterest}` : "",
+          "",
+          projectMessage,
+        ].filter(Boolean).join("\n")
+      );
+
+      window.location.href = `mailto:info@cybertechmarketing.com?subject=${subject}&body=${body}`;
       setStatus("error");
-      setMessage(error instanceof Error ? error.message : "Something went wrong. Please email info@cybertechmarketing.com.");
+      setMessage(error instanceof Error ? `${error.message} Your email app is opening with the enquiry details.` : "Your email app is opening with the enquiry details.");
     }
   }
 
