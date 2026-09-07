@@ -23,7 +23,7 @@ export default function AboutPage() {
           <div className="about-page-visual">
             <div className="about-page-image">
               <Image
-                src="https://images.unsplash.com/photo-1519389950473-47ba0277781c?q=80&w=800&auto=format&fit=crop"
+                src="/images/collaboration.webp"
                 alt="Cybertech team collaborating"
                 width={480}
                 height={360}

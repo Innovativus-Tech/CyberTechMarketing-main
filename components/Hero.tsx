@@ -1,63 +1,20 @@
 import Link from "next/link";
 import Image from "next/image";
-import { ArrowRight, Bot, Code2, Phone } from "lucide-react";
+import { ArrowUpRight, CheckCircle2, Phone } from "lucide-react";
 import Reveal from "./Reveal";
 
 export default function Hero() {
-  return (
-    <section className="hero" id="home">
-      <Image
-        className="hero-image"
-        src="/cybertech-hero.png"
-        alt="Cybertech Marketing background"
-        width={1920}
-        height={1080}
-        priority
-        quality={90}
-        placeholder="blur"
-        blurDataURL="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mM8d+5cPQAGvQKdqxxcYQAAAABJRU5ErkJggg=="
-        style={{ objectFit: 'cover', objectPosition: 'center' }}
-      />
-      <div className="hero-scrim" />
-      
-      {/* Floating Animated Shapes (Parallax feel) */}
-      <div className="hero-shapes">
-        <div className="hero-shape shape-1" />
-        <div className="hero-shape shape-2" />
-      </div>
-
-      <div className="site-container hero-content">
-        <Reveal direction="left">
-          <p className="eyebrow hero-eyebrow"><span /> Cybertech Marketing</p>
-          <h1>Let&apos;s <em style={{ color: 'var(--red)', fontStyle: 'normal' }}>digitize</em> your business.</h1>
-          <p className="hero-desc">We build digital growth systems, performance websites, and AI automation workflows for modern businesses.</p>
-          <div className="hero-actions">
-            <Link href="#enquiry" className="button button-primary">GET STARTED <ArrowRight size={18} /></Link>
-            <a href="tel:+917428768779" className="button button-ghost"><Phone size={17} /> +91 74287 68779</a>
-          </div>
-        </Reveal>
-        
-        <Reveal className="hero-service-panel" direction="right" delay={0.2}>
-          <div className="hero-service-card" style={{ padding: '24px', background: 'rgba(255,255,255,0.05)', borderRadius: '12px', border: '1px solid rgba(255,255,255,0.1)', display: 'flex', gap: '16px', marginBottom: '16px', transition: 'all 0.3s ease' }}>
-            <div className="hsc-icon" style={{ color: 'var(--orange)' }}>
-              <Code2 size={24} />
-            </div>
-            <div>
-              <strong style={{ display: 'block', fontSize: '1.1rem', marginBottom: '4px' }}>Digital Growth Engine</strong>
-              <p style={{ margin: 0, fontSize: '0.9rem', color: '#b8c0cc' }}>Performance marketing, Custom software & Data systems</p>
-            </div>
-          </div>
-          <div className="hero-service-card" style={{ padding: '24px', background: 'rgba(255,255,255,0.05)', borderRadius: '12px', border: '1px solid rgba(255,255,255,0.1)', display: 'flex', gap: '16px', transition: 'all 0.3s ease' }}>
-            <div className="hsc-icon" style={{ color: 'var(--red)' }}>
-              <Bot size={24} />
-            </div>
-            <div>
-              <strong style={{ display: 'block', fontSize: '1.1rem', marginBottom: '4px' }}>AI & Automation</strong>
-              <p style={{ margin: 0, fontSize: '0.9rem', color: '#b8c0cc' }}>Removing manual work with intelligent tools.</p>
-            </div>
-          </div>
-        </Reveal>
-      </div>
-    </section>
-  );
+  return <section className="cm-hero" id="home">
+    <div className="site-container cm-hero-grid">
+      <Reveal className="cm-hero-copy" direction="left">
+        <p className="eyebrow hero-eyebrow"><span /> Cybertech Marketing</p>
+        <h1>Let’s <em>digitize</em><br />your business.<br /><span>And grow it.</span></h1>
+        <p className="cm-hero-desc">We build digital growth systems, performance websites, and AI automation workflows for modern businesses.</p>
+        <ul className="cm-hero-checks"><li><CheckCircle2 size={18} /> Strategy, creativity and technology. Connected.</li><li><CheckCircle2 size={18} /> One team. From first idea to launch.</li></ul>
+        <div className="cm-hero-actions"><Link className="button button-primary" href="#enquiry">LET’S BUILD WHAT’S NEXT <ArrowUpRight size={18} /></Link><a className="cm-call" href="tel:+917428768779"><span><Phone size={21} /></span><div><small>CONTACT US DAILY</small><b>+91 74287 68779</b></div></a></div>
+      </Reveal>
+      <div className="cm-hero-art"><Image src="/images/technology-core.webp" alt="Red illuminated technology core with concentric circuitry" width={1000} height={1000} priority /><span className="cm-art-label">STRATEGY × CREATIVITY × TECHNOLOGY</span></div>
+    </div>
+    <div className="site-container cm-hero-bottom"><span>ONE PARTNER. EVERY DIGITAL POSSIBILITY.</span><a href="#services">Explore our expertise <span>↓</span></a></div>
+  </section>;
 }

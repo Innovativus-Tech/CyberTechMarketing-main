@@ -11,6 +11,7 @@ const nextConfig: NextConfig = {
     'detection-hemstitch-work.ngrok-free.dev',
   ],
   images: {
+    unoptimized: true,
     remotePatterns: [
       {
         protocol: 'https',

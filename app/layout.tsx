@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import "./globals.css";
+import "./premium.css";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import WhatsAppButton from "@/components/WhatsAppButton";
@@ -30,7 +31,8 @@ export default function RootLayout({
         <ScrollProgress />
         <ScrollRestoration />
         <Navbar />
-        <main>{children}</main>
+        <a className="skip-link" href="#main-content">Skip to content</a>
+        <main id="main-content">{children}</main>
         <WhatsAppButton />
         <ScrollToTop />
         <Footer />

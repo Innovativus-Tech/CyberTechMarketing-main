@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { ArrowUpRight, ChevronDown, Menu, MessageCircle, Phone, X } from "lucide-react";
 import BrandLogo from "./BrandLogo";
 
@@ -26,7 +26,7 @@ const menus = [
   },
   {
     label: 'Services',
-    href: '/#services',
+    href: '/services',
     featured: true,
     items: [
       { label: 'Digital Marketing & Growth', href: '/services/digital-marketing-growth', text: 'SEO, paid media, funnels and content systems' },
@@ -46,10 +46,22 @@ const simpleLinks = [
 
 export default function Navbar() {
   const [open, setOpen] = useState(false);
+  const [expanded, setExpanded] = useState<string | null>(null);
+  const menuButton = useRef<HTMLButtonElement>(null);
+
+  useEffect(() => {
+    function escape(event: KeyboardEvent) {
+      if (event.key === "Escape") { setOpen(false); setExpanded(null); menuButton.current?.focus(); }
+    }
+    document.addEventListener("keydown", escape);
+    return () => document.removeEventListener("keydown", escape);
+  }, []);
 
   useEffect(() => {
     document.body.style.overflow = open ? "hidden" : "";
-    return () => { document.body.style.overflow = ""; };
+    const regions = document.querySelectorAll<HTMLElement>("main, footer");
+    regions.forEach(region => { region.inert = open; });
+    return () => { document.body.style.overflow = ""; regions.forEach(region => { region.inert = false; }); };
   }, [open]);
 
   return (
@@ -65,16 +77,16 @@ export default function Navbar() {
         <BrandLogo />
         <nav className="desktop-nav" aria-label="Primary navigation">
           {menus.map((menu) => (
-            <div className="nav-menu" key={menu.label}>
-              <Link href={menu.href}>{menu.label}<ChevronDown size={14} /></Link>
-              <div className={`mega-menu ${menu.featured ? "mega-menu-wide" : ""}`}>
+            <div className={`nav-menu ${expanded===menu.label ? "is-expanded" : ""}`} key={menu.label} onMouseLeave={()=>setExpanded(null)} onBlur={event=>{if(!event.currentTarget.contains(event.relatedTarget))setExpanded(null);}}>
+              <button type="button" className="nav-menu-toggle" aria-expanded={expanded===menu.label} aria-controls={`nav-${menu.label}`} onClick={()=>setExpanded(expanded===menu.label?null:menu.label)}>{menu.label}<ChevronDown size={14} /></button>
+              <div id={`nav-${menu.label}`} className={`mega-menu ${menu.featured ? "mega-menu-wide" : ""}`} inert={expanded!==menu.label}>
                 <div className="mega-kicker">
                   <span>{menu.label}</span>
                   <b>Cybertech Marketing</b>
                 </div>
                 <div className="mega-links">
                   {menu.items.map((item) => (
-                    <Link key={item.label} href={item.href} onClick={() => setOpen(false)}>
+                    <Link key={item.label} href={item.href} onClick={() => {setOpen(false);setExpanded(null);}}>
                       <strong>{item.label}</strong>
                       <small>{item.text}</small>
                     </Link>
@@ -90,15 +102,14 @@ export default function Navbar() {
           ))}
         </nav>
         <Link href="/#enquiry" className="nav-cta">GET STARTED <ArrowUpRight size={16} /></Link>
-        <button className="menu-button" onClick={() => setOpen(!open)} aria-expanded={open} aria-label={open ? "Close menu" : "Open menu"}>
+        <button ref={menuButton} className="menu-button" onClick={() => setOpen(!open)} aria-expanded={open} aria-controls="mobile-navigation" aria-label={open ? "Close menu" : "Open menu"}>
           {open ? <X size={22} /> : <Menu size={22} />}
         </button>
       </div>
-      <div className={`mobile-menu ${open ? "is-open" : ""}`}>
+      <div id="mobile-navigation" hidden={!open} className={`mobile-menu ${open ? "is-open" : ""}`}>
         <nav aria-label="Mobile navigation">
-          {[...menus, ...simpleLinks].map((item, index) => (
-            <Link key={item.label} href={item.href} onClick={() => setOpen(false)}><span>0{index + 1}</span>{item.label}</Link>
-          ))}
+          {menus.map(menu => <details key={menu.label}><summary>{menu.label}<ChevronDown size={18} /></summary><div><Link href={menu.href} onClick={()=>setOpen(false)}>View {menu.label.toLowerCase()}</Link>{menu.items.map(item=><Link key={item.label} href={item.href} onClick={()=>setOpen(false)}>{item.label}</Link>)}</div></details>)}
+          {simpleLinks.map(item=><Link key={item.label} href={item.href} onClick={()=>setOpen(false)}>{item.label}</Link>)}
         </nav>
         <div className="mobile-menu-actions">
           <Link href="/#enquiry" className="button button-primary" onClick={() => setOpen(false)}>Tell us about your project</Link>

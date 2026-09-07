@@ -6,6 +6,9 @@ import { validateContactForm } from '@/lib/validations/contact';
 
 export async function POST(request: NextRequest) {
   try {
+    const origin = request.headers.get('origin');
+    if (origin && origin !== request.nextUrl.origin) return NextResponse.json({ error: 'Please submit from this website.' }, { status: 403 });
+    if (Number(request.headers.get('content-length') || 0) > 12000) return NextResponse.json({ error: 'Message too large.' }, { status: 413 });
     if (!process.env.MONGODB_URI) {
       return NextResponse.json(
         { error: 'Contact storage is not configured yet. Add MONGODB_URI to enable submissions.' },
@@ -13,9 +16,8 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    await dbConnect();
-
     const body = await request.json();
+    if (body?.website) return NextResponse.json({ success: true }, { status: 201 });
 
     // Validate request body with Zod
     const validation = validateContactForm(body);
@@ -39,6 +41,7 @@ export async function POST(request: NextRequest) {
 
     // Use validated data
     const validatedData = validation.data;
+    await dbConnect();
 
     const submission = new ContactSubmission({
       category: validatedData.category,
