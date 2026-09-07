@@ -54,7 +54,7 @@ export default function AboutPage() {
                 </div>
                 <div className="about-v2-stat">
                   <strong>100%</strong>
-                  <span>Results Guaranteed</span>
+                  <span>Delivery Focus</span>
                 </div>
               </div>
             </div>

@@ -1,5 +1,6 @@
 import Image from "next/image";
-import { ArrowRight, Bot, BrainCircuit, CheckCircle2, Code2, Globe, LayoutTemplate, Megaphone, Phone, ShieldCheck, Smartphone, Sparkles, Star, Target, Users, Workflow, Zap } from "lucide-react";
+import Link from "next/link";
+import { ArrowRight, Bot, BrainCircuit, CheckCircle2, Code2, Globe, LayoutTemplate, Megaphone, ShieldCheck, Smartphone, Star, Target, Workflow } from "lucide-react";
 import ContactForm from "@/components/ContactForm";
 import Hero from "@/components/Hero";
 import Reveal from "@/components/Reveal";
@@ -51,15 +52,7 @@ const funFacts = [
   { value: "50+", label: "Projects Completed" },
   { value: "30+", label: "Happy Clients" },
   { value: "6", label: "Core Services" },
-  { value: "100%", label: "Results Guaranteed" },
-];
-
-const processSteps = [
-  { number: "01", title: "Share your requirements", description: "We understand your goals, audience, current stack and what success should look like." },
-  { number: "02", title: "Discuss with experts", description: "Strategy, creative, engineering and data needs are shaped into one practical roadmap." },
-  { number: "03", title: "Get a clear quote", description: "You receive a scoped plan for the right mix of marketing, software, AI, data or mobile work." },
-  { number: "04", title: "Build and launch", description: "Design, development, campaigns and automation move through clean delivery milestones." },
-  { number: "05", title: "Optimize continuously", description: "Performance signals guide the next improvements after launch." },
+  { value: "100%", label: "Delivery Focus" },
 ];
 
 const testimonials = [
@@ -83,27 +76,6 @@ const testimonials = [
     text: "Their AI solutions automated our lead qualification process, saving us 20+ hours per week. Game-changing technology partner.",
     rating: 5,
     avatarColor: "linear-gradient(135deg, #ff7a3d, #e6332a)",
-  },
-];
-
-const technologies = ["React", "Next.js", "Node.js", "Python", "TypeScript", "MongoDB", "PostgreSQL", "AI Models", "Analytics", "Automation", "Cloud", "Mobile"];
-
-const faqs = [
-  {
-    question: "What makes Cybertech Marketing different?",
-    answer: "Cybertech connects marketing, website development, software, AI and data in one execution plan, so your digital presence and backend systems support the same business goal.",
-  },
-  {
-    question: "Can you redesign an existing website?",
-    answer: "Yes. Cybertech can improve an existing website with better structure, conversion paths, responsiveness, content and technical performance.",
-  },
-  {
-    question: "Do you build software and apps as well as marketing campaigns?",
-    answer: "Yes. The service mix includes software development, web development, mobile app development, AI solutions and machine learning/data work.",
-  },
-  {
-    question: "How do we start a project?",
-    answer: "Send your requirement through the enquiry form or contact Cybertech by phone, email or WhatsApp. The team can then discuss scope, timeline and next steps.",
   },
 ];
 
@@ -133,18 +105,20 @@ export default function Home() {
           <div className="services-card-grid">
             {services.map((service, idx) => (
               <Reveal className="svc-card" key={service.title} delay={idx * 0.1} direction="up">
-                <div className="svc-card-icon">
-                  <service.Icon size={32} strokeWidth={1.5} />
-                </div>
-                <h3>{service.title}</h3>
-                <ul className="svc-card-bullets">
-                  {service.bullets.map((bullet) => (
-                    <li key={bullet}>
-                      <svg width="18" height="18" viewBox="0 0 18 18" fill="none"><circle cx="9" cy="9" r="8" stroke="currentColor" strokeWidth="1.5"/><circle cx="9" cy="9" r="3" fill="currentColor"/></svg>
-                      {bullet}
-                    </li>
-                  ))}
-                </ul>
+                <Link href={`/services/${["digital-marketing-growth", "web-development", "software-development", "ai-intelligent-solutions", "machine-learning-data", "mobile-app-development"][idx]}`} className="svc-card-link-wrap">
+                  <div className="svc-card-topline">
+                    <div className="svc-card-icon"><service.Icon size={28} strokeWidth={1.7} /></div>
+                    <span className="svc-card-index">0{idx + 1}</span>
+                  </div>
+                  <h3>{service.title}</h3>
+                  <p className="svc-card-description">{service.description}</p>
+                  <ul className="svc-card-bullets">
+                    {service.bullets.slice(0, 3).map((bullet) => (
+                      <li key={bullet}><CheckCircle2 size={17} />{bullet}</li>
+                    ))}
+                  </ul>
+                  <span className="svc-card-action">Explore service <ArrowRight size={17} /></span>
+                </Link>
               </Reveal>
             ))}
           </div>
@@ -192,7 +166,7 @@ export default function Home() {
                 </div>
                 <div className="about-v2-stat">
                   <strong>100%</strong>
-                  <span>Results Guaranteed</span>
+                  <span>Delivery Focus</span>
                 </div>
               </div>
             </div>

@@ -6,22 +6,20 @@ import { Plus, Minus } from "lucide-react";
 
 const faqs = [
   {
-    question: "How to choose a software development company?",
-    answer: "A custom software development company is a vendor that builds unique software from scratch. Also, such vendors provide a range of other useful services like software upgrades, Here is an extended list of services:",
+    question: "How do we choose the right Cybertech service?",
+    answer: "Start with the business outcome rather than a technology. We review your current setup, priorities and constraints, then recommend the smallest practical combination of services needed to move forward.",
     list: [
-      "Web and mobile app development",
-      "Cloud computing",
-      "Software architecture",
-      "QA and testing",
-      "IT consulting and audit",
-      "Business analysis",
-      "Legacy system modernization",
-      "IT staffing services"
+      "Growth and acquisition strategy",
+      "Web and mobile experiences",
+      "Custom software workflows",
+      "AI and process automation",
+      "Data pipelines and reporting",
+      "Testing and launch support"
     ]
   },
   {
-    question: "What is a custom software development company?",
-    answer: "Cybertech connects marketing, website development, software, AI and data in one execution plan, so your digital presence and backend systems support the same business goal.",
+    question: "Can you combine marketing, software and AI in one project?",
+    answer: "Yes. Cybertech can shape one coordinated roadmap across marketing, website development, software, AI and data so the customer experience and operational systems support the same goal.",
   },
   {
     question: "Can you redesign an existing website?",
@@ -59,7 +57,7 @@ export default function FAQSection() {
             </div>
           </div>
           <h2 className="text-4xl md:text-5xl font-extrabold text-[#101828] mb-16 text-center">
-            Need a <span className="text-[#E6332A]">Support?</span>
+            Questions, <span className="text-[#E6332A]">answered.</span>
           </h2>
         </Reveal>
 

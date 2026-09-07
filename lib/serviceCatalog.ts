@@ -62,7 +62,7 @@ export const serviceCatalog = [
     "features": [
       {
         "title": "Modern Frameworks",
-        "desc": "Built with React, Next.js, and Node.js for instantaneous load times and unparalleled SEO."
+        "desc": "Built with modern frameworks such as React and Next.js for fast experiences, maintainable delivery and strong technical SEO foundations."
       },
       {
         "title": "Headless CMS Integration",
@@ -127,7 +127,7 @@ export const serviceCatalog = [
       },
       {
         "title": "Enterprise Security",
-        "desc": "Bank-grade encryption, SOC2-compliant architectures, and rigorous penetration testing."
+        "desc": "Secure-by-design architecture, careful access controls and testing aligned to the project’s risk and compliance requirements."
       }
     ],
     "headline": "Software that fits the way you work.",
@@ -229,7 +229,7 @@ export const serviceCatalog = [
       },
       {
         "title": "Recommendation Engines",
-        "desc": "Personalized product and content recommendations that significantly boost average order value."
+        "desc": "Personalized product and content recommendations designed to improve relevance, discovery and commercial performance."
       },
       {
         "title": "Business Intelligence Dashboards",
@@ -270,7 +270,7 @@ export const serviceCatalog = [
     "title": "Mobile App Development",
     "img": "/images/mobile.webp",
     "subtitle": "Native and cross-platform mobile experiences for iOS and Android.",
-    "description": "We design and develop mobile applications that users love. Whether you need a consumer-facing app with millions of downloads or a secure internal tool for your field workforce, our mobile team delivers excellence.",
+    "description": "We design and develop mobile applications around clear user journeys, reliable performance and maintainable release processes—from customer-facing products to secure tools for internal teams.",
     "features": [
       {
         "title": "Cross-Platform React Native",

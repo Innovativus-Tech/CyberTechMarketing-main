@@ -7,28 +7,28 @@ import { Plus, Minus } from "lucide-react";
 const steps = [
   { 
     id: "01", 
-    title: "Discovery Phase", 
-    description: "Data - driven diagnostic and predictive app for improving outcomes\nData driven diagnostic and predictive app for improving." 
+    title: "Discover & Define",
+    description: "We clarify the business goal, audience, current systems, constraints and the measures that will define success."
   },
   { 
     id: "02", 
-    title: "Design and Development", 
-    description: "Strategy, creative, engineering and data needs are shaped into one practical roadmap." 
+    title: "Strategy & Experience",
+    description: "Strategy, content, user journeys, technical architecture and priorities are shaped into one practical roadmap."
   },
   { 
     id: "03", 
-    title: "Maintenance", 
-    description: "You receive a scoped plan for the right mix of marketing, software, AI, data or mobile work." 
+    title: "Build & Integrate",
+    description: "Design, engineering, campaigns, automation and integrations move through clear, reviewable delivery milestones."
   },
   { 
     id: "04", 
-    title: "Deployment", 
-    description: "Design, development, campaigns and automation move through clean delivery milestones." 
+    title: "Test & Launch",
+    description: "We validate responsive behavior, content, integrations and critical workflows before a controlled launch."
   },
   { 
     id: "05", 
-    title: "Testing and QA", 
-    description: "Performance signals guide the next improvements after launch." 
+    title: "Improve & Support",
+    description: "Performance signals, user feedback and business priorities guide the next improvements after launch."
   },
 ];
 

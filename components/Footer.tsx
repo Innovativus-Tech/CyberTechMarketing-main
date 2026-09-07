@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import { Mail, MessageCircle } from 'lucide-react';
 import BrandLogo from './BrandLogo';
 
 export default function Footer() {
@@ -13,8 +14,8 @@ export default function Footer() {
               Empowering businesses with innovative digital solutions, cutting-edge technology, and strategic marketing for sustainable growth in the modern era.
             </p>
             <div className="footer-social" style={{ display: 'flex', gap: '1rem', marginTop: '1.5rem' }}>
-              <a href="https://wa.me/917428768779" target="_blank" rel="noopener noreferrer">WhatsApp ↗</a>
-              <a href="mailto:info@cybertechmarketing.com">Email ↗</a>
+              <a href="https://wa.me/917428768779" target="_blank" rel="noopener noreferrer" aria-label="Message Cybertech on WhatsApp" title="WhatsApp"><MessageCircle size={18} /></a>
+              <a href="mailto:info@cybertechmarketing.com" aria-label="Email Cybertech Marketing" title="Email"><Mail size={18} /></a>
             </div>
           </div>
 

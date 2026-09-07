@@ -48,9 +48,9 @@ export default async function Testimonials({
   const colorSchemes = [
     { bg: 'from-red-50 to-orange-50', border: 'border-red-200', accent: 'bg-red-600', quote: 'text-red-500' },
     { bg: 'from-red-50 to-orange-50', border: 'border-red-200', accent: 'bg-red-600', quote: 'text-red-500' },
-    { bg: 'from-purple-50 to-pink-50', border: 'border-purple-200', accent: 'bg-purple-600', quote: 'text-purple-500' },
-    { bg: 'from-green-50 to-emerald-50', border: 'border-green-200', accent: 'bg-green-600', quote: 'text-green-500' },
-    { bg: 'from-amber-50 to-yellow-50', border: 'border-amber-200', accent: 'bg-amber-600', quote: 'text-amber-500' },
+    { bg: 'from-red-50 to-orange-50', border: 'border-red-200', accent: 'bg-red-700', quote: 'text-red-500' },
+    { bg: 'from-gray-50 to-red-50', border: 'border-red-100', accent: 'bg-gray-900', quote: 'text-red-500' },
+    { bg: 'from-orange-50 to-red-50', border: 'border-orange-200', accent: 'bg-orange-600', quote: 'text-red-500' },
     { bg: 'from-rose-50 to-red-50', border: 'border-rose-200', accent: 'bg-rose-600', quote: 'text-rose-500' },
   ];
 
@@ -113,7 +113,7 @@ export default async function Testimonials({
 
         {/* CTA Section */}
         <div className="mt-16 text-center">
-          <p className="text-gray-600 text-lg mb-6">Join hundreds of satisfied clients who have transformed their business with us</p>
+          <p className="text-gray-600 text-lg mb-6">Tell us what you want to improve, build or automate.</p>
           <a 
             href="/contact" 
             className="inline-block px-8 py-4 bg-gradient-to-r from-red-600 to-red-500 text-white font-bold rounded-xl hover:shadow-xl hover:shadow-red-600/30 transition-all duration-300 hover:-translate-y-0.5"

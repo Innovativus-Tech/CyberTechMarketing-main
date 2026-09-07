@@ -63,6 +63,7 @@ export async function POST(request: NextRequest) {
       {
         success: true,
         message: 'Contact submission saved successfully',
+        reference: submission._id.toString().slice(0, 8),
         data: {
           id: submission._id,
           category: submission.category,

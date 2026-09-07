@@ -7,15 +7,6 @@ import BrandLogo from "./BrandLogo";
 
 const menus = [
   {
-    label: 'Home',
-    href: '/',
-    items: [
-      { label: 'Hero Overview', href: '/#home', text: 'Cybertech positioning and main CTA' },
-      { label: 'Featured Services', href: '/#services', text: 'Six growth and technology services' },
-      { label: 'Client Journey', href: '/#process', text: 'How projects move from brief to launch' },
-    ],
-  },
-  {
     label: 'Company',
     href: '/about',
     items: [
@@ -76,6 +67,7 @@ export default function Navbar() {
       <div className="nav-shell">
         <BrandLogo />
         <nav className="desktop-nav" aria-label="Primary navigation">
+          <div className="nav-menu"><Link href="/#home">Home</Link></div>
           {menus.map((menu) => (
             <div className={`nav-menu ${expanded===menu.label ? "is-expanded" : ""}`} key={menu.label} onMouseLeave={()=>setExpanded(null)} onBlur={event=>{if(!event.currentTarget.contains(event.relatedTarget))setExpanded(null);}}>
               <button type="button" className="nav-menu-toggle" aria-expanded={expanded===menu.label} aria-controls={`nav-${menu.label}`} onClick={()=>setExpanded(expanded===menu.label?null:menu.label)}>{menu.label}<ChevronDown size={14} /></button>
@@ -108,6 +100,7 @@ export default function Navbar() {
       </div>
       <div id="mobile-navigation" hidden={!open} className={`mobile-menu ${open ? "is-open" : ""}`}>
         <nav aria-label="Mobile navigation">
+          <Link href="/#home" onClick={()=>setOpen(false)}>Home</Link>
           {menus.map(menu => <details key={menu.label}><summary>{menu.label}<ChevronDown size={18} /></summary><div><Link href={menu.href} onClick={()=>setOpen(false)}>View {menu.label.toLowerCase()}</Link>{menu.items.map(item=><Link key={item.label} href={item.href} onClick={()=>setOpen(false)}>{item.label}</Link>)}</div></details>)}
           {simpleLinks.map(item=><Link key={item.label} href={item.href} onClick={()=>setOpen(false)}>{item.label}</Link>)}
         </nav>
