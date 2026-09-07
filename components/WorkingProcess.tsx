@@ -2,7 +2,6 @@
 
 import React, { useState } from "react";
 import Reveal from "@/components/Reveal";
-import { Plus, Minus } from "lucide-react";
 
 const steps = [
   { 
@@ -48,7 +47,7 @@ export default function WorkingProcess() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         <div className="grid lg:grid-cols-2 gap-16 items-center">
           
-          {/* Left Column - Accordion */}
+          {/* Left Column - Visual process map */}
           <div>
             <Reveal direction="left">
               <p className="text-sm font-bold tracking-widest text-[#101828] uppercase mb-4">
@@ -59,43 +58,36 @@ export default function WorkingProcess() {
               </h2>
             </Reveal>
 
-            <div className="flex flex-col">
-              {steps.map((step, idx) => {
-                const isActive = activeIdx === idx;
-                return (
-                  <div key={step.id}>
-                    <div className="border-b border-gray-200 last:border-0">
-                      <button
-                        onClick={() => setActiveIdx(idx)}
-                        className={`w-full py-6 flex items-center justify-between text-left transition-colors duration-200 ${
-                          isActive ? "text-[#101828]" : "text-[#101828] hover:text-[#E6332A]"
-                        }`}
-                      >
-                        <span className="text-xl md:text-2xl font-semibold">
-                          {step.id}. {step.title}
-                        </span>
-                        {isActive ? (
-                          <Minus className="w-6 h-6 text-[#101828]" />
-                        ) : (
-                          <Plus className="w-6 h-6 text-[#101828]" />
-                        )}
-                      </button>
-                      
-                      <div 
-                        className={`overflow-hidden transition-all duration-300 ease-in-out ${
-                          isActive ? "max-h-48 opacity-100 mb-6" : "max-h-0 opacity-0"
-                        }`}
-                      >
-                        <div className="bg-[#FFEDE8] p-6 rounded-md">
-                          <p className="text-[#475467] leading-relaxed whitespace-pre-line">
-                            {step.description}
-                          </p>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                );
-              })}
+            <div className="process-orbit-wrap" aria-label="Cybertech delivery cycle">
+              <div className="process-orbit">
+                <svg className="process-orbit-svg" viewBox="0 0 360 360" aria-hidden="true">
+                  <circle cx="180" cy="180" r="128" />
+                  <path d="M180 52a128 128 0 0 1 121 86" />
+                  <path d="M301 138l-17-2 11 13" />
+                </svg>
+                <div className="process-orbit-core">
+                  <span>CYBERTECH</span>
+                  <strong>Growth<br />in motion</strong>
+                  <small>strategy × technology</small>
+                </div>
+                {steps.map((step, idx) => (
+                  <button
+                    key={step.id}
+                    type="button"
+                    className={`process-orbit-node process-orbit-node-${idx + 1} ${activeIdx === idx ? "is-active" : ""}`}
+                    onClick={() => setActiveIdx(idx)}
+                    aria-label={`Select ${step.title}`}
+                    aria-pressed={activeIdx === idx}
+                  >
+                    <span>{step.id}</span>
+                    <b>{step.title.split(" ")[0]}</b>
+                  </button>
+                ))}
+              </div>
+              <div className="process-orbit-caption">
+                <span>{steps[activeIdx].id} / 05</span>
+                <p>{steps[activeIdx].description}</p>
+              </div>
             </div>
           </div>
 
