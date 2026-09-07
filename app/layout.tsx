@@ -4,6 +4,8 @@ import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import WhatsAppButton from "@/components/WhatsAppButton";
 import ScrollRestoration from "@/components/ScrollRestoration";
+import ScrollProgress from "@/components/ScrollProgress";
+import ScrollToTop from "@/components/ScrollToTop";
 
 export const metadata: Metadata = {
   title: "Cybertech Marketing | Digital Growth, Software & AI",
@@ -25,10 +27,12 @@ export default function RootLayout({
   return (
     <html lang="en" className="h-full antialiased scroll-smooth" data-scroll-behavior="smooth">
       <body>
+        <ScrollProgress />
         <ScrollRestoration />
         <Navbar />
         <main>{children}</main>
         <WhatsAppButton />
+        <ScrollToTop />
         <Footer />
       </body>
     </html>

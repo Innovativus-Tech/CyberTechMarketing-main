@@ -74,7 +74,7 @@ export default function Navbar() {
                 </div>
                 <div className="mega-links">
                   {menu.items.map((item) => (
-                    <Link key={item.label} href={item.href}>
+                    <Link key={item.label} href={item.href} onClick={() => setOpen(false)}>
                       <strong>{item.label}</strong>
                       <small>{item.text}</small>
                     </Link>
@@ -91,7 +91,7 @@ export default function Navbar() {
         </nav>
         <Link href="/#enquiry" className="nav-cta">GET STARTED <ArrowUpRight size={16} /></Link>
         <button className="menu-button" onClick={() => setOpen(!open)} aria-expanded={open} aria-label={open ? "Close menu" : "Open menu"}>
-          {open ? <X /> : <Menu />}
+          {open ? <X size={22} /> : <Menu size={22} />}
         </button>
       </div>
       <div className={`mobile-menu ${open ? "is-open" : ""}`}>

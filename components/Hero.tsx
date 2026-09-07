@@ -9,10 +9,14 @@ export default function Hero() {
       <Image
         className="hero-image"
         src="/cybertech-hero.png"
-        alt=""
-        width={1200}
-        height={760}
+        alt="Cybertech Marketing background"
+        width={1920}
+        height={1080}
         priority
+        quality={90}
+        placeholder="blur"
+        blurDataURL="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mM8d+5cPQAGvQKdqxxcYQAAAABJRU5ErkJggg=="
+        style={{ objectFit: 'cover', objectPosition: 'center' }}
       />
       <div className="hero-scrim" />
       
@@ -25,7 +29,7 @@ export default function Hero() {
       <div className="site-container hero-content">
         <Reveal direction="left">
           <p className="eyebrow hero-eyebrow"><span /> Cybertech Marketing</p>
-          <h1>Let&apos;s <em>digitize</em> your business.</h1>
+          <h1>Let&apos;s <em style={{ color: 'var(--red)', fontStyle: 'normal' }}>digitize</em> your business.</h1>
           <p className="hero-desc">We build digital growth systems, performance websites, and AI automation workflows for modern businesses.</p>
           <div className="hero-actions">
             <Link href="#enquiry" className="button button-primary">GET STARTED <ArrowRight size={18} /></Link>
@@ -34,7 +38,7 @@ export default function Hero() {
         </Reveal>
         
         <Reveal className="hero-service-panel" direction="right" delay={0.2}>
-          <div className="hero-service-card" style={{ padding: '24px', background: 'rgba(255,255,255,0.05)', borderRadius: '12px', border: '1px solid rgba(255,255,255,0.1)', display: 'flex', gap: '16px', marginBottom: '16px' }}>
+          <div className="hero-service-card" style={{ padding: '24px', background: 'rgba(255,255,255,0.05)', borderRadius: '12px', border: '1px solid rgba(255,255,255,0.1)', display: 'flex', gap: '16px', marginBottom: '16px', transition: 'all 0.3s ease' }}>
             <div className="hsc-icon" style={{ color: 'var(--orange)' }}>
               <Code2 size={24} />
             </div>
@@ -43,7 +47,7 @@ export default function Hero() {
               <p style={{ margin: 0, fontSize: '0.9rem', color: '#b8c0cc' }}>Performance marketing, Custom software & Data systems</p>
             </div>
           </div>
-          <div className="hero-service-card" style={{ padding: '24px', background: 'rgba(255,255,255,0.05)', borderRadius: '12px', border: '1px solid rgba(255,255,255,0.1)', display: 'flex', gap: '16px' }}>
+          <div className="hero-service-card" style={{ padding: '24px', background: 'rgba(255,255,255,0.05)', borderRadius: '12px', border: '1px solid rgba(255,255,255,0.1)', display: 'flex', gap: '16px', transition: 'all 0.3s ease' }}>
             <div className="hsc-icon" style={{ color: 'var(--red)' }}>
               <Bot size={24} />
             </div>
