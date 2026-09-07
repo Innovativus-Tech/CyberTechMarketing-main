@@ -1,6 +1,9 @@
 import Link from 'next/link';
+import Image from 'next/image';
 import { notFound } from 'next/navigation';
 import { getAllPosts, getPostBySlug } from '@/lib/blog';
+import { ArrowLeft, ArrowRight } from 'lucide-react';
+import Reveal from '@/components/Reveal';
 
 export async function generateStaticParams() {
   const posts = await getAllPosts();
@@ -47,74 +50,120 @@ export default async function BlogPostPage({
     .slice(0, 2);
 
   return (
-    <main className="min-h-screen bg-[#f8f6f3] pb-20">
-      <section className="relative isolate overflow-hidden">
+    <main className="min-h-screen">
+      {/* Blog Post Hero */}
+      <section className="about-page-hero relative" style={{ minHeight: '65vh', display: 'flex', alignItems: 'center' }}>
         <div
-          className="absolute inset-0"
-          style={{ backgroundImage: `linear-gradient(180deg, rgba(15, 23, 42, 0.4), rgba(15, 23, 42, 0.85)), url(${post.image})`, backgroundSize: 'cover', backgroundPosition: 'center' }}
+          className="absolute inset-0 z-0"
+          style={{ backgroundImage: `url(${post.image})`, backgroundSize: 'cover', backgroundPosition: 'center' }}
         />
-        <div className={`absolute inset-0 bg-gradient-to-br ${post.accent} mix-blend-multiply opacity-80`} />
-        <div className="relative mx-auto max-w-6xl px-4 py-24 sm:px-6 lg:px-8 lg:py-32">
-          <Link href="/blog" className="inline-flex rounded-full border border-white/20 bg-white/10 px-4 py-2 text-xs font-extrabold uppercase tracking-[0.3em] text-white/90 backdrop-blur-sm">
-            Back to Blog
-          </Link>
-          <div className="mt-8 max-w-4xl animate-fade-up">
-            <p className="text-sm font-bold uppercase tracking-[0.3em] text-red-100">
-              {post.category} | {post.readTime}
-            </p>
-            <h1 className="mt-6 text-4xl font-black leading-tight text-white md:text-6xl">
+        <div className="absolute inset-0 bg-gradient-to-t from-[var(--ink)] via-[rgba(21,26,36,0.85)] to-[rgba(21,26,36,0.6)] z-0" />
+        
+        <div className="site-container relative z-10">
+          <Reveal direction="up" style={{ maxWidth: '900px' }}>
+            <Link href="/blog" className="inline-flex items-center gap-2 text-white hover:text-red-400 transition-colors" style={{ fontSize: '0.9rem', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.05em', marginBottom: '32px' }}>
+              <ArrowLeft size={16} /> Back to Blog
+            </Link>
+            
+            <div style={{ display: 'flex', alignItems: 'center', gap: '16px', marginBottom: '24px' }}>
+              <span style={{ display: 'inline-block', padding: '6px 16px', background: 'var(--red)', color: 'white', fontSize: '0.85rem', fontWeight: 800, textTransform: 'uppercase', borderRadius: '6px' }}>
+                {post.category}
+              </span>
+              <span style={{ color: 'rgba(255,255,255,0.7)', fontWeight: 600, fontSize: '0.95rem' }}>
+                {post.readTime}
+              </span>
+            </div>
+            
+            <h1 style={{ fontSize: 'clamp(2.5rem, 5vw, 4.2rem)', lineHeight: 1.1, fontWeight: 900, color: 'white', marginBottom: '24px' }}>
               {post.title}
             </h1>
-            <p className="mt-6 max-w-3xl text-lg leading-8 text-white/80">
+            
+            <p style={{ fontSize: '1.25rem', color: 'rgba(255,255,255,0.8)', lineHeight: 1.6, maxWidth: '800px' }}>
               {post.excerpt}
             </p>
-          </div>
+            
+            <div style={{ display: 'flex', alignItems: 'center', gap: '12px', marginTop: '40px', color: 'rgba(255,255,255,0.6)', fontWeight: 600, fontSize: '0.9rem' }}>
+              <span>Published on {new Date(post.date).toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' })}</span>
+            </div>
+          </Reveal>
         </div>
       </section>
 
-      <section className="mx-auto -mt-12 grid max-w-6xl gap-10 px-4 sm:px-6 lg:grid-cols-[1.2fr_0.65fr] lg:px-8">
-        <article className="rounded-[2rem] bg-white p-8 shadow-[0_25px_60px_rgba(15,23,42,0.08)] md:p-10">
-          <p className="text-sm font-bold uppercase tracking-[0.25em] text-slate-500">
-            Published {new Date(post.date).toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' })}
-          </p>
-          <div className="mt-8 space-y-6 text-lg leading-8 text-slate-700">
-            {post.content.map((paragraph) => (
-              <p key={paragraph}>{paragraph}</p>
-            ))}
-          </div>
-        </article>
+      {/* Main Post Content */}
+      <section className="section section-light" style={{ padding: '80px 0', background: 'var(--paper)' }}>
+        <div className="site-container">
+          <div style={{ display: 'grid', gridTemplateColumns: '1fr', gap: '40px' }} className="lg:grid-cols-[2fr_1fr]">
+            
+            {/* Article Body */}
+            <Reveal direction="up">
+              <article style={{ background: 'white', padding: '60px', borderRadius: '16px', border: '1px solid #e1e5ea', boxShadow: '0 20px 60px rgba(21, 26, 36, 0.05)' }}>
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '28px', fontSize: '1.15rem', lineHeight: 1.8, color: 'var(--ink)' }}>
+                  {post.content.map((paragraph, i) => (
+                    <p key={i}>{paragraph}</p>
+                  ))}
+                </div>
+                
+                <hr style={{ border: 'none', borderTop: '1px solid #e1e5ea', margin: '60px 0 40px' }} />
+                
+                <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexWrap: 'wrap', gap: '24px' }}>
+                  <h3 style={{ fontSize: '1.5rem', fontWeight: 900, color: 'var(--ink)' }}>Ready to implement this strategy?</h3>
+                  <Link href="/contact" className="button button-primary">
+                    Book a Strategy Call <ArrowRight size={18} />
+                  </Link>
+                </div>
+              </article>
+            </Reveal>
 
-        <aside className="space-y-6">
-          <div className="rounded-[1.75rem] bg-slate-950 p-8 text-white shadow-[0_20px_50px_rgba(15,23,42,0.18)]">
-            <p className="text-sm font-extrabold uppercase tracking-[0.3em] text-red-300">Need help applying this?</p>
-            <h2 className="mt-4 text-3xl font-black">Build the strategy with us.</h2>
-            <p className="mt-4 text-base leading-7 text-white/75">
-              We help brands turn channel chaos into a focused growth system built around traffic, conversion, and retention.
-            </p>
-            <Link href="/contact" className="mt-6 inline-flex rounded-full bg-red-600 px-5 py-3 text-sm font-extrabold text-white transition-colors hover:bg-red-700">
-              Contact Cybertech
-            </Link>
-          </div>
+            {/* Sidebar */}
+            <aside style={{ display: 'flex', flexDirection: 'column', gap: '32px' }}>
+              
+              <Reveal direction="up" delay={0.1}>
+                <div style={{ background: 'var(--ink)', padding: '40px', borderRadius: '16px', color: 'white' }}>
+                  <h3 style={{ fontSize: '1.5rem', fontWeight: 900, marginBottom: '16px' }}>Need help applying this?</h3>
+                  <p style={{ color: 'rgba(255,255,255,0.7)', lineHeight: 1.6, marginBottom: '32px' }}>
+                    We help brands turn channel chaos into a focused growth system built around traffic, conversion, and retention.
+                  </p>
+                  <Link href="/contact" className="button button-primary" style={{ width: '100%', minHeight: '50px' }}>
+                    Contact Cybertech
+                  </Link>
+                </div>
+              </Reveal>
 
-          {relatedPosts.map((relatedPost) => (
-            <Link
-              key={relatedPost.slug}
-              href={`/blog/${relatedPost.slug}`}
-              className="group block overflow-hidden rounded-[1.75rem] bg-white shadow-[0_15px_40px_rgba(15,23,42,0.06)]"
-            >
-              <div
-                className={`h-48 bg-gradient-to-br ${relatedPost.accent} transition-transform duration-500 group-hover:scale-105`}
-                style={{ backgroundImage: `linear-gradient(180deg, rgba(15, 23, 42, 0.2), rgba(15, 23, 42, 0.35)), url(${relatedPost.image})`, backgroundSize: 'cover', backgroundPosition: 'center' }}
-              />
-              <div className="p-6">
-                <p className="text-sm font-bold text-slate-500">{relatedPost.category}</p>
-                <h3 className="mt-3 text-2xl font-black leading-tight text-slate-900">
-                  {relatedPost.title}
-                </h3>
-              </div>
-            </Link>
-          ))}
-        </aside>
+              <Reveal direction="up" delay={0.2}>
+                <h3 style={{ fontSize: '1.25rem', fontWeight: 900, color: 'var(--ink)', marginBottom: '20px' }}>Related Reads</h3>
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
+                  {relatedPosts.map((related) => (
+                    <Link
+                      key={related.slug}
+                      href={`/blog/${related.slug}`}
+                      style={{ display: 'block', background: 'white', border: '1px solid #e1e5ea', borderRadius: '12px', overflow: 'hidden', transition: 'transform 0.3s ease, box-shadow 0.3s ease' }}
+                      className="hover:-translate-y-1 hover:shadow-lg group"
+                    >
+                      <div style={{ height: '140px', position: 'relative', overflow: 'hidden' }}>
+                        <Image 
+                          src={related.image}
+                          alt={related.title}
+                          fill
+                          style={{ objectFit: 'cover' }}
+                          className="transition-transform duration-700 group-hover:scale-105"
+                        />
+                      </div>
+                      <div style={{ padding: '20px' }}>
+                        <span style={{ fontSize: '0.75rem', fontWeight: 800, color: 'var(--red)', textTransform: 'uppercase', marginBottom: '8px', display: 'block' }}>
+                          {related.category}
+                        </span>
+                        <h4 style={{ fontSize: '1.1rem', fontWeight: 800, color: 'var(--ink)', lineHeight: 1.3 }}>
+                          {related.title}
+                        </h4>
+                      </div>
+                    </Link>
+                  ))}
+                </div>
+              </Reveal>
+
+            </aside>
+          </div>
+        </div>
       </section>
     </main>
   );

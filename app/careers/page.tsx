@@ -9,20 +9,22 @@ export default function CareersPage() {
   ];
 
   return (
-    <main className="pt-20 pb-32 bg-white min-h-screen">
-      <section className="page-top-red-gradient relative overflow-hidden pt-16 pb-20 mb-16">
-        <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-white"></div>
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-16 relative z-10">
-          <div className="text-center mb-20">
-            <h1 className="text-5xl md:text-6xl font-bold text-white mb-6">Join the Cybertech Team</h1>
-            <p className="text-xl text-red-50/85 max-w-3xl mx-auto font-medium">
-              We&apos;re always looking for brilliant minds to help us build the future of AI-native marketing. Discover your next career move below.
+    <main className="min-h-screen">
+      {/* Dark Hero Section */}
+      <section className="about-page-hero">
+        <div className="site-container about-page-layout" style={{ gridTemplateColumns: '1fr' }}>
+          <div className="about-page-copy" style={{ maxWidth: '800px', margin: '0 auto', textAlign: 'center' }}>
+            <p className="eyebrow" style={{ justifyContent: 'center' }}><span /> Careers at Cybertech</p>
+            <h1 style={{ fontSize: 'clamp(2.5rem, 5vw, 4rem)' }}>Join the <em>Cybertech</em> Team</h1>
+            <p style={{ fontSize: '1.1rem', marginTop: '20px' }}>
+              We&apos;re always looking for brilliant minds to help us build the future of AI-native marketing and connected software. Discover your next career move below.
             </p>
           </div>
         </div>
       </section>
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <section className="section section-light" style={{ padding: '80px 0' }}>
+        <div className="site-container">
         <div className="grid grid-cols-1 gap-6 max-w-4xl mx-auto">
           {jobs.map((job, idx) => (
             <div key={idx} className="p-8 rounded-2xl bg-white border border-gray-200 shadow-sm hover:shadow-lg transition-all flex flex-col md:flex-row justify-between items-start md:items-center gap-6 group">
@@ -40,7 +42,8 @@ export default function CareersPage() {
             </div>
           ))}
         </div>
-      </div>
+        </div>
+      </section>
     </main>
   );
 }

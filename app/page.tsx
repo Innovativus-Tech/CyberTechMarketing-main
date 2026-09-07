@@ -1,4 +1,5 @@
-import { ArrowRight, Bot, BrainCircuit, CheckCircle2, Code2, LayoutTemplate, Megaphone, ShieldCheck, Smartphone, Target, Workflow } from "lucide-react";
+import Image from "next/image";
+import { ArrowRight, Bot, BrainCircuit, CheckCircle2, Code2, Globe, LayoutTemplate, Megaphone, Phone, ShieldCheck, Smartphone, Sparkles, Star, Target, Users, Workflow, Zap } from "lucide-react";
 import ContactForm from "@/components/ContactForm";
 import Hero from "@/components/Hero";
 import Reveal from "@/components/Reveal";
@@ -42,30 +43,43 @@ const services = [
   },
 ];
 
-const proofCards = [
-  {
-    title: "Lead generation systems",
-    label: "Growth operations",
-    copy: "Campaigns, websites and CRM-ready journeys aligned around clearer enquiries.",
-  },
-  {
-    title: "Digital product builds",
-    label: "Software execution",
-    copy: "Web apps, dashboards and portals designed for teams that need reliable daily tools.",
-  },
-  {
-    title: "AI-enabled workflows",
-    label: "Intelligent automation",
-    copy: "Assistants, data flows and automation mapped to practical business tasks.",
-  },
+const funFacts = [
+  { value: "50+", label: "Projects Completed" },
+  { value: "30+", label: "Happy Clients" },
+  { value: "6", label: "Core Services" },
+  { value: "100%", label: "Results Guaranteed" },
 ];
 
-const process = [
-  ["01", "Share your requirements", "We understand your goals, audience, current stack and what success should look like."],
-  ["02", "Discuss with experts", "Strategy, creative, engineering and data needs are shaped into one practical roadmap."],
-  ["03", "Get a clear quote", "You receive a scoped plan for the right mix of marketing, software, AI, data or mobile work."],
-  ["04", "Build and launch", "Design, development, campaigns and automation move through clean delivery milestones."],
-  ["05", "Optimize continuously", "Performance signals guide the next improvements after launch."],
+const processSteps = [
+  { number: "01", title: "Share your requirements", description: "We understand your goals, audience, current stack and what success should look like." },
+  { number: "02", title: "Discuss with experts", description: "Strategy, creative, engineering and data needs are shaped into one practical roadmap." },
+  { number: "03", title: "Get a clear quote", description: "You receive a scoped plan for the right mix of marketing, software, AI, data or mobile work." },
+  { number: "04", title: "Build and launch", description: "Design, development, campaigns and automation move through clean delivery milestones." },
+  { number: "05", title: "Optimize continuously", description: "Performance signals guide the next improvements after launch." },
+];
+
+const testimonials = [
+  {
+    name: "Rahul Sharma",
+    role: "CEO, TechStart India",
+    text: "Cybertech Marketing transformed our online presence. Their SEO and content strategy doubled our organic traffic in just 4 months.",
+    rating: 5,
+    avatarColor: "linear-gradient(135deg, #10b981, #059669)", // Emerald green
+  },
+  {
+    name: "Priya Mehta",
+    role: "Founder, DesignHub",
+    text: "The web development team built us a stunning, fast website that actually converts visitors into clients. Highly recommended.",
+    rating: 5,
+    avatarColor: "linear-gradient(135deg, #f59e0b, #d97706)", // Amber orange
+  },
+  {
+    name: "Amit Patel",
+    role: "CTO, DataFlow Systems",
+    text: "Their AI solutions automated our lead qualification process, saving us 20+ hours per week. Game-changing technology partner.",
+    rating: 5,
+    avatarColor: "linear-gradient(135deg, #3b82f6, #2563eb)", // Royal blue
+  },
 ];
 
 const technologies = ["React", "Next.js", "Node.js", "Python", "TypeScript", "MongoDB", "PostgreSQL", "AI Models", "Analytics", "Automation", "Cloud", "Mobile"];
@@ -92,8 +106,10 @@ const faqs = [
 export default function Home() {
   return (
     <>
+      {/* HERO */}
       <Hero />
 
+      {/* PARTNERS MARQUEE */}
       <section className="logo-marquee" aria-label="Cybertech focus areas">
         <div className="ticker-track">
           {["Performance Marketing", "Custom Web Apps", "Web Development", "Software Solutions", "Enterprise Automation", "AI Systems", "Mobile Apps", "Data Intelligence", "Performance Marketing", "Custom Web Apps", "Web Development", "Software Solutions"].map((item, index) => (
@@ -102,24 +118,28 @@ export default function Home() {
         </div>
       </section>
 
-      <section className="section section-light" id="services">
+      {/* SERVICES */}
+      <section className="section section-services" id="services">
         <div className="site-container">
-          <Reveal className="section-heading">
+          <Reveal className="section-heading" direction="up">
             <p className="eyebrow"><span /> Our Services</p>
-            <h2>How we can help you</h2>
+            <h2>How we can <em>help</em> you</h2>
             <p>Cybertech Marketing brings growth, software and intelligence together so your brand can attract, convert, operate and scale with confidence.</p>
           </Reveal>
-          <div className="service-showcase">
-            {services.map((service, index) => (
-              <Reveal className="service-row" key={service.title}>
-                <div className="service-row-index">{String(index + 1).padStart(2, "0")}</div>
-                <div className="service-row-icon"><service.Icon size={30} /></div>
-                <div className="service-row-copy">
-                  <h3>{service.title}</h3>
-                  <p>{service.description}</p>
+          <div className="services-card-grid">
+            {services.map((service, idx) => (
+              <Reveal className="svc-card" key={service.title} delay={idx * 0.1} direction="up">
+                <div className="svc-card-icon">
+                  <service.Icon size={32} strokeWidth={1.5} />
                 </div>
-                <ul>
-                  {service.bullets.map((bullet) => <li key={bullet}>{bullet}</li>)}
+                <h3>{service.title}</h3>
+                <ul className="svc-card-bullets">
+                  {service.bullets.map((bullet) => (
+                    <li key={bullet}>
+                      <svg width="18" height="18" viewBox="0 0 18 18" fill="none"><circle cx="9" cy="9" r="8" stroke="currentColor" strokeWidth="1.5"/><circle cx="9" cy="9" r="3" fill="currentColor"/></svg>
+                      {bullet}
+                    </li>
+                  ))}
                 </ul>
               </Reveal>
             ))}
@@ -127,55 +147,84 @@ export default function Home() {
         </div>
       </section>
 
+      {/* ABOUT / MISSION */}
       <section className="section section-dark" id="about">
-        <div className="site-container mission-layout">
-          <Reveal className="mission-copy">
+        <div className="site-container about-v2-layout">
+          <Reveal className="about-v2-copy" direction="left">
             <p className="eyebrow"><span /> About Us</p>
-            <h2>Cybertech mission and goal</h2>
-            <p>Our mission is to help businesses build a stronger digital engine: one where marketing, websites, software, AI and data work together instead of living in separate silos.</p>
-            <a className="button button-primary" href="#enquiry">Start with Cybertech <ArrowRight size={18} /></a>
+            <h2>Cybertech <em>Mission &amp; Goal</em></h2>
+            <p>Our mission is to help businesses build a stronger digital engine: one where marketing, websites, software, AI and data work together instead of living in separate silos. With a commitment to excellence and customer satisfaction we strive.</p>
           </Reveal>
-          <Reveal className="mission-board">
-            <div><strong>6</strong><span>Core service lines</span></div>
-            <div><strong>360</strong><span>Growth and product thinking</span></div>
-            <div><strong>1</strong><span>Connected execution team</span></div>
+          <Reveal className="about-v2-visual" direction="right">
+            <div className="about-v2-image">
+              <Image
+                src="https://images.unsplash.com/photo-1519389950473-47ba0277781c?q=80&w=800&auto=format&fit=crop"
+                alt="Cybertech team working"
+                width={480}
+                height={320}
+                className="about-v2-img"
+              />
+            </div>
+            <div className="about-v2-stats-panel">
+              <div className="about-v2-stats-top">
+                <div className="about-v2-avatars">
+                  <div className="avatar-stack">
+                    <span className="avatar-circle" style={{background: 'linear-gradient(135deg, #e6332a, #ff7a3d)'}}>CT</span>
+                    <span className="avatar-circle" style={{background: 'linear-gradient(135deg, #315a8f, #4a8fd4)'}}>DM</span>
+                    <span className="avatar-circle" style={{background: 'linear-gradient(135deg, #202838, #3a4a60)'}}>AI</span>
+                    <span className="avatar-circle avatar-count">50+</span>
+                  </div>
+                  <span className="about-v2-label">Happy Customers</span>
+                </div>
+                <a className="button button-primary about-v2-cta" href="#enquiry">Learn More <ArrowRight size={16} /></a>
+              </div>
+              <div className="about-v2-stats-bottom">
+                <div className="about-v2-globe-icon">
+                  <Globe size={24} />
+                </div>
+                <div className="about-v2-stat">
+                  <strong>50+</strong>
+                  <span>Projects Done</span>
+                </div>
+                <div className="about-v2-stat">
+                  <strong>100%</strong>
+                  <span>Results Guaranteed</span>
+                </div>
+              </div>
+            </div>
           </Reveal>
         </div>
       </section>
 
-      <section className="section case-section" id="proof">
+      {/* FUN FACTS / COUNTERS */}
+      <section className="section funfact-section" id="facts">
         <div className="site-container">
-          <Reveal className="section-heading align-left">
-            <p className="eyebrow"><span /> Case Studies</p>
-            <h2>Business problems Cybertech is built to solve</h2>
-          </Reveal>
-          <div className="case-grid">
-            {proofCards.map((card) => (
-              <Reveal className="case-card" key={card.title}>
-                <span>{card.label}</span>
-                <h3>{card.title}</h3>
-                <p>{card.copy}</p>
-                <a href="#enquiry">Discuss this need <ArrowRight size={17} /></a>
+          <div className="funfact-grid">
+            {funFacts.map((fact, idx) => (
+              <Reveal className="funfact-card" key={fact.label} delay={idx * 0.15} direction="scale">
+                <strong>{fact.value}</strong>
+                <span>{fact.label}</span>
               </Reveal>
             ))}
           </div>
         </div>
       </section>
 
+      {/* WORKING PROCESS */}
       <section className="section section-light" id="process">
-        <div className="site-container process-layout">
-          <Reveal className="section-heading align-left">
+        <div className="site-container process-v2-layout">
+          <Reveal className="section-heading align-left" direction="left">
             <p className="eyebrow"><span /> Working Process</p>
-            <h2>Our approach</h2>
+            <h2>Our <em>approach</em></h2>
             <p>The process keeps your project practical: clear discovery, expert planning, focused build work and ongoing improvement.</p>
           </Reveal>
-          <div className="process-list process-list-premium">
-            {process.map(([number, title, copy]) => (
-              <Reveal className="process-item process-item-premium" key={title}>
-                <span>{number}</span>
-                <div>
-                  <h3>{title}</h3>
-                  <p>{copy}</p>
+          <div className="process-v2-list">
+            {processSteps.map((step, idx) => (
+              <Reveal className="process-v2-item" key={step.title} delay={idx * 0.1} direction="right">
+                <div className="process-v2-number">{step.number}</div>
+                <div className="process-v2-content">
+                  <h3>{step.title}</h3>
+                  <p>{step.description}</p>
                 </div>
               </Reveal>
             ))}
@@ -183,21 +232,56 @@ export default function Home() {
         </div>
       </section>
 
+      {/* TESTIMONIALS */}
+      <section className="section testimonial-section" id="testimonials">
+        <div className="site-container">
+          <Reveal className="section-heading" direction="up">
+            <p className="eyebrow"><span /> Testimonials</p>
+            <h2>What our <em>clients</em> say</h2>
+            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '16px', marginTop: '16px' }}>
+              <span style={{ fontSize: '1.05rem', color: '#b8c0cc', fontWeight: 500 }}>Rated 5.0/5.0 by our clients on</span>
+              <Image src="/google-rating.png" alt="Google 5 Stars" width={120} height={40} style={{ objectFit: 'contain' }} />
+            </div>
+          </Reveal>
+          <div className="testimonial-grid" style={{ marginTop: '20px' }}>
+            {testimonials.map((t, idx) => (
+              <Reveal className="testimonial-card" key={t.name} delay={idx * 0.15} direction="up">
+                <div className="testimonial-stars">
+                  {Array.from({ length: t.rating }).map((_, i) => (
+                    <Star key={i} size={16} fill="currentColor" strokeWidth={0} style={{ color: '#FBBC05' }} />
+                  ))}
+                </div>
+                <p className="testimonial-text">&ldquo;{t.text}&rdquo;</p>
+                <div className="testimonial-author">
+                  <div className="testimonial-avatar" style={{ background: t.avatarColor }}>{t.name.charAt(0)}</div>
+                  <div>
+                    <strong>{t.name}</strong>
+                    <span>{t.role}</span>
+                  </div>
+                </div>
+              </Reveal>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* TECHNOLOGIES */}
       <section className="section tech-section" id="technology">
         <div className="site-container tech-layout">
-          <Reveal>
+          <Reveal direction="scale">
             <p className="eyebrow"><span /> Our Technologies</p>
             <h2>We use modern technologies</h2>
           </Reveal>
-          <Reveal className="tech-cloud">
+          <Reveal className="tech-cloud" direction="up" delay={0.2}>
             {technologies.map((tech) => <span key={tech}>{tech}</span>)}
           </Reveal>
         </div>
       </section>
 
+      {/* CONTACT / ENQUIRY */}
       <section className="section section-accent" id="enquiry">
         <div className="site-container contact-band contact-start">
-          <Reveal className="contact-intro">
+          <Reveal className="contact-intro" direction="left">
             <p className="eyebrow"><span /> You Are Here</p>
             <h2>Let&apos;s start your journey to digital growth.</h2>
             <p>Tell Cybertech Marketing what you want to grow, build or automate. We will review the requirement and get back to you.</p>
@@ -212,7 +296,7 @@ export default function Home() {
               <a href="https://wa.me/917428768779" target="_blank" rel="noreferrer">WhatsApp Cybertech</a>
             </div>
           </Reveal>
-          <Reveal className="form-panel">
+          <Reveal className="form-panel" direction="right">
             <h3>Let&apos;s connect</h3>
             <p>Send us a message and we will promptly discuss your project with you.</p>
             <ContactForm compact />
@@ -220,6 +304,7 @@ export default function Home() {
         </div>
       </section>
 
+      {/* FAQ */}
       <section className="section section-light">
         <div className="site-container faq-layout">
           <Reveal className="section-heading">
@@ -239,6 +324,7 @@ export default function Home() {
         </div>
       </section>
 
+      {/* FINAL CTA */}
       <section className="section final-cta">
         <div className="site-container">
           <Reveal>

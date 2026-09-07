@@ -1,35 +1,67 @@
 import WhyChooseUs from '@/components/WhyChooseUs';
 import Testimonials from '@/components/Testimonials';
 import Image from 'next/image';
+import { ArrowRight } from 'lucide-react';
 
 export default function AboutPage() {
   return (
-    <main className="pt-16 pb-16 bg-white min-h-screen">
-      <section className="page-top-red-gradient relative overflow-hidden pt-16 pb-20">
-        <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-white"></div>
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center mb-16 pt-16 relative z-10">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-red-200/30 bg-white/10 backdrop-blur-sm mb-6">
-              <span className="w-2 h-2 rounded-full bg-red-300 animate-pulse"></span>
-              <span className="text-sm font-bold text-red-50 tracking-wide uppercase">Who We Are</span>
+    <main className="min-h-screen">
+      {/* Dark Hero Section */}
+      <section className="about-page-hero">
+        <div className="site-container about-page-layout">
+          <div className="about-page-copy">
+            <p className="eyebrow"><span /> About Us</p>
+            <h1>Cybertech <em>Mission &amp; Goal</em></h1>
+            <p>
+              At Cybertech Marketing, our mission is to empower businesses through
+              innovative digital solutions that streamline operations,
+              foster growth, and drive success. With a commitment to
+              excellence and customer satisfaction we strive to deliver
+              results that exceed expectations.
+            </p>
           </div>
-          <h1 className="text-5xl md:text-7xl font-bold text-white mb-6 tracking-tight">About Cybertech Marketing</h1>
-          <p className="text-xl text-red-50/85 max-w-3xl mx-auto font-medium mb-12 leading-relaxed">
-            We are an industry-leading digital marketing agency committed to driving explosive growth through AI-native strategies, autonomous intelligence, and relentless innovation.
-          </p>
-
-          <div className="w-full h-[400px] md:h-[600px] rounded-3xl overflow-hidden relative shadow-2xl mb-16 border border-white/10">
-             <div className="absolute inset-0 bg-red-950/30 z-10"></div>
-             <Image 
-               src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?q=80&w=2070&auto=format&fit=crop" 
-               alt="Cybertech Marketing Team"
-               fill
-               sizes="100vw"
-               className="object-cover"
-             />
+          <div className="about-page-visual">
+            <div className="about-page-image">
+              <Image
+                src="https://images.unsplash.com/photo-1519389950473-47ba0277781c?q=80&w=800&auto=format&fit=crop"
+                alt="Cybertech team collaborating"
+                width={480}
+                height={360}
+                className="about-v2-img"
+                priority
+              />
+            </div>
+            <div className="about-page-stats">
+              <div className="about-page-stats-top">
+                <div className="about-v2-avatars">
+                  <div className="avatar-stack">
+                    <span className="avatar-circle" style={{background: 'linear-gradient(135deg, #e6332a, #ff7a3d)'}}>CT</span>
+                    <span className="avatar-circle" style={{background: 'linear-gradient(135deg, #315a8f, #4a8fd4)'}}>DM</span>
+                    <span className="avatar-circle" style={{background: 'linear-gradient(135deg, #202838, #3a4a60)'}}>AI</span>
+                    <span className="avatar-circle avatar-count">50+</span>
+                  </div>
+                  <span className="about-v2-label">Happy Customers</span>
+                </div>
+                <a className="button button-primary about-v2-cta" href="/contact">Learn More <ArrowRight size={16} /></a>
+              </div>
+              <div className="about-page-stats-bottom">
+                <div className="about-v2-globe-icon">
+                  <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5"><circle cx="12" cy="12" r="10"/><path d="M2 12h20"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+                </div>
+                <div className="about-v2-stat">
+                  <strong>50+</strong>
+                  <span>Projects Done</span>
+                </div>
+                <div className="about-v2-stat">
+                  <strong>100%</strong>
+                  <span>Results Guaranteed</span>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </section>
-      
+
       <WhyChooseUs />
       <Testimonials />
     </main>

@@ -26,19 +26,21 @@ const serviceNeeds = [
 export default function ContactPage() {
   return (
     <>
-      <section className="page-hero contact-hero">
-        <div className="site-container page-hero-content">
-          <Reveal>
-            <p className="eyebrow"><span /> Contact Us</p>
-            <h1>Let&apos;s start your next digital project.</h1>
-            <p>Share your requirement and Cybertech Marketing will help you map the right mix of growth, software, AI, data and mobile execution.</p>
-          </Reveal>
+      <section className="about-page-hero">
+        <div className="site-container about-page-layout" style={{ gridTemplateColumns: '1fr' }}>
+          <div className="about-page-copy" style={{ maxWidth: '800px', margin: '0 auto', textAlign: 'center' }}>
+            <Reveal direction="scale">
+              <p className="eyebrow" style={{ justifyContent: 'center' }}><span /> Contact Us</p>
+              <h1 style={{ fontSize: 'clamp(2.5rem, 5vw, 4rem)' }}>Let&apos;s start your next digital project.</h1>
+              <p style={{ fontSize: '1.1rem', marginTop: '20px' }}>Share your requirement and Cybertech Marketing will help you map the right mix of growth, software, AI, data and mobile execution.</p>
+            </Reveal>
+          </div>
         </div>
       </section>
 
       <section className="section section-light">
         <div className="site-container contact-page-grid contact-page-premium">
-          <Reveal className="contact-details">
+          <Reveal className="contact-details" direction="left">
             <p className="eyebrow"><span /> You Are Here</p>
             <h2>Talk to Cybertech Marketing</h2>
             <a href="mailto:info@cybertechmarketing.com"><Mail size={22} /> info@cybertechmarketing.com</a>
@@ -51,7 +53,7 @@ export default function ContactPage() {
               ))}
             </div>
           </Reveal>
-          <Reveal className="form-panel">
+          <Reveal className="form-panel" direction="right" delay={0.2}>
             <h3>Let&apos;s connect</h3>
             <p>Send us a message and we will promptly discuss your project with you.</p>
             <ContactForm />
@@ -61,11 +63,11 @@ export default function ContactPage() {
 
       <section className="section tech-section">
         <div className="site-container tech-layout">
-          <Reveal>
+          <Reveal direction="up">
             <p className="eyebrow"><span /> What We Can Discuss</p>
             <h2>Bring your requirement. We will shape the route.</h2>
           </Reveal>
-          <Reveal className="tech-cloud contact-cloud">
+          <Reveal className="tech-cloud contact-cloud" direction="scale" delay={0.2}>
             {serviceNeeds.map((need, index) => (
               <span key={need}>{index === 0 ? <Target size={18} /> : index === 3 ? <Workflow size={18} /> : index === 5 ? <ShieldCheck size={18} /> : null}{need}</span>
             ))}

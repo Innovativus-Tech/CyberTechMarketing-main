@@ -7,45 +7,41 @@ import BrandLogo from "./BrandLogo";
 
 const menus = [
   {
-    label: "Home",
-    href: "/",
+    label: 'Home',
+    href: '/',
     items: [
-      { label: "Hero Overview", href: "/#home", text: "Cybertech positioning and main CTA" },
-      { label: "Featured Services", href: "/#services", text: "Six growth and technology services" },
-      { label: "Client Journey", href: "/#process", text: "How projects move from brief to launch" },
+      { label: 'Hero Overview', href: '/#home', text: 'Cybertech positioning and main CTA' },
+      { label: 'Featured Services', href: '/#services', text: 'Six growth and technology services' },
+      { label: 'Client Journey', href: '/#process', text: 'How projects move from brief to launch' },
     ],
   },
   {
-    label: "Company",
-    href: "/#about",
+    label: 'Company',
+    href: '/about',
     items: [
-      { label: "About Cybertech", href: "/#about", text: "Mission, approach and delivery style" },
-      { label: "Proof & Outcomes", href: "/#proof", text: "Business impact areas and use cases" },
-      { label: "Technology Stack", href: "/#technology", text: "Platforms and tools we work with" },
+      { label: 'About Cybertech', href: '/about', text: 'Mission, approach and delivery style' },
+      { label: 'Careers', href: '/careers', text: 'Open positions at Cybertech' },
+      { label: 'Our Process', href: '/#process', text: 'How projects move from brief to launch' },
     ],
   },
   {
-    label: "Services",
-    href: "/#services",
+    label: 'Services',
+    href: '/#services',
     featured: true,
     items: [
-      { label: "Digital Marketing & Growth", href: "/#services", text: "SEO, paid media, funnels and content systems" },
-      { label: "Web Development", href: "/#services", text: "High-performance websites and landing pages" },
-      { label: "Software Development", href: "/#services", text: "Custom platforms, dashboards and portals" },
-      { label: "AI & Intelligent Solutions", href: "/#services", text: "Assistants, automation and smart workflows" },
-      { label: "Machine Learning & Data", href: "/#services", text: "Data pipelines, reporting and prediction models" },
-      { label: "Mobile App Development", href: "/#services", text: "iOS, Android and cross-platform products" },
+      { label: 'Digital Marketing & Growth', href: '/services/digital-marketing-growth', text: 'SEO, paid media, funnels and content systems' },
+      { label: 'Web Development', href: '/services/web-development', text: 'High-performance websites and landing pages' },
+      { label: 'Software Development', href: '/services/software-development', text: 'Custom platforms, dashboards and portals' },
+      { label: 'AI & Intelligent Solutions', href: '/services/ai-intelligent-solutions', text: 'Assistants, automation and smart workflows' },
+      { label: 'Machine Learning & Data', href: '/services/machine-learning-data', text: 'Data pipelines, reporting and prediction models' },
+      { label: 'Mobile App Development', href: '/services/mobile-app-development', text: 'iOS, Android and cross-platform products' },
     ],
   },
-  {
-    label: "Contact",
-    href: "/contact",
-    items: [
-      { label: "Contact Us Page", href: "/contact", text: "Full contact details and form" },
-      { label: "Homepage Enquiry", href: "/#enquiry", text: "Quick project enquiry section" },
-      { label: "WhatsApp", href: "https://wa.me/917428768779", text: "Message Cybertech directly" },
-    ],
-  },
+];
+
+const simpleLinks = [
+  { label: 'Blog', href: '/blog' },
+  { label: 'Contact', href: '/contact' },
 ];
 
 export default function Navbar() {
@@ -87,16 +83,21 @@ export default function Navbar() {
               </div>
             </div>
           ))}
+          {simpleLinks.map((link) => (
+            <div className="nav-menu" key={link.label}>
+              <Link href={link.href}>{link.label}</Link>
+            </div>
+          ))}
         </nav>
-        <Link href="/#enquiry" className="nav-cta">Free consultation <ArrowUpRight size={16} /></Link>
+        <Link href="/#enquiry" className="nav-cta">GET STARTED <ArrowUpRight size={16} /></Link>
         <button className="menu-button" onClick={() => setOpen(!open)} aria-expanded={open} aria-label={open ? "Close menu" : "Open menu"}>
           {open ? <X /> : <Menu />}
         </button>
       </div>
       <div className={`mobile-menu ${open ? "is-open" : ""}`}>
         <nav aria-label="Mobile navigation">
-          {menus.map((menu, index) => (
-            <Link key={menu.label} href={menu.href} onClick={() => setOpen(false)}><span>0{index + 1}</span>{menu.label}</Link>
+          {[...menus, ...simpleLinks].map((item, index) => (
+            <Link key={item.label} href={item.href} onClick={() => setOpen(false)}><span>0{index + 1}</span>{item.label}</Link>
           ))}
         </nav>
         <div className="mobile-menu-actions">

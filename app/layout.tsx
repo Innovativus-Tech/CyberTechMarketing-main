@@ -3,10 +3,18 @@ import "./globals.css";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import WhatsAppButton from "@/components/WhatsAppButton";
+import ScrollRestoration from "@/components/ScrollRestoration";
 
 export const metadata: Metadata = {
   title: "Cybertech Marketing | Digital Growth, Software & AI",
   description: "Cybertech Marketing builds connected digital growth systems, software products, AI solutions, and mobile experiences.",
+  icons: {
+    icon: [
+      { url: "/favicon.ico", sizes: "any" },
+    ],
+    shortcut: "/favicon.ico",
+    apple: "/favicon.ico",
+  },
 };
 
 export default function RootLayout({
@@ -17,6 +25,7 @@ export default function RootLayout({
   return (
     <html lang="en" className="h-full antialiased scroll-smooth" data-scroll-behavior="smooth">
       <body>
+        <ScrollRestoration />
         <Navbar />
         <main>{children}</main>
         <WhatsAppButton />
