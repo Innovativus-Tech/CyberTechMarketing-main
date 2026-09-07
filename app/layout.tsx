@@ -6,7 +6,6 @@ import Footer from "@/components/Footer";
 import WhatsAppButton from "@/components/WhatsAppButton";
 import ScrollRestoration from "@/components/ScrollRestoration";
 import ScrollProgress from "@/components/ScrollProgress";
-import ScrollToTop from "@/components/ScrollToTop";
 
 export const metadata: Metadata = {
   title: "Cybertech Marketing | Digital Growth, Software & AI",
@@ -34,7 +33,6 @@ export default function RootLayout({
         <a className="skip-link" href="#main-content">Skip to content</a>
         <main id="main-content">{children}</main>
         <WhatsAppButton />
-        <ScrollToTop />
         <Footer />
       </body>
     </html>

@@ -2,6 +2,7 @@
 
 import { FormEvent, useState } from "react";
 import { ArrowRight, CheckCircle2, Loader2 } from "lucide-react";
+import { validateSalesContact } from "@/lib/validations/contact";
 
 const serviceOptions = [
   "Digital Marketing & Growth",
@@ -23,12 +24,13 @@ export default function ContactForm({ compact = false, defaultService = "" }: Co
   const [status, setStatus] = useState<FormState>("idle");
   const [message, setMessage] = useState("");
   const [emailFallback, setEmailFallback] = useState("");
+  const [fieldErrors, setFieldErrors] = useState<Record<string, string>>({});
 
   async function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
     if (status === "submitting") return;
-    setStatus("submitting");
     setMessage("");
+    setFieldErrors({});
 
     const form = event.currentTarget;
     const data = new FormData(form);
@@ -46,6 +48,29 @@ export default function ContactForm({ compact = false, defaultService = "" }: Co
       message: projectMessage,
       website: String(data.get("website") || ""),
     };
+
+    const clientValidation = validateSalesContact({
+      category: payload.category,
+      firstName: payload.firstName,
+      lastName: payload.lastName,
+      email: payload.email,
+      phone: payload.phone,
+      company: payload.company,
+      serviceInterest: payload.serviceInterest,
+      message: payload.message,
+    });
+
+    if (!clientValidation.success) {
+      const errors = Object.fromEntries(
+        clientValidation.error.issues.map((issue) => [String(issue.path[0]), issue.message])
+      );
+      setFieldErrors(errors);
+      setStatus("error");
+      setMessage("Please review the highlighted fields and try again.");
+      return;
+    }
+
+    setStatus("submitting");
 
     try {
       const response = await fetch("/api/contact", {
@@ -84,46 +109,53 @@ export default function ContactForm({ compact = false, defaultService = "" }: Co
   }
 
   return (
-    <form className={`contact-form ${compact ? "contact-form-compact" : ""}`} onSubmit={handleSubmit}>
+    <form className={`contact-form ${compact ? "contact-form-compact" : ""}`} onSubmit={handleSubmit} noValidate>
       <label className="form-honeypot" aria-hidden="true">Leave this empty<input name="website" tabIndex={-1} autoComplete="off" /></label>
       <div className="form-row">
         <label>
-          First name
-          <input name="firstName" type="text" minLength={2} maxLength={50} required autoComplete="given-name" />
+          First name <span aria-hidden="true">*</span>
+          <input name="firstName" type="text" minLength={2} maxLength={50} required autoComplete="given-name" placeholder="Your first name" aria-invalid={Boolean(fieldErrors.firstName)} aria-describedby={fieldErrors.firstName ? "firstName-error" : undefined} />
+          {fieldErrors.firstName && <small id="firstName-error" className="form-field-error">{fieldErrors.firstName}</small>}
         </label>
         <label>
-          Last name
-          <input name="lastName" type="text" minLength={2} maxLength={50} required autoComplete="family-name" />
+          Last name <span aria-hidden="true">*</span>
+          <input name="lastName" type="text" minLength={2} maxLength={50} required autoComplete="family-name" placeholder="Your last name" aria-invalid={Boolean(fieldErrors.lastName)} aria-describedby={fieldErrors.lastName ? "lastName-error" : undefined} />
+          {fieldErrors.lastName && <small id="lastName-error" className="form-field-error">{fieldErrors.lastName}</small>}
         </label>
       </div>
       <div className="form-row">
         <label>
-          Email
-          <input name="email" type="email" maxLength={100} required autoComplete="email" />
+          Email <span aria-hidden="true">*</span>
+          <input name="email" type="email" maxLength={100} required autoComplete="email" placeholder="name@company.com" aria-invalid={Boolean(fieldErrors.email)} aria-describedby={fieldErrors.email ? "email-error" : undefined} />
+          {fieldErrors.email && <small id="email-error" className="form-field-error">{fieldErrors.email}</small>}
         </label>
         <label>
-          Phone
-          <input name="phone" type="tel" minLength={10} maxLength={25} required autoComplete="tel" placeholder="Your phone number" />
+          Phone <span aria-hidden="true">*</span>
+          <input name="phone" type="tel" minLength={10} maxLength={25} required autoComplete="tel" placeholder="+91 98 7654 3210" aria-invalid={Boolean(fieldErrors.phone)} aria-describedby={fieldErrors.phone ? "phone-error" : undefined} />
+          {fieldErrors.phone && <small id="phone-error" className="form-field-error">{fieldErrors.phone}</small>}
         </label>
       </div>
       <div className="form-row">
         <label>
           Company
-          <input name="company" type="text" maxLength={100} autoComplete="organization" />
+          <input name="company" type="text" maxLength={100} autoComplete="organization" placeholder="Your company (optional)" aria-invalid={Boolean(fieldErrors.company)} aria-describedby={fieldErrors.company ? "company-error" : undefined} />
+          {fieldErrors.company && <small id="company-error" className="form-field-error">{fieldErrors.company}</small>}
         </label>
         <label>
           Service interest
-          <select name="serviceInterest" defaultValue={defaultService}>
-            <option value="" disabled>Select a service</option>
+          <select name="serviceInterest" defaultValue={defaultService} aria-invalid={Boolean(fieldErrors.serviceInterest)} aria-describedby={fieldErrors.serviceInterest ? "serviceInterest-error" : undefined}>
+            <option value="" disabled>Choose a service (optional)</option>
             {serviceOptions.map((service) => (
               <option key={service} value={service}>{service}</option>
             ))}
           </select>
+          {fieldErrors.serviceInterest && <small id="serviceInterest-error" className="form-field-error">{fieldErrors.serviceInterest}</small>}
         </label>
       </div>
       <label>
-        Project details
-        <textarea name="message" rows={compact ? 4 : 5} minLength={10} maxLength={1000} required placeholder="Tell us what you want to improve, build, automate, or launch." />
+        Project details <span aria-hidden="true">*</span>
+        <textarea name="message" rows={compact ? 4 : 5} minLength={10} maxLength={1000} required placeholder="Tell us what you want to improve, build, automate, or launch." aria-invalid={Boolean(fieldErrors.message)} aria-describedby={fieldErrors.message ? "message-error" : undefined} />
+        {fieldErrors.message && <small id="message-error" className="form-field-error">{fieldErrors.message}</small>}
       </label>
       <button className="button button-primary form-submit" type="submit" disabled={status === "submitting"}>
         {status === "submitting" ? <Loader2 size={18} className="spin" /> : status === "success" ? <CheckCircle2 size={18} /> : <ArrowRight size={18} />}

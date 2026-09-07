@@ -32,10 +32,10 @@ const faqs = [
 ];
 
 export default function FAQSection() {
-  const [openIdx, setOpenIdx] = useState<number>(0);
+  const [openIdx, setOpenIdx] = useState<number | null>(null);
 
   const toggle = (idx: number) => {
-    setOpenIdx(openIdx === idx ? -1 : idx);
+    setOpenIdx(openIdx === idx ? null : idx);
   };
 
   return (
@@ -69,6 +69,8 @@ export default function FAQSection() {
                 <div className="w-full">
                   <button 
                     onClick={() => toggle(idx)}
+                    aria-expanded={isActive}
+                    aria-controls={`faq-answer-${idx}`}
                     className="w-full flex items-center justify-between py-4 text-left group"
                   >
                     <h3 className="text-xl md:text-[22px] font-medium text-[#101828] pr-8 transition-colors group-hover:text-[#E6332A]">
@@ -84,6 +86,7 @@ export default function FAQSection() {
                   </button>
                   
                   <div 
+                    id={`faq-answer-${idx}`}
                     className={`overflow-hidden transition-all duration-300 ease-in-out ${
                       isActive ? "max-h-[800px] opacity-100 mt-2 mb-4" : "max-h-0 opacity-0"
                     }`}
