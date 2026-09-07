@@ -3,6 +3,10 @@ import { ArrowRight, Bot, BrainCircuit, CheckCircle2, Code2, Globe, LayoutTempla
 import ContactForm from "@/components/ContactForm";
 import Hero from "@/components/Hero";
 import Reveal from "@/components/Reveal";
+import FAQSection from "@/components/FAQSection";
+import ArticlesSection from "@/components/ArticlesSection";
+import TechnologiesSection from "@/components/TechnologiesSection";
+import WorkingProcess from "@/components/WorkingProcess";
 
 const services = [
   {
@@ -211,26 +215,7 @@ export default function Home() {
       </section>
 
       {/* WORKING PROCESS */}
-      <section className="section section-light" id="process">
-        <div className="site-container process-v2-layout">
-          <Reveal className="section-heading align-left" direction="left">
-            <p className="eyebrow"><span /> Working Process</p>
-            <h2>Our <em>approach</em></h2>
-            <p>The process keeps your project practical: clear discovery, expert planning, focused build work and ongoing improvement.</p>
-          </Reveal>
-          <div className="process-v2-list">
-            {processSteps.map((step, idx) => (
-              <Reveal className="process-v2-item" key={step.title} delay={idx * 0.1} direction="right">
-                <div className="process-v2-number">{step.number}</div>
-                <div className="process-v2-content">
-                  <h3>{step.title}</h3>
-                  <p>{step.description}</p>
-                </div>
-              </Reveal>
-            ))}
-          </div>
-        </div>
-      </section>
+      <WorkingProcess />
 
       {/* TESTIMONIALS */}
       <section className="section testimonial-section" id="testimonials">
@@ -266,17 +251,7 @@ export default function Home() {
       </section>
 
       {/* TECHNOLOGIES */}
-      <section className="section tech-section" id="technology">
-        <div className="site-container tech-layout">
-          <Reveal direction="scale">
-            <p className="eyebrow"><span /> Our Technologies</p>
-            <h2>We use modern technologies</h2>
-          </Reveal>
-          <Reveal className="tech-cloud" direction="up" delay={0.2}>
-            {technologies.map((tech) => <span key={tech}>{tech}</span>)}
-          </Reveal>
-        </div>
-      </section>
+      <TechnologiesSection />
 
       {/* CONTACT / ENQUIRY */}
       <section className="section section-accent" id="enquiry">
@@ -305,24 +280,10 @@ export default function Home() {
       </section>
 
       {/* FAQ */}
-      <section className="section section-light">
-        <div className="site-container faq-layout">
-          <Reveal className="section-heading">
-            <p className="eyebrow"><span /> F.A.Q.</p>
-            <h2>Need support?</h2>
-          </Reveal>
-          <div className="faq-list">
-            {faqs.map((item) => (
-              <Reveal key={item.question}>
-                <details>
-                  <summary>{item.question}<ArrowRight size={18} /></summary>
-                  <p>{item.answer}</p>
-                </details>
-              </Reveal>
-            ))}
-          </div>
-        </div>
-      </section>
+      <FAQSection />
+
+      {/* ARTICLES */}
+      <ArticlesSection />
 
       {/* FINAL CTA */}
       <section className="section final-cta">

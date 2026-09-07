@@ -1,8 +1,9 @@
-import Link from 'next/link';
+import { getAllPosts } from '@/lib/queries';
+import { urlFor } from '@/lib/sanity';
 import Image from 'next/image';
-import { getAllPosts } from '@/lib/blog';
-import { ArrowRight } from 'lucide-react';
+import Link from 'next/link';
 import Reveal from '@/components/Reveal';
+import { User, Calendar, MessageSquare, ArrowUpRight } from 'lucide-react';
 
 export const metadata = {
   title: 'Blog | Cybertech Marketing',
@@ -11,124 +12,78 @@ export const metadata = {
 
 export default async function BlogPage() {
   const posts = await getAllPosts();
-  const [featuredPost, ...otherPosts] = posts;
 
   return (
-    <main className="min-h-screen">
-      {/* Dark Hero Section */}
-      <section className="about-page-hero relative">
-        <div className="site-container about-page-layout" style={{ gridTemplateColumns: '1fr' }}>
-          <div className="about-page-copy" style={{ maxWidth: '900px', margin: '0 auto', textAlign: 'center' }}>
-            <Reveal direction="up">
-              <p className="eyebrow" style={{ justifyContent: 'center' }}><span /> Intelligence &amp; Insights</p>
-              <h1 style={{ fontSize: 'clamp(2.8rem, 6vw, 4.5rem)', lineHeight: 1.1 }}>Marketing intelligence &amp; <em>growth</em> strategy</h1>
-              <p style={{ fontSize: '1.25rem', marginTop: '24px', color: 'rgba(255,255,255,0.85)', lineHeight: 1.6, maxWidth: '760px', marginInline: 'auto' }}>
-                Insights on AI marketing, content systems, conversion design, and performance growth that actually ships.
-              </p>
-            </Reveal>
-          </div>
+    <main className="min-h-screen bg-[#F8FAFC]">
+      {/* Page Header */}
+      <section className="bg-white py-20 border-b border-gray-100">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+          <Reveal direction="up">
+            <div className="flex items-center justify-center gap-2 mb-4">
+              <h4 className="text-sm font-bold tracking-widest text-[#101828] uppercase">OUR ARTICLES</h4>
+              <div className="w-12 h-[2px] bg-[#1653FF] rounded flex items-center justify-end relative">
+                <div className="w-2 h-2 rounded-full bg-[#1653FF] absolute -right-1" />
+              </div>
+            </div>
+            <h1 className="text-5xl md:text-6xl font-extrabold text-[#101828] mb-6">
+              Latest <span className="text-[#1653FF]">Articles</span>
+            </h1>
+            <p className="text-xl text-[#475467] max-w-2xl mx-auto">
+              Insights on AI marketing, content systems, conversion design, and performance growth that actually ships.
+            </p>
+          </Reveal>
         </div>
       </section>
 
-      {/* Featured Post & Sidebar Grid */}
-      <section className="section section-light" style={{ padding: '80px 0 40px' }}>
-        <div className="site-container">
-          <div style={{ display: 'grid', gridTemplateColumns: '1fr', gap: '40px' }} className="lg:grid-cols-[1.8fr_1fr]">
-            
-            {/* Featured Post */}
-            {featuredPost && (
-              <Reveal direction="up">
-                <Link
-                  href={`/blog/${featuredPost.slug}`}
-                  style={{ display: 'block', borderRadius: '16px', overflow: 'hidden', border: '1px solid #e1e5ea', background: 'white', transition: 'transform 0.3s ease, box-shadow 0.3s ease' }}
-                  className="hover:-translate-y-2 hover:shadow-xl group"
-                >
-                  <div style={{ position: 'relative', height: '400px', width: '100%' }}>
+      {/* Grid of Posts */}
+      <section className="py-24">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {posts.map((post: any, idx: number) => (
+              <Reveal key={post.slug?.current || idx} direction="up" delay={idx * 0.1}>
+                <Link href={`/blog/${post.slug?.current}`} className="group block bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition-shadow duration-300 border border-gray-100 h-full flex flex-col">
+                  <div className="relative h-[240px] w-full overflow-hidden">
                     <Image 
-                      src={featuredPost.image} 
-                      alt={featuredPost.title}
+                      src={post.image ? (typeof post.image === 'string' ? post.image : urlFor(post.image).url()) : 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?q=80&w=600&auto=format&fit=crop'} 
+                      alt={post.title}
                       fill
-                      style={{ objectFit: 'cover' }}
-                      className="transition-transform duration-700 group-hover:scale-105"
+                      className="object-cover transition-transform duration-500 group-hover:scale-105"
                     />
-                    <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(to top, rgba(21, 26, 36, 0.9), transparent)' }}></div>
-                    <div style={{ position: 'absolute', bottom: '32px', left: '32px', right: '32px' }}>
-                      <span style={{ display: 'inline-block', padding: '4px 12px', background: 'var(--red)', color: 'white', fontSize: '0.8rem', fontWeight: 800, textTransform: 'uppercase', borderRadius: '4px', marginBottom: '16px' }}>
-                        {featuredPost.category}
+                    <div className="absolute top-4 left-4">
+                      <span className="bg-[#1653FF] text-white px-3 py-1 rounded text-xs font-bold uppercase tracking-wider">
+                        {post.category || 'Tech'}
                       </span>
-                      <h2 style={{ fontSize: '2.5rem', fontWeight: 900, color: 'white', lineHeight: 1.1, marginBottom: '12px' }}>
-                        {featuredPost.title}
-                      </h2>
-                      <div style={{ display: 'flex', alignItems: 'center', gap: '16px', color: 'rgba(255,255,255,0.8)', fontSize: '0.95rem', fontWeight: 600 }}>
-                        <span>{featuredPost.readTime}</span>
-                        <span>•</span>
-                        <span>{new Date(featuredPost.date).toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' })}</span>
+                    </div>
+                    {/* Decorative circle with arrow on hover */}
+                    <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                      <div className="w-14 h-14 rounded-full bg-[#1653FF] flex items-center justify-center text-white transform translate-y-4 group-hover:translate-y-0 transition-transform duration-300 shadow-lg">
+                        <ArrowUpRight size={24} strokeWidth={2.5} />
                       </div>
                     </div>
                   </div>
-                </Link>
-              </Reveal>
-            )}
-
-            {/* Sidebar CTA */}
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '24px' }}>
-              <Reveal direction="up" delay={0.1} style={{ height: '100%' }}>
-                <div style={{ background: 'var(--ink)', borderRadius: '16px', padding: '40px', height: '100%', color: 'white', display: 'flex', flexDirection: 'column', justifyContent: 'center', position: 'relative', overflow: 'hidden' }}>
-                  <div style={{ position: 'absolute', top: '-50px', right: '-50px', width: '200px', height: '200px', background: 'var(--red)', filter: 'blur(80px)', opacity: 0.4 }}></div>
-                  <h3 style={{ fontSize: '2rem', fontWeight: 900, marginBottom: '16px', position: 'relative' }}>Subscribe to the Growth Digest</h3>
-                  <p style={{ color: 'rgba(255,255,255,0.7)', fontSize: '1.1rem', lineHeight: 1.6, marginBottom: '32px', position: 'relative' }}>
-                    Keep up to date with our weekly digest of growth strategy, SEO, content, and creative insights.
-                  </p>
-                  <div style={{ display: 'flex', gap: '8px', position: 'relative' }}>
-                    <input type="email" placeholder="Business Email" style={{ flex: 1, padding: '16px', borderRadius: '8px', border: 'none', outline: 'none', color: 'var(--ink)' }} />
-                    <button className="button button-primary" style={{ minWidth: 'auto', padding: '0 24px', borderRadius: '8px' }}><ArrowRight size={20} /></button>
-                  </div>
-                </div>
-              </Reveal>
-            </div>
-
-          </div>
-        </div>
-      </section>
-
-      {/* Grid of Other Posts */}
-      <section className="section" style={{ padding: '40px 0 100px', background: 'var(--paper)' }}>
-        <div className="site-container">
-          <Reveal direction="up">
-            <h2 style={{ fontSize: '2.5rem', fontWeight: 900, color: 'var(--ink)', marginBottom: '40px' }}>Latest Articles</h2>
-          </Reveal>
-          
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(350px, 1fr))', gap: '32px' }}>
-            {otherPosts.map((post, idx) => (
-              <Reveal direction="up" delay={idx * 0.1} key={post.slug}>
-                <Link
-                  href={`/blog/${post.slug}`}
-                  style={{ display: 'flex', flexDirection: 'column', height: '100%', background: 'white', border: '1px solid #e1e5ea', borderRadius: '16px', overflow: 'hidden', transition: 'transform 0.3s ease, box-shadow 0.3s ease' }}
-                  className="hover:-translate-y-2 hover:shadow-xl group"
-                >
-                  <div style={{ height: '220px', position: 'relative', overflow: 'hidden' }}>
-                    <Image 
-                      src={post.image}
-                      alt={post.title}
-                      fill
-                      style={{ objectFit: 'cover' }}
-                      className="transition-transform duration-700 group-hover:scale-105"
-                    />
-                  </div>
-                  <div style={{ padding: '32px', display: 'flex', flexDirection: 'column', flex: 1 }}>
-                    <div style={{ display: 'flex', alignItems: 'center', gap: '12px', marginBottom: '16px', fontSize: '0.85rem', fontWeight: 800, color: 'var(--muted)', textTransform: 'uppercase' }}>
-                      <span style={{ color: 'var(--red)' }}>{post.category}</span>
-                      <span>•</span>
-                      <span>{post.readTime}</span>
-                    </div>
-                    <h3 style={{ fontSize: '1.5rem', fontWeight: 800, color: 'var(--ink)', lineHeight: 1.3, marginBottom: '16px' }}>
+                  
+                  <div className="p-6 md:p-8 flex flex-col flex-grow">
+                    <h2 className="text-xl md:text-[22px] font-bold text-[#101828] leading-tight mb-4 group-hover:text-[#1653FF] transition-colors">
                       {post.title}
-                    </h3>
-                    <p style={{ color: 'var(--muted)', lineHeight: 1.6, marginBottom: '24px', flex: 1 }}>
+                    </h2>
+                    
+                    <p className="text-[#475467] text-base leading-relaxed mb-8 flex-grow line-clamp-3">
                       {post.excerpt}
                     </p>
-                    <div style={{ display: 'flex', alignItems: 'center', gap: '8px', color: 'var(--ink)', fontWeight: 800, fontSize: '0.95rem' }}>
-                      Read Article <ArrowRight size={16} className="transition-transform group-hover:translate-x-1" />
+                    
+                    <div className="mt-auto pt-6 border-t border-gray-100 flex items-center justify-between gap-4 text-sm font-medium text-[#475467]">
+                      <div className="flex items-center gap-2">
+                        <User size={16} className="text-[#101828]" />
+                        <span>By admin</span>
+                      </div>
+                      <div className="flex items-center gap-2">
+                        <Calendar size={16} className="text-[#101828]" />
+                        <span>{new Date(post.date || Date.now()).toLocaleDateString('en-GB')}</span>
+                      </div>
+                      <div className="flex items-center gap-2 hidden lg:flex">
+                        <MessageSquare size={16} className="text-[#101828]" />
+                        <span>0</span>
+                      </div>
                     </div>
                   </div>
                 </Link>
