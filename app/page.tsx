@@ -82,7 +82,7 @@ const testimonials = [
     role: "CTO, DataFlow Systems",
     text: "Their AI solutions automated our lead qualification process, saving us 20+ hours per week. Game-changing technology partner.",
     rating: 5,
-    avatarColor: "linear-gradient(135deg, #3b82f6, #2563eb)", // Royal blue
+    avatarColor: "linear-gradient(135deg, #ff7a3d, #e6332a)",
   },
 ];
 
@@ -174,7 +174,7 @@ export default function Home() {
                 <div className="about-v2-avatars">
                   <div className="avatar-stack">
                     <span className="avatar-circle" style={{background: 'linear-gradient(135deg, #e6332a, #ff7a3d)'}}>CT</span>
-                    <span className="avatar-circle" style={{background: 'linear-gradient(135deg, #315a8f, #4a8fd4)'}}>DM</span>
+                    <span className="avatar-circle" style={{background: 'linear-gradient(135deg, #ff7a3d, #e6332a)'}}>DM</span>
                     <span className="avatar-circle" style={{background: 'linear-gradient(135deg, #202838, #3a4a60)'}}>AI</span>
                     <span className="avatar-circle avatar-count">50+</span>
                   </div>

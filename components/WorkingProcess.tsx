@@ -36,12 +36,12 @@ export default function WorkingProcess() {
   const [activeIdx, setActiveIdx] = useState(0);
 
   return (
-    <section className="py-24 bg-[#F4F8FE] relative overflow-hidden" id="process">
+    <section className="py-24 bg-[#FFF8F6] relative overflow-hidden" id="process">
       {/* Decorative background line */}
       <div className="absolute left-0 top-12 pointer-events-none hidden lg:block opacity-70">
         <svg width="150" height="250" viewBox="0 0 150 250" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <path d="M-50 0 C50 0 100 50 100 150 C100 200 50 250 0 250" stroke="#D1E0F5" strokeWidth="2" fill="none" />
-          <circle cx="-50" cy="0" r="4" fill="#1653FF" />
+          <path d="M-50 0 C50 0 100 50 100 150 C100 200 50 250 0 250" stroke="#F2C9C1" strokeWidth="2" fill="none" />
+          <circle cx="-50" cy="0" r="4" fill="#E6332A" />
         </svg>
       </div>
 
@@ -55,7 +55,7 @@ export default function WorkingProcess() {
                 WORKING PROCESS
               </p>
               <h2 className="text-4xl md:text-5xl font-extrabold text-[#101828] mb-12">
-                Our <span className="text-[#1653FF]">Approach</span>
+                Our <span className="text-[#E6332A]">Approach</span>
               </h2>
             </Reveal>
 
@@ -68,7 +68,7 @@ export default function WorkingProcess() {
                       <button
                         onClick={() => setActiveIdx(idx)}
                         className={`w-full py-6 flex items-center justify-between text-left transition-colors duration-200 ${
-                          isActive ? "text-[#101828]" : "text-[#101828] hover:text-[#1653FF]"
+                          isActive ? "text-[#101828]" : "text-[#101828] hover:text-[#E6332A]"
                         }`}
                       >
                         <span className="text-xl md:text-2xl font-semibold">
@@ -86,7 +86,7 @@ export default function WorkingProcess() {
                           isActive ? "max-h-48 opacity-100 mb-6" : "max-h-0 opacity-0"
                         }`}
                       >
-                        <div className="bg-[#E2EDFC] p-6 rounded-md">
+                        <div className="bg-[#FFEDE8] p-6 rounded-md">
                           <p className="text-[#475467] leading-relaxed whitespace-pre-line">
                             {step.description}
                           </p>
@@ -102,30 +102,23 @@ export default function WorkingProcess() {
           {/* Right Column - Diagram */}
           <div className="flex justify-center lg:justify-end mt-12 lg:mt-0">
             <Reveal direction="right">
-              <div className="flex flex-col items-center relative w-[320px] sm:w-[420px] md:w-[480px]">
+              <div className="process-diagram">
                 {steps.map((step, idx) => {
                   const isActive = activeIdx === idx;
                   return (
                     <div
                       key={step.id}
                       onClick={() => setActiveIdx(idx)}
-                      className={`cursor-pointer flex items-center justify-center w-full aspect-[3.5/1] rounded-[100%] transition-all duration-500 absolute left-0 ${
-                        isActive 
-                          ? "bg-[#1653FF] text-white border-2 border-[#1653FF] shadow-xl z-20 scale-105" 
-                          : "bg-transparent text-[#101828] border border-[#101828] hover:border-[#1653FF] hover:text-[#1653FF] z-10"
-                      }`}
-                      style={{
-                        top: `${idx * 65}px`, // Adjust vertical spacing to create the overlap
-                      }}
+                      className={`process-diagram-card cursor-pointer ${isActive ? "is-active" : ""}`}
                     >
-                      <span className={`text-xl sm:text-2xl font-medium ${isActive ? 'font-semibold' : ''}`}>
+                      <span className="process-diagram-index">{step.id}</span>
+                      <span className="process-diagram-title">
                         {step.title}
                       </span>
+                      <span className="process-diagram-toggle" aria-hidden="true">{isActive ? "−" : "+"}</span>
                     </div>
                   );
                 })}
-                {/* Spacer to give the relative container enough height */}
-                <div style={{ height: `${(steps.length - 1) * 65 + 160}px`, width: '100%' }} />
               </div>
             </Reveal>
           </div>

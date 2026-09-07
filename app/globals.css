@@ -9,7 +9,7 @@
   --red: #e6332a;
   --red-dark: #b91f1a;
   --orange: #ff7a3d;
-  --blue: #315a8f;
+ --blue: #e6332a;
   --line: #e1e5ea;
   --radius: 8px;
 }
@@ -523,7 +523,7 @@ img {
   position: absolute;
   inset: 0 0 auto;
   height: 4px;
-  background: linear-gradient(90deg, var(--red), var(--orange), var(--blue));
+  background: linear-gradient(90deg, var(--red), var(--orange), var(--red));
   transform: scaleX(0);
   transform-origin: left;
   transition: transform .4s cubic-bezier(.25, 1, .35, 1);

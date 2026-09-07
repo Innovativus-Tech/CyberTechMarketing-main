@@ -19,7 +19,7 @@ const fallbackServices = [
     metric: 'MODERN SITES',
     href: '/#services',
     icon: 'WD',
-    gradient: 'from-blue-600 to-cyan-600',
+    gradient: 'from-red-600 to-orange-500',
   },
   {
     title: 'Software Development',
@@ -28,7 +28,7 @@ const fallbackServices = [
     metric: 'SCALABLE BUILDS',
     href: '/#services',
     icon: 'SD',
-    gradient: 'from-indigo-600 to-blue-600',
+    gradient: 'from-red-700 to-orange-500',
   },
   {
     title: 'AI & Intelligent Solutions',
@@ -87,9 +87,9 @@ const iconMap: Record<string, string> = {
 const gradientMap: Record<number, string> = {
   0: 'from-red-600 to-orange-600',
   1: 'from-purple-600 to-pink-600',
-  2: 'from-blue-600 to-cyan-600',
+  2: 'from-red-600 to-orange-500',
   3: 'from-green-600 to-emerald-600',
-  4: 'from-indigo-600 to-blue-600',
+  4: 'from-red-700 to-orange-500',
   5: 'from-amber-600 to-orange-600',
 };
 

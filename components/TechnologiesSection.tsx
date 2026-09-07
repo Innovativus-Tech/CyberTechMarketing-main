@@ -70,13 +70,13 @@ export default function TechnologiesSection() {
   const [activeTab, setActiveTab] = useState<keyof typeof techData>("Web Platform");
 
   return (
-    <section className="py-24 relative overflow-hidden bg-[#EBF3FC]" id="technology">
+    <section className="py-24 relative overflow-hidden bg-[#FFF8F6]" id="technology">
       {/* Decorative background line */}
       <div className="absolute right-0 top-0 h-full w-1/3 pointer-events-none hidden lg:block">
         <svg width="100%" height="100%" viewBox="0 0 400 800" fill="none" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none">
-          <path d="M 0 120 C 150 120 250 150 250 300 C 250 450 350 450 400 450" stroke="#D1E0F5" strokeWidth="2" fill="none" />
-          <circle cx="250" cy="300" r="6" fill="#1653FF" />
-          <circle cx="400" cy="450" r="6" fill="#1653FF" />
+          <path d="M 0 120 C 150 120 250 150 250 300 C 250 450 350 450 400 450" stroke="#F2C9C1" strokeWidth="2" fill="none" />
+          <circle cx="250" cy="300" r="6" fill="#E6332A" />
+          <circle cx="400" cy="450" r="6" fill="#E6332A" />
         </svg>
       </div>
 
@@ -84,17 +84,17 @@ export default function TechnologiesSection() {
         <Reveal direction="up">
           <div className="flex items-center justify-center gap-2 mb-4">
             <h4 className="text-sm font-bold tracking-widest text-[#101828] uppercase">OUR TECHNOLOGIES</h4>
-            <div className="w-12 h-[2px] bg-blue-500 rounded flex items-center justify-end relative">
-              <div className="w-2 h-2 rounded-full bg-blue-500 absolute -right-1" />
+            <div className="w-12 h-[2px] bg-[#E6332A] rounded flex items-center justify-end relative">
+              <div className="w-2 h-2 rounded-full bg-[#E6332A] absolute -right-1" />
             </div>
           </div>
           <h2 className="text-4xl md:text-5xl font-extrabold text-[#101828] mb-12">
-            We Use <span className="text-[#1653FF]">Technologies</span>
+            We Use <span className="text-[#E6332A]">Technologies</span>
           </h2>
         </Reveal>
 
         <Reveal direction="up" delay={0.1}>
-          <div className="flex flex-wrap justify-center bg-[#D6E6FA] rounded-full p-1.5 mb-16 max-w-fit mx-auto shadow-inner">
+          <div className="flex flex-wrap justify-center bg-[#FFE4DE] rounded-full p-1.5 mb-16 max-w-fit mx-auto shadow-inner">
             {tabs.map((tab) => (
               <button
                 key={tab}

@@ -1,4 +1,4 @@
-import { getAllPosts } from '@/lib/queries';
+import { getAllPosts } from '@/lib/blog';
 import { urlFor } from '@/lib/sanity';
 import Image from 'next/image';
 import Link from 'next/link';
@@ -21,12 +21,12 @@ export default async function BlogPage() {
           <Reveal direction="up">
             <div className="flex items-center justify-center gap-2 mb-4">
               <h4 className="text-sm font-bold tracking-widest text-[#101828] uppercase">OUR ARTICLES</h4>
-              <div className="w-12 h-[2px] bg-[#1653FF] rounded flex items-center justify-end relative">
-                <div className="w-2 h-2 rounded-full bg-[#1653FF] absolute -right-1" />
+              <div className="w-12 h-[2px] bg-[#E6332A] rounded flex items-center justify-end relative">
+                <div className="w-2 h-2 rounded-full bg-[#E6332A] absolute -right-1" />
               </div>
             </div>
             <h1 className="text-5xl md:text-6xl font-extrabold text-[#101828] mb-6">
-              Latest <span className="text-[#1653FF]">Articles</span>
+              Latest <span className="text-[#E6332A]">Articles</span>
             </h1>
             <p className="text-xl text-[#475467] max-w-2xl mx-auto">
               Insights on AI marketing, content systems, conversion design, and performance growth that actually ships.
@@ -50,20 +50,20 @@ export default async function BlogPage() {
                       className="object-cover transition-transform duration-500 group-hover:scale-105"
                     />
                     <div className="absolute top-4 left-4">
-                      <span className="bg-[#1653FF] text-white px-3 py-1 rounded text-xs font-bold uppercase tracking-wider">
+                      <span className="bg-[#E6332A] text-white px-3 py-1 rounded text-xs font-bold uppercase tracking-wider">
                         {post.category || 'Tech'}
                       </span>
                     </div>
                     {/* Decorative circle with arrow on hover */}
                     <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                      <div className="w-14 h-14 rounded-full bg-[#1653FF] flex items-center justify-center text-white transform translate-y-4 group-hover:translate-y-0 transition-transform duration-300 shadow-lg">
+                      <div className="w-14 h-14 rounded-full bg-[#E6332A] flex items-center justify-center text-white transform translate-y-4 group-hover:translate-y-0 transition-transform duration-300 shadow-lg">
                         <ArrowUpRight size={24} strokeWidth={2.5} />
                       </div>
                     </div>
                   </div>
                   
                   <div className="p-6 md:p-8 flex flex-col flex-grow">
-                    <h2 className="text-xl md:text-[22px] font-bold text-[#101828] leading-tight mb-4 group-hover:text-[#1653FF] transition-colors">
+                    <h2 className="text-xl md:text-[22px] font-bold text-[#101828] leading-tight mb-4 group-hover:text-[#E6332A] transition-colors">
                       {post.title}
                     </h2>
                     

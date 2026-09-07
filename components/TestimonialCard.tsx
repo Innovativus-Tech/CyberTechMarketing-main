@@ -12,7 +12,7 @@ interface Testimonial {
 
 const colorSchemes = [
   { bg: 'from-red-50 to-orange-50', border: 'border-red-200', accent: 'bg-red-600', quote: 'text-red-500' },
-  { bg: 'from-blue-50 to-cyan-50', border: 'border-blue-200', accent: 'bg-blue-600', quote: 'text-blue-500' },
+  { bg: 'from-red-50 to-orange-50', border: 'border-red-200', accent: 'bg-red-600', quote: 'text-red-500' },
   { bg: 'from-purple-50 to-pink-50', border: 'border-purple-200', accent: 'bg-purple-600', quote: 'text-purple-500' },
   { bg: 'from-green-50 to-emerald-50', border: 'border-green-200', accent: 'bg-green-600', quote: 'text-green-500' },
   { bg: 'from-amber-50 to-yellow-50', border: 'border-amber-200', accent: 'bg-amber-600', quote: 'text-amber-500' },

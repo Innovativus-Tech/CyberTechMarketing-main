@@ -26,12 +26,12 @@ const gradientMap: Record<string, string> = {
   'Design': 'from-purple-600 to-pink-600',
   'Advertising': 'from-green-600 to-emerald-600',
   'Content': 'from-amber-600 to-orange-600',
-  'Development': 'from-indigo-600 to-blue-600',
+  'Development': 'from-red-600 to-orange-500',
 };
 
 export default function ServiceCard({ service, index = 0 }: { service: Service; index?: number }) {
   const icon = iconMap[service.category] || '⚡';
-  const gradient = gradientMap[service.category] || 'from-blue-600 to-cyan-600';
+  const gradient = gradientMap[service.category] || 'from-red-600 to-orange-500';
 
   return (
     <Link href={`/services/${service.slug.current}`}>

@@ -43,12 +43,12 @@ export default function ArticlesSection() {
         <Reveal direction="up">
           <div className="flex items-center justify-center gap-2 mb-4">
             <h4 className="text-sm font-bold tracking-widest text-[#101828] uppercase">OUR ARTICLES</h4>
-            <div className="w-12 h-[2px] bg-blue-500 rounded flex items-center justify-end relative">
-              <div className="w-2 h-2 rounded-full bg-blue-500 absolute -right-1" />
+            <div className="w-12 h-[2px] bg-[#E6332A] rounded flex items-center justify-end relative">
+              <div className="w-2 h-2 rounded-full bg-[#E6332A] absolute -right-1" />
             </div>
           </div>
           <h2 className="text-4xl md:text-5xl font-extrabold text-[#101828] mb-16 text-center">
-            Latest <span className="text-[#1653FF]">Articles</span>
+            Latest <span className="text-[#E6332A]">Articles</span>
           </h2>
         </Reveal>
 
@@ -65,14 +65,14 @@ export default function ArticlesSection() {
                   />
                   {/* Decorative circle with arrow on hover */}
                   <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                    <div className="w-14 h-14 rounded-full bg-[#1653FF] flex items-center justify-center text-white transform translate-y-4 group-hover:translate-y-0 transition-transform duration-300">
+                    <div className="w-14 h-14 rounded-full bg-[#E6332A] flex items-center justify-center text-white transform translate-y-4 group-hover:translate-y-0 transition-transform duration-300">
                       <ArrowUpRight size={24} strokeWidth={2.5} />
                     </div>
                   </div>
                 </div>
                 
                 <div className="p-6 md:p-8 flex flex-col flex-grow">
-                  <h3 className="text-xl md:text-[22px] font-bold text-[#101828] leading-tight mb-6 group-hover:text-[#1653FF] transition-colors">
+                  <h3 className="text-xl md:text-[22px] font-bold text-[#101828] leading-tight mb-6 group-hover:text-[#E6332A] transition-colors">
                     {article.title}
                   </h3>
                   

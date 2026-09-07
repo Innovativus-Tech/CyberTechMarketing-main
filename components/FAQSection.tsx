@@ -46,7 +46,7 @@ export default function FAQSection() {
       <div 
         className="absolute top-0 right-0 w-[300px] md:w-[500px] h-[300px] md:h-[500px] pointer-events-none opacity-20 hidden md:block" 
         style={{
-          background: 'linear-gradient(225deg, #1653FF 0%, transparent 50%)',
+          background: 'linear-gradient(225deg, #E6332A 0%, transparent 50%)',
         }} 
       />
 
@@ -54,12 +54,12 @@ export default function FAQSection() {
         <Reveal direction="up">
           <div className="flex items-center justify-center gap-2 mb-4">
             <h4 className="text-sm font-bold tracking-widest text-[#101828] uppercase">F.A.Q.</h4>
-            <div className="w-12 h-[2px] bg-blue-500 rounded flex items-center justify-end relative">
-              <div className="w-2 h-2 rounded-full bg-blue-500 absolute -right-1" />
+            <div className="w-12 h-[2px] bg-[#E6332A] rounded flex items-center justify-end relative">
+              <div className="w-2 h-2 rounded-full bg-[#E6332A] absolute -right-1" />
             </div>
           </div>
           <h2 className="text-4xl md:text-5xl font-extrabold text-[#101828] mb-16 text-center">
-            Need a <span className="text-[#1653FF]">Support?</span>
+            Need a <span className="text-[#E6332A]">Support?</span>
           </h2>
         </Reveal>
 
@@ -73,13 +73,13 @@ export default function FAQSection() {
                     onClick={() => toggle(idx)}
                     className="w-full flex items-center justify-between py-4 text-left group"
                   >
-                    <h3 className="text-xl md:text-[22px] font-medium text-[#101828] pr-8 transition-colors group-hover:text-[#1653FF]">
+                    <h3 className="text-xl md:text-[22px] font-medium text-[#101828] pr-8 transition-colors group-hover:text-[#E6332A]">
                       Q. {faq.question}
                     </h3>
                     <div className={`w-10 h-10 flex-shrink-0 flex items-center justify-center rounded-md border transition-colors duration-200 ${
                       isActive 
-                        ? "bg-[#1653FF] border-[#1653FF] text-white" 
-                        : "bg-white border-gray-200 text-[#1653FF] group-hover:border-[#1653FF]"
+                        ? "bg-[#E6332A] border-[#E6332A] text-white" 
+                        : "bg-white border-gray-200 text-[#E6332A] group-hover:border-[#E6332A]"
                     }`}>
                       {isActive ? <Minus size={20} strokeWidth={2.5} /> : <Plus size={20} strokeWidth={2.5} />}
                     </div>
@@ -90,7 +90,7 @@ export default function FAQSection() {
                       isActive ? "max-h-[800px] opacity-100 mt-2 mb-4" : "max-h-0 opacity-0"
                     }`}
                   >
-                    <div className="bg-[#DFEAFA] rounded-md p-6 md:p-10 flex flex-col sm:flex-row gap-6 md:gap-10">
+                    <div className="bg-[#FFEDE8] rounded-md p-6 md:p-10 flex flex-col sm:flex-row gap-6 md:gap-10">
                       <div className="text-4xl md:text-5xl font-extrabold text-[#101828] flex-shrink-0">
                         A.
                       </div>
@@ -101,7 +101,7 @@ export default function FAQSection() {
                           <ul className="grid sm:grid-cols-2 gap-y-4 gap-x-8">
                             {faq.list.map((item, i) => (
                               <li key={i} className="flex items-center gap-3">
-                                <div className="w-1.5 h-1.5 rounded-full bg-[#1653FF] flex-shrink-0" />
+                                <div className="w-1.5 h-1.5 rounded-full bg-[#E6332A] flex-shrink-0" />
                                 <span className="text-[15px]">{item}</span>
                               </li>
                             ))}
