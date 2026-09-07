@@ -40,8 +40,8 @@ export default async function BlogPage() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
             {posts.map((post: any, idx: number) => (
-              <Reveal key={post.slug?.current || idx} direction="up" delay={idx * 0.1}>
-                <Link href={`/blog/${post.slug?.current}`} className="group block bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition-shadow duration-300 border border-gray-100 h-full flex flex-col">
+              <Reveal key={post.slug || idx} direction="up" delay={idx * 0.1}>
+                <Link href={`/blog/${post.slug}`} className="group block bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition-shadow duration-300 border border-gray-100 h-full flex flex-col">
                   <div className="relative h-[240px] w-full overflow-hidden">
                     <Image 
                       src={post.image ? (typeof post.image === 'string' ? post.image : urlFor(post.image).url()) : 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?q=80&w=600&auto=format&fit=crop'} 

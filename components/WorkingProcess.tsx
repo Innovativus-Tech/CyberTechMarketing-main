@@ -63,7 +63,7 @@ export default function WorkingProcess() {
               {steps.map((step, idx) => {
                 const isActive = activeIdx === idx;
                 return (
-                  <Reveal key={step.id} direction="up" delay={idx * 0.1}>
+                  <div key={step.id}>
                     <div className="border-b border-gray-200 last:border-0">
                       <button
                         onClick={() => setActiveIdx(idx)}
@@ -93,7 +93,7 @@ export default function WorkingProcess() {
                         </div>
                       </div>
                     </div>
-                  </Reveal>
+                  </div>
                 );
               })}
             </div>

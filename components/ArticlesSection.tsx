@@ -9,30 +9,30 @@ import Link from "next/link";
 const articles = [
   {
     id: 1,
-    title: "Unlocking New Possibilities with Advanced Cloud Computing",
-    image: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?q=80&w=600&auto=format&fit=crop",
+    title: "The AI Demand Generation Playbook for High-Intent Pipeline Growth",
+    image: "/images/ai.webp",
     author: "admin",
     date: "06/08/2024",
     comments: 0,
-    slug: "/blog/unlocking-new-possibilities"
+    slug: "/blog/ai-demand-generation-playbook"
   },
   {
     id: 2,
-    title: "Insider Perspectives on IT Solutions with Cybertech",
-    image: "https://images.unsplash.com/photo-1518770660439-4636190af475?q=80&w=600&auto=format&fit=crop",
+    title: "Content Operations That Keep Multi-Channel Marketing Consistent",
+    image: "/images/collaboration.webp",
     author: "admin",
     date: "06/08/2024",
     comments: 0,
-    slug: "/blog/insider-perspectives"
+    slug: "/blog/content-ops-for-multi-channel-marketing"
   },
   {
     id: 3,
-    title: "Harnessing the Power of AI and Machine Learning",
-    image: "https://images.unsplash.com/photo-1620712943543-bcc4688e7485?q=80&w=600&auto=format&fit=crop",
+    title: "Conversion Design Principles That Help Service Brands Win Trust Faster",
+    image: "/images/marketing.webp",
     author: "admin",
     date: "06/08/2024",
     comments: 0,
-    slug: "/blog/harnessing-ai"
+    slug: "/blog/conversion-design-for-service-brands"
   }
 ];
 
