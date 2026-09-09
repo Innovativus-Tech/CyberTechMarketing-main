@@ -7,7 +7,7 @@ if (!cached) {
 }
 
 async function dbConnect() {
-  const mongoUri = process.env.MONGODB_URI;
+  const mongoUri = process.env.MONGODB_URI?.trim();
 
   if (!mongoUri) {
     throw new Error('MONGODB_URI is not configured');
@@ -20,6 +20,8 @@ async function dbConnect() {
   if (!cached.promise) {
     const opts = {
       bufferCommands: false,
+      serverSelectionTimeoutMS: 10000,
+      connectTimeoutMS: 10000,
     };
 
     cached.promise = mongoose

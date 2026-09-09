@@ -3,6 +3,7 @@ import { ZodError } from 'zod';
 import dbConnect from '@/lib/mongodb';
 import ContactSubmission from '@/models/ContactSubmission';
 import { validateContactForm } from '@/lib/validations/contact';
+import { saveLocalContactSubmission } from '@/lib/localContactStorage';
 
 export async function POST(request: NextRequest) {
   try {
@@ -42,15 +43,7 @@ export async function POST(request: NextRequest) {
     const validatedData = validation.data;
     const [firstName, ...lastNameParts] = validatedData.fullName.trim().split(/\s+/);
     const lastName = lastNameParts.join(' ');
-    if (!process.env.MONGODB_URI) {
-      return NextResponse.json(
-        { error: 'Contact storage is not configured yet. Add MONGODB_URI to enable submissions.' },
-        { status: 503 }
-      );
-    }
-    await dbConnect();
-
-    const submission = new ContactSubmission({
+    const submissionData = {
       category: validatedData.category,
       firstName,
       lastName,
@@ -62,7 +55,29 @@ export async function POST(request: NextRequest) {
       companySize: 'companySize' in validatedData ? validatedData.companySize : undefined,
       serviceInterest: validatedData.serviceInterest || undefined,
       message: validatedData.message,
-    });
+    };
+
+    if (!process.env.MONGODB_URI) {
+      if (process.env.NODE_ENV !== 'development') {
+        return NextResponse.json(
+          { error: 'Enquiry storage is not configured. Please contact us by email or WhatsApp.' },
+          { status: 503 }
+        );
+      }
+
+      const localId = await saveLocalContactSubmission(submissionData);
+      return NextResponse.json(
+        {
+          success: true,
+          message: 'Contact submission saved successfully',
+          reference: localId.slice(0, 8),
+        },
+        { status: 201 }
+      );
+    }
+
+    await dbConnect();
+    const submission = new ContactSubmission(submissionData);
 
     await submission.save();
 
@@ -81,7 +96,12 @@ export async function POST(request: NextRequest) {
       { status: 201 }
     );
   } catch (error) {
-    console.error('Error:', error);
+    const diagnostic = error as { name?: string; code?: number | string; message?: string };
+    console.error('Contact submission error:', {
+      name: diagnostic?.name || 'UnknownError',
+      code: diagnostic?.code || 'unknown',
+      message: diagnostic?.message || 'No error message',
+    });
 
     // Handle Zod validation errors
     if (error instanceof ZodError) {

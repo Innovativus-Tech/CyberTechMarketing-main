@@ -9,8 +9,11 @@
 /.next/
 /out/
 
-# Compiled Sanity Studio
+# Build output
 /dist
+
+# Local development form submissions
+/.data/
 
 
 
