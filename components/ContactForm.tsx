@@ -2,6 +2,7 @@
 
 import { FormEvent, useState } from "react";
 import { ArrowRight, CheckCircle2, Loader2 } from "lucide-react";
+import { useRouter } from "next/navigation";
 import { validateSalesContact } from "@/lib/validations/contact";
 
 const serviceOptions = [
@@ -21,6 +22,7 @@ type ContactFormProps = {
 type FormState = "idle" | "submitting" | "success" | "error";
 
 export default function ContactForm({ compact = false, defaultService = "" }: ContactFormProps) {
+  const router = useRouter();
   const [status, setStatus] = useState<FormState>("idle");
   const [message, setMessage] = useState("");
   const [emailFallback, setEmailFallback] = useState("");
@@ -86,8 +88,9 @@ export default function ContactForm({ compact = false, defaultService = "" }: Co
       }
 
       setStatus("success");
-      setMessage(`Thank you. Your enquiry has been received.${result.reference ? ` Reference: ${result.reference}.` : ""} We’ll review your project and get back to you.`);
       form.reset();
+      const reference = typeof result.reference === "string" ? result.reference : "";
+      router.push(reference ? `/thank-you?reference=${encodeURIComponent(reference)}` : "/thank-you");
     } catch (error) {
       const subject = encodeURIComponent(`Cybertech Marketing enquiry from ${payload.fullName}`.trim());
       const body = encodeURIComponent(

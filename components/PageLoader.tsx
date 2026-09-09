@@ -31,18 +31,7 @@ export default function PageLoader() {
       }}
     >
       <div style={{ textAlign: "center" }}>
-        <div
-          className="brand-mark"
-          style={{
-            width: "60px",
-            height: "60px",
-            margin: "0 auto 20px",
-            animation: "spin 1.2s linear infinite",
-          }}
-        >
-          <span className="brand-mark-dot brand-mark-dot-one" />
-          <span className="brand-mark-dot brand-mark-dot-two" />
-        </div>
+        <div className="page-loader-logo" aria-hidden="true" />
         <p style={{ color: "#b8c0cc", fontSize: "14px", fontWeight: 700 }}>
           Loading Cybertech...
         </p>

@@ -12,10 +12,10 @@ export const metadata: Metadata = {
   description: "Cybertech Marketing builds connected digital growth systems, software products, AI solutions, and mobile experiences.",
   icons: {
     icon: [
-      { url: "/favicon.svg", type: "image/svg+xml" },
+      { url: "/favicon.png", type: "image/png", sizes: "4500x4500" },
     ],
-    shortcut: "/favicon.svg",
-    apple: "/favicon.svg",
+    shortcut: "/favicon.png",
+    apple: "/favicon.png",
   },
 };
 

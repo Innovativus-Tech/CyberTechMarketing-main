@@ -41,7 +41,6 @@ export default function ContactPage() {
       <section className="section section-accent" id="enquiry">
         <div className="site-container contact-band contact-start">
           <Reveal className="contact-intro" direction="left">
-            <p className="eyebrow"><span /> You Are Here</p>
             <h2>Have a Business Problem You Want to Solve?</h2>
             <div style={{ display: 'flex', flexDirection: 'column', gap: '14px', marginBottom: '28px' }}>
               <p style={{ fontWeight: 700, color: '#101828', fontSize: '1.05rem' }}>Tell us what you&apos;re trying to grow, build or automate.</p>
