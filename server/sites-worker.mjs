@@ -13,7 +13,8 @@ export async function saveEnquiry(db, data) {
 export async function handleContact(request, env) {
   if (request.method !== "POST") return json({ error: "Method not allowed" }, 405);
   const origin = request.headers.get("Origin");
-  if (origin && origin !== new URL(request.url).origin) return json({ error: "Please submit from this website." }, 403);
+  const forwardedHost = (request.headers.get("X-Forwarded-Host") || request.headers.get("Host") || new URL(request.url).host).split(",")[0].trim().toLowerCase();
+  if (origin && new URL(origin).host.toLowerCase() !== forwardedHost) return json({ error: "Please submit from this website." }, 403);
   if (!request.headers.get("Content-Type")?.includes("application/json")) return json({ error: "Expected a JSON request." }, 415);
   if (Number(request.headers.get("Content-Length") || 0) > 12000) return json({ error: "Message too large." }, 413);
   let raw;
@@ -24,7 +25,7 @@ export async function handleContact(request, env) {
   const fields = ["fullName", "email", "phone", "company", "serviceInterest", "message"];
   const data = Object.fromEntries(fields.map(key=>[key,typeof raw[key]==="string"?raw[key].trim():""]));
   const phoneDigits = data.phone.replace(/\D/g,"").length;
-  const invalid = data.fullName.length < 2 || data.fullName.length > 100 || !/^[a-zA-Z\s'-]+$/.test(data.fullName) || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(data.email) || data.email.length > 100 || !/^[+\d()\s.-]+$/.test(data.phone) || phoneDigits < 10 || phoneDigits > 15 || data.phone.length > 25 || data.company.length > 100 || data.message.length < 10 || data.message.length > 1000 || (data.serviceInterest && !serviceNames.includes(data.serviceInterest));
+  const invalid = data.fullName.length < 2 || data.fullName.length > 100 || !/^[a-zA-Z\s'-]+$/.test(data.fullName) || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(data.email) || data.email.length > 100 || (data.phone !== "" && (!/^[+\d()\s.-]+$/.test(data.phone) || phoneDigits < 10 || phoneDigits > 15)) || data.phone.length > 25 || data.company.length > 100 || data.message.length < 10 || data.message.length > 1000 || (data.serviceInterest && !serviceNames.includes(data.serviceInterest));
   if (invalid) return json({ error: "Please check your name, email, phone and project details." }, 400);
   if (!env.DB) return json({ error: "We couldn’t receive your enquiry. Please contact us by email or WhatsApp." }, 503);
   try { const id = await saveEnquiry(env.DB, data); return json({ success: true, reference: id.slice(0,8) }, 201); }

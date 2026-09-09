@@ -36,7 +36,7 @@ const ContactSubmissionSchema = new Schema<IContactSubmission>(
     },
     phone: {
       type: String,
-      required: true,
+      default: '',
     },
     company: {
       type: String,

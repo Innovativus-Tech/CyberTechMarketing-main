@@ -9,7 +9,7 @@ const payload = {
   website: ""
 };
 
-fetch("http://localhost:3000/api/contact", {
+fetch("http://localhost:3001/api/contact", {
   method: "POST",
   headers: { "Content-Type": "application/json" },
   body: JSON.stringify(payload)

@@ -29,13 +29,15 @@ const baseContactSchema = z.object({
   
   phone: z
     .string()
-    .min(10, 'Phone number must be at least 10 digits')
     .max(25, 'Phone number must not exceed 25 characters')
-    .regex(phoneCharactersRegex, 'Please provide a valid phone number')
+    .refine(
+      (value) => value === '' || phoneCharactersRegex.test(value),
+      'Please provide a valid phone number'
+    )
     .refine((value) => {
       const digitCount = value.replace(/\D/g, '').length;
-      return digitCount >= 10 && digitCount <= 15;
-    }, 'Phone number must contain 10 to 15 digits')
+      return value === '' || (digitCount >= 10 && digitCount <= 15);
+    }, 'Phone number must contain 10 to 15 digits when provided')
     .transform((val) => val.replace(/\s+/g, ' ').trim()), // Normalize spaces
 
   serviceInterest: z

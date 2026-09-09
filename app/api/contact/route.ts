@@ -5,10 +5,23 @@ import ContactSubmission from '@/models/ContactSubmission';
 import { validateContactForm } from '@/lib/validations/contact';
 import { saveLocalContactSubmission } from '@/lib/localContactStorage';
 
+function getForwardedHost(request: NextRequest) {
+  return (
+    request.headers.get('x-forwarded-host')?.split(',')[0]?.trim().toLowerCase() ||
+    request.headers.get('host')?.toLowerCase() ||
+    request.nextUrl.host.toLowerCase()
+  );
+}
+
 export async function POST(request: NextRequest) {
   try {
     const origin = request.headers.get('origin');
-    if (origin && origin !== request.nextUrl.origin) return NextResponse.json({ error: 'Please submit from this website.' }, { status: 403 });
+    if (origin) {
+      const originHost = new URL(origin).host.toLowerCase();
+      if (originHost !== getForwardedHost(request)) {
+        return NextResponse.json({ error: 'Please submit from this website.' }, { status: 403 });
+      }
+    }
     if (Number(request.headers.get('content-length') || 0) > 12000) return NextResponse.json({ error: 'Message too large.' }, { status: 413 });
     const body = await request.json();
     if (body?.website) return NextResponse.json({ success: true }, { status: 201 });

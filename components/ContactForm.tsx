@@ -104,19 +104,13 @@ export default function ContactForm({ compact = false, defaultService = "" }: Co
 
       setEmailFallback(`mailto:info@cybertechmarketing.com?subject=${subject}&body=${body}`);
       setStatus("error");
-
-      const serverErrorMessage =
-        error instanceof Error && error.message !== "Failed to fetch"
-          ? error.message
-          : null;
-      const displayMessage =
-        serverErrorMessage && serverErrorMessage !== "Please check the form and try again."
-          ? serverErrorMessage
-          : error instanceof Error && error.name === "TimeoutError"
-            ? "The request timed out. Please try again or contact us directly."
-            : "We couldn’t submit your enquiry. Please check your details and try again, or send it by email or WhatsApp below.";
-
-      setMessage(displayMessage);
+      setMessage(
+        error instanceof Error && error.name === "TimeoutError"
+          ? "The request timed out. Please try again or contact us directly."
+          : error instanceof Error
+            ? error.message
+            : "We couldn’t submit your enquiry. Please try again or contact us directly."
+      );
     }
   }
 
