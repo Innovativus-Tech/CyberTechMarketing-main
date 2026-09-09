@@ -1,21 +1,15 @@
 import { z } from 'zod';
 
-// Phone number validation - supports multiple formats
-const phoneRegex = /^[\+]?[(]?[0-9]{1,4}[)]?[-\s\.]?[(]?[0-9]{1,4}[)]?[-\s\.]?[0-9]{1,9}$/;
+// Accept familiar international formatting, then validate the actual digit count.
+const phoneCharactersRegex = /^[+\d()\s.-]+$/;
 
 // Base contact schema with common fields
 const baseContactSchema = z.object({
-  firstName: z
+  fullName: z
     .string()
-    .min(2, 'First name must be at least 2 characters')
-    .max(50, 'First name must not exceed 50 characters')
-    .regex(/^[a-zA-Z\s'-]+$/, 'First name can only contain letters, spaces, hyphens, and apostrophes'),
-  
-  lastName: z
-    .string()
-    .min(2, 'Last name must be at least 2 characters')
-    .max(50, 'Last name must not exceed 50 characters')
-    .regex(/^[a-zA-Z\s'-]+$/, 'Last name can only contain letters, spaces, hyphens, and apostrophes'),
+    .min(2, 'Full name must be at least 2 characters')
+    .max(100, 'Full name must not exceed 100 characters')
+    .regex(/^[a-zA-Z\s'-]+$/, 'Full name can only contain letters, spaces, hyphens, and apostrophes'),
   
   email: z
     .string()
@@ -36,8 +30,12 @@ const baseContactSchema = z.object({
   phone: z
     .string()
     .min(10, 'Phone number must be at least 10 digits')
-    .max(20, 'Phone number must not exceed 20 characters')
-    .regex(phoneRegex, 'Please provide a valid phone number (e.g., +1 555-123-4567 or 5551234567)')
+    .max(25, 'Phone number must not exceed 25 characters')
+    .regex(phoneCharactersRegex, 'Please provide a valid phone number')
+    .refine((value) => {
+      const digitCount = value.replace(/\D/g, '').length;
+      return digitCount >= 10 && digitCount <= 15;
+    }, 'Phone number must contain 10 to 15 digits')
     .transform((val) => val.replace(/\s+/g, ' ').trim()), // Normalize spaces
 
   serviceInterest: z

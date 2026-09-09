@@ -75,21 +75,7 @@ export default function ArticlesSection() {
                   <h3 className="text-xl md:text-[22px] font-bold text-[#101828] leading-tight mb-6 group-hover:text-[#E6332A] transition-colors">
                     {article.title}
                   </h3>
-                  
-                  <div className="mt-auto pt-6 border-t border-gray-100 flex items-center justify-between gap-4 text-sm font-medium text-[#475467]">
-                    <div className="flex items-center gap-2">
-                      <User size={16} className="text-[#101828]" />
-                      <span>By {article.author}</span>
-                    </div>
-                    <div className="flex items-center gap-2">
-                      <Calendar size={16} className="text-[#101828]" />
-                      <span>{article.date}</span>
-                    </div>
-                    <div className="flex items-center gap-2">
-                      <MessageSquare size={16} className="text-[#101828]" />
-                      <span>{article.comments}</span>
-                    </div>
-                  </div>
+                  <div className="mt-auto pt-6" />
                 </div>
               </Link>
             </Reveal>

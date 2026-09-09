@@ -1,4 +1,4 @@
-import { CheckCircle2, Mail, MapPin, MessageCircle, Phone, ShieldCheck, Target, Workflow } from "lucide-react";
+import { ArrowRight, CheckCircle2, Mail, MapPin, MessageCircle, Phone, ShieldCheck, Target, Workflow } from "lucide-react";
 import ContactForm from "@/components/ContactForm";
 import Reveal from "@/components/Reveal";
 
@@ -38,25 +38,40 @@ export default function ContactPage() {
         </div>
       </section>
 
-      <section className="section section-light">
-        <div className="site-container contact-page-grid contact-page-premium">
-          <Reveal className="contact-details" direction="left">
+      <section className="section section-accent" id="enquiry">
+        <div className="site-container contact-band contact-start">
+          <Reveal className="contact-intro" direction="left">
             <p className="eyebrow"><span /> You Are Here</p>
-            <h2>Talk to Cybertech Marketing</h2>
-            <a href="mailto:info@cybertechmarketing.com"><Mail size={22} /> info@cybertechmarketing.com</a>
-            <a href="tel:+917428768779"><Phone size={22} /> +91 74287 68779</a>
-            <a href="https://wa.me/917428768779" target="_blank" rel="noreferrer"><MessageCircle size={22} /> WhatsApp Cybertech Marketing</a>
-            <p><MapPin size={22} /> Serving clients across India and beyond.</p>
-            <div className="contact-step-card">
-              {contactSteps.map((step, index) => (
-                <span key={step}><CheckCircle2 size={18} /> {String(index + 1).padStart(2, "0")} {step}</span>
-              ))}
+            <h2>Have a Business Problem You Want to Solve?</h2>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '14px', marginBottom: '28px' }}>
+              <p style={{ fontWeight: 700, color: '#101828', fontSize: '1.05rem' }}>Tell us what you&apos;re trying to grow, build or automate.</p>
+              <p>You don&apos;t need a perfect brief. Tell us what&apos;s not working, what you&apos;re trying to achieve, or what you&apos;d like to build.</p>
+              <p>We&apos;ll review it, ask the right questions and help you identify the next practical step.</p>
+            </div>
+            <div className="start-steps">
+              <span><Target size={18} /> Share your requirements</span>
+              <span><Workflow size={18} /> Discuss them with experts</span>
+              <span><ShieldCheck size={18} /> Get a clear next step</span>
+            </div>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '20px', marginTop: '36px' }}>
+              <div style={{ display: 'flex', gap: '16px', flexWrap: 'wrap' }}>
+                <a className="button button-primary" href="/#enquiry" style={{ padding: '14px 24px', fontSize: '14px' }}>
+                  Book a Growth Call <ArrowRight size={16} />
+                </a>
+                <a className="button" href="https://wa.me/917428768779" target="_blank" rel="noreferrer" style={{ padding: '14px 24px', fontSize: '14px', border: '1px solid #25D366', color: '#101828', backgroundColor: '#25D366', fontWeight: 700 }}>
+                  WhatsApp Cybertech <ArrowRight size={16} />
+                </a>
+              </div>
+              <div style={{ marginTop: '12px' }}>
+                <p style={{ margin: '0 0 4px', fontSize: '0.95rem', color: '#667085', fontWeight: 600 }}>Prefer email?</p>
+                <a href="mailto:info@cybertechmarketing.com" style={{ fontSize: '1.1rem', fontWeight: 800, color: '#E6332A', borderBottom: '2px solid #E6332A', display: 'inline-block', paddingBottom: '2px' }}>info@cybertechmarketing.com</a>
+              </div>
             </div>
           </Reveal>
-          <Reveal className="form-panel" direction="right" delay={0.2}>
-            <h3>Let&apos;s connect</h3>
+          <Reveal className="form-panel" direction="right">
+            <h3>Let&apos;s Talk About My Project</h3>
             <p>Send us a message and we will promptly discuss your project with you.</p>
-            <ContactForm />
+            <ContactForm compact />
           </Reveal>
         </div>
       </section>
@@ -69,7 +84,10 @@ export default function ContactPage() {
           </Reveal>
           <Reveal className="tech-cloud contact-cloud" direction="scale" delay={0.2}>
             {serviceNeeds.map((need, index) => (
-              <span key={need}>{index === 0 ? <Target size={18} /> : index === 3 ? <Workflow size={18} /> : index === 5 ? <ShieldCheck size={18} /> : null}{need}</span>
+              <span key={need}>
+                {index === 0 ? <Target size={18} /> : index === 3 ? <Workflow size={18} /> : index === 5 ? <ShieldCheck size={18} /> : null}
+                <span>{need}</span>
+              </span>
             ))}
           </Reveal>
         </div>

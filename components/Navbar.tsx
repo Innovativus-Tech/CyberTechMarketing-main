@@ -7,15 +7,6 @@ import BrandLogo from "./BrandLogo";
 
 const menus = [
   {
-    label: 'Company',
-    href: '/about',
-    items: [
-      { label: 'About Cybertech', href: '/about', text: 'Mission, approach and delivery style' },
-      { label: 'Careers', href: '/careers', text: 'Open positions at Cybertech' },
-      { label: 'Our Process', href: '/#process', text: 'How projects move from brief to launch' },
-    ],
-  },
-  {
     label: 'Services',
     href: '/services',
     featured: true,
@@ -31,6 +22,7 @@ const menus = [
 ];
 
 const simpleLinks = [
+  { label: 'About Us', href: '/about' },
   { label: 'Blog', href: '/blog' },
   { label: 'Contact', href: '/contact' },
 ];

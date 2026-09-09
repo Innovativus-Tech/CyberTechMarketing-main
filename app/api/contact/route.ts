@@ -9,18 +9,17 @@ export async function POST(request: NextRequest) {
     const origin = request.headers.get('origin');
     if (origin && origin !== request.nextUrl.origin) return NextResponse.json({ error: 'Please submit from this website.' }, { status: 403 });
     if (Number(request.headers.get('content-length') || 0) > 12000) return NextResponse.json({ error: 'Message too large.' }, { status: 413 });
-    if (!process.env.MONGODB_URI) {
-      return NextResponse.json(
-        { error: 'Contact storage is not configured yet. Add MONGODB_URI to enable submissions.' },
-        { status: 503 }
-      );
-    }
-
     const body = await request.json();
     if (body?.website) return NextResponse.json({ success: true }, { status: 201 });
+    const normalizedBody = {
+      ...body,
+      fullName: typeof body?.fullName === 'string'
+        ? body.fullName
+        : [body?.firstName, body?.lastName].filter((value) => typeof value === 'string' && value.trim()).join(' '),
+    };
 
     // Validate request body with Zod
-    const validation = validateContactForm(body);
+    const validation = validateContactForm(normalizedBody);
 
     if (!validation.success) {
       // Format Zod errors for better user experience
@@ -41,12 +40,20 @@ export async function POST(request: NextRequest) {
 
     // Use validated data
     const validatedData = validation.data;
+    const [firstName, ...lastNameParts] = validatedData.fullName.trim().split(/\s+/);
+    const lastName = lastNameParts.join(' ');
+    if (!process.env.MONGODB_URI) {
+      return NextResponse.json(
+        { error: 'Contact storage is not configured yet. Add MONGODB_URI to enable submissions.' },
+        { status: 503 }
+      );
+    }
     await dbConnect();
 
     const submission = new ContactSubmission({
       category: validatedData.category,
-      firstName: validatedData.firstName,
-      lastName: validatedData.lastName,
+      firstName,
+      lastName,
       email: validatedData.email,
       phone: validatedData.phone,
       company: 'company' in validatedData ? validatedData.company : undefined,

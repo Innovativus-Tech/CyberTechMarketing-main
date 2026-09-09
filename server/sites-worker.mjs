@@ -4,8 +4,9 @@ const json = (data, status = 200) => Response.json(data, { status, headers: { "C
 
 export async function saveEnquiry(db, data) {
   const id = crypto.randomUUID();
+  const [firstName, ...lastNameParts] = data.fullName.split(/\s+/);
   await db.prepare("INSERT INTO enquiries (id, first_name, last_name, email, phone, company, service, message, created_at) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)")
-    .bind(id, data.firstName, data.lastName, data.email, data.phone, data.company, data.serviceInterest, data.message, Date.now()).run();
+    .bind(id, firstName, lastNameParts.join(" "), data.email, data.phone, data.company, data.serviceInterest, data.message, Date.now()).run();
   return id;
 }
 
@@ -19,9 +20,11 @@ export async function handleContact(request, env) {
   try { const text = await request.text(); if (text.length > 12000) return json({ error: "Message too large." }, 413); raw = JSON.parse(text); } catch { return json({ error: "Please check your message." }, 400); }
   if (!raw || typeof raw !== "object" || Array.isArray(raw)) return json({ error: "Invalid message." }, 400);
   if (raw.website) return json({ success: true }, 201); // Honeypot: discard automated submissions.
-  const fields = ["firstName", "lastName", "email", "phone", "company", "serviceInterest", "message"];
+  if (typeof raw.fullName !== "string") raw.fullName = [raw.firstName, raw.lastName].filter(value=>typeof value==="string"&&value.trim()).join(" ");
+  const fields = ["fullName", "email", "phone", "company", "serviceInterest", "message"];
   const data = Object.fromEntries(fields.map(key=>[key,typeof raw[key]==="string"?raw[key].trim():""]));
-  const invalid = data.firstName.length < 2 || data.firstName.length > 50 || data.lastName.length < 2 || data.lastName.length > 50 || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(data.email) || data.email.length > 100 || data.phone.replace(/\D/g,"").length < 10 || data.phone.length > 25 || data.company.length > 100 || data.message.length < 10 || data.message.length > 1000 || (data.serviceInterest && !serviceNames.includes(data.serviceInterest));
+  const phoneDigits = data.phone.replace(/\D/g,"").length;
+  const invalid = data.fullName.length < 2 || data.fullName.length > 100 || !/^[a-zA-Z\s'-]+$/.test(data.fullName) || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(data.email) || data.email.length > 100 || !/^[+\d()\s.-]+$/.test(data.phone) || phoneDigits < 10 || phoneDigits > 15 || data.phone.length > 25 || data.company.length > 100 || data.message.length < 10 || data.message.length > 1000 || (data.serviceInterest && !serviceNames.includes(data.serviceInterest));
   if (invalid) return json({ error: "Please check your name, email, phone and project details." }, 400);
   if (!env.DB) return json({ error: "We couldn’t receive your enquiry. Please contact us by email or WhatsApp." }, 503);
   try { const id = await saveEnquiry(env.DB, data); return json({ success: true, reference: id.slice(0,8) }, 201); }

@@ -34,7 +34,7 @@ export default async function BlogPage() {
                   <span>{post.category}</span>
                 </div>
                 <div className="blog-index-copy">
-                  <div className="blog-index-meta"><span><Calendar size={15} />{new Date(post.date).toLocaleDateString("en-GB", { day: "2-digit", month: "short", year: "numeric" })}</span><span><Clock size={15} />{post.readTime}</span></div>
+                  <div className="blog-index-meta"><span><Clock size={15} />{post.readTime}</span></div>
                   <h2>{post.title}</h2>
                   <p>{post.excerpt}</p>
                   <span className="blog-index-link">Read article <ArrowRight size={17} /></span>

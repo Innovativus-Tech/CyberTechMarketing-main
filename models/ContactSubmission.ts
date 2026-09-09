@@ -28,7 +28,7 @@ const ContactSubmissionSchema = new Schema<IContactSubmission>(
     },
     lastName: {
       type: String,
-      required: true,
+      default: '',
     },
     email: {
       type: String,

@@ -29,7 +29,7 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
           <div className="blog-post-tags"><span>{post.category}</span><span><Clock size={15} />{post.readTime}</span></div>
           <h1>{post.title}</h1>
           <p>{post.excerpt}</p>
-          <div className="blog-post-byline"><span>Cybertech Editorial</span><span><Calendar size={15} />{new Date(post.date).toLocaleDateString("en-US", { month: "long", day: "numeric", year: "numeric" })}</span></div>
+
         </div>
       </section>
 

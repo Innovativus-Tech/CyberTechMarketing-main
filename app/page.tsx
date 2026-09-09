@@ -69,26 +69,41 @@ const funFacts = [
 
 const testimonials = [
   {
-    name: "Rahul Sharma",
-    role: "CEO, TechStart India",
-    text: "Cybertech Marketing transformed our online presence. Their SEO and content strategy doubled our organic traffic in just 4 months.",
+    name: "Rajesh K.",
+    text: "“They made our digital marketing predictable.” Cybertech helped us improve our online visibility and generate better-quality leads. The team understood our goals and delivered exactly what we needed.",
     rating: 5,
-    avatarColor: "linear-gradient(135deg, #10b981, #059669)", // Emerald green
+    avatarColor: "linear-gradient(135deg, #10b981, #059669)",
   },
   {
-    name: "Priya Mehta",
-    role: "Founder, DesignHub",
-    text: "The web development team built us a stunning, fast website that actually converts visitors into clients. Highly recommended.",
+    name: "Priya M.",
+    text: "“Our website finally works for our business.” The new website is faster, clearer and much better at converting visitors into enquiries. Great team and smooth execution.",
     rating: 5,
-    avatarColor: "linear-gradient(135deg, #f59e0b, #d97706)", // Amber orange
+    avatarColor: "linear-gradient(135deg, #f59e0b, #d97706)",
   },
   {
-    name: "Amit Patel",
-    role: "CTO, DataFlow Systems",
-    text: "Their AI solutions automated our lead qualification process, saving us 20+ hours per week. Game-changing technology partner.",
+    name: "Amit P.",
+    text: "“They helped us automate hours of manual work.” Cybertech Marketing team identified where automation could make the biggest difference and built a solution that saves our team valuable time every week.",
     rating: 5,
     avatarColor: "linear-gradient(135deg, #ff7a3d, #e6332a)",
   },
+  {
+    name: "Vikram S.",
+    text: "“A team that actually understands our business.” Cybertech didn't just deliver what we asked for. They understood the bigger picture and helped us find a better solution.",
+    rating: 5,
+    avatarColor: "linear-gradient(135deg, #3b82f6, #2563eb)",
+  },
+  {
+    name: "Neha G.",
+    text: "“Professional, responsive and reliable.” From strategy to execution, the Cybertech team made the entire process simple. They delivered quality work and kept us informed throughout.",
+    rating: 5,
+    avatarColor: "linear-gradient(135deg, #8b5cf6, #7c3aed)",
+  },
+  {
+    name: "Karan D.",
+    text: "“They turned our idea into reality.” We had a vision but weren't sure how to build it. Cybertech turned the idea into a practical, scalable digital solution.",
+    rating: 5,
+    avatarColor: "linear-gradient(135deg, #ec4899, #db2777)",
+  }
 ];
 
 const automationFlowSteps = ["Attract", "Convert", "Automate", "Scale"];
@@ -111,9 +126,7 @@ export default function Home() {
                     <strong>{step}</strong>
                   </div>
                   {index < automationFlowSteps.length - 1 && (
-                    <div className="flow-connector" aria-hidden="true">
-                      <i />
-                    </div>
+                    <div className="flow-connector" aria-hidden="true" />
                   )}
                 </div>
               ))}
@@ -245,24 +258,25 @@ export default function Home() {
               <Image src="/google-rating.png" alt="Google 5 Stars" width={120} height={40} style={{ objectFit: 'contain' }} />
             </div>
           </Reveal>
-          <div className="testimonial-grid" style={{ marginTop: '20px' }}>
-            {testimonials.map((t, idx) => (
-              <Reveal className="testimonial-card" key={t.name} delay={idx * 0.15} direction="up">
-                <div className="testimonial-stars">
-                  {Array.from({ length: t.rating }).map((_, i) => (
-                    <Star key={i} size={16} fill="currentColor" strokeWidth={0} style={{ color: '#FBBC05' }} />
-                  ))}
-                </div>
-                <p className="testimonial-text">&ldquo;{t.text}&rdquo;</p>
-                <div className="testimonial-author">
-                  <div className="testimonial-avatar" style={{ background: t.avatarColor }}>{t.name.charAt(0)}</div>
-                  <div>
-                    <strong>{t.name}</strong>
-                    <span>{t.role}</span>
+          <div className="testimonial-marquee-wrapper" style={{ marginTop: '20px', overflow: 'hidden', padding: '20px 0' }}>
+            <div className="testimonial-marquee">
+              {[...testimonials, ...testimonials].map((t, idx) => (
+                <div className="testimonial-card" key={idx}>
+                  <div className="testimonial-stars">
+                    {Array.from({ length: t.rating }).map((_, i) => (
+                      <Star key={i} size={16} fill="currentColor" strokeWidth={0} style={{ color: '#FBBC05' }} />
+                    ))}
+                  </div>
+                  <p className="testimonial-text">{t.text}</p>
+                  <div className="testimonial-author">
+                    <div className="testimonial-avatar" style={{ background: t.avatarColor }}>{t.name.charAt(0)}</div>
+                    <div>
+                      <strong>{t.name}</strong>
+                    </div>
                   </div>
                 </div>
-              </Reveal>
-            ))}
+              ))}
+            </div>
           </div>
         </div>
       </section>
@@ -291,7 +305,7 @@ export default function Home() {
                 <a className="button button-primary" href="/#enquiry" style={{ padding: '14px 24px', fontSize: '14px' }}>
                   Book a Growth Call <ArrowRight size={16} />
                 </a>
-                <a className="button button-ghost" href="https://wa.me/917428768779" target="_blank" rel="noreferrer" style={{ padding: '14px 24px', fontSize: '14px' }}>
+                <a className="button" href="https://wa.me/917428768779" target="_blank" rel="noreferrer" style={{ padding: '14px 24px', fontSize: '14px', border: '1px solid #25D366', color: '#101828', backgroundColor: '#25D366', fontWeight: 700 }}>
                   WhatsApp Cybertech <ArrowRight size={16} />
                 </a>
               </div>
@@ -302,7 +316,7 @@ export default function Home() {
             </div>
           </Reveal>
           <Reveal className="form-panel" direction="right">
-            <h3>Let&apos;s connect</h3>
+            <h3>Let&apos;s Talk About My Project</h3>
             <p>Send us a message and we will promptly discuss your project with you.</p>
             <ContactForm compact />
           </Reveal>
@@ -320,8 +334,18 @@ export default function Home() {
         <div className="site-container">
           <Reveal>
             <p className="eyebrow hero-eyebrow"><span /> Cybertech Marketing</p>
-            <h2>Ready for a high-performance digital system?</h2>
-            <a className="button button-primary" href="#enquiry">Send an enquiry <CheckCircle2 size={18} /></a>
+            <h2>Let&apos;s Build Something That Moves the Business Forward.</h2>
+            <p style={{ fontSize: '1.25rem', color: '#c5c5cf', maxWidth: '650px', margin: '0 auto 36px', lineHeight: 1.6 }}>
+              Tell us where you want to go. We&apos;ll help you figure out how to get there.
+            </p>
+            <div style={{ display: 'flex', gap: '16px', flexWrap: 'wrap', justifyContent: 'center' }}>
+              <a className="button button-primary" href="/#enquiry">
+                Start a Conversation <ArrowRight size={18} />
+              </a>
+              <a className="button" href="https://wa.me/917428768779" target="_blank" rel="noreferrer" style={{ border: '1px solid #25D366', color: '#101828', backgroundColor: '#25D366', fontWeight: 700 }}>
+                WhatsApp Cybertech <ArrowRight size={18} />
+              </a>
+            </div>
           </Reveal>
         </div>
       </section>

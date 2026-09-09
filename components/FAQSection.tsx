@@ -6,29 +6,25 @@ import { Plus, Minus } from "lucide-react";
 
 const faqs = [
   {
-    question: "How do we choose the right Cybertech service?",
-    answer: "Start with the business outcome rather than a technology. We review your current setup, priorities and constraints, then recommend the smallest practical combination of services needed to move forward.",
-    list: [
-      "Growth and acquisition strategy",
-      "Web and mobile experiences",
-      "Custom software workflows",
-      "AI and process automation",
-      "Data pipelines and reporting",
-      "Testing and launch support"
-    ]
+    question: "Do you build custom software or only websites?",
+    answer: "Both. We build websites, internal platforms, dashboards, portals, APIs, mobile applications and custom business software."
   },
   {
-    question: "Can you combine marketing, software and AI in one project?",
-    answer: "Yes. Cybertech can shape one coordinated roadmap across marketing, website development, software, AI and data so the customer experience and operational systems support the same goal.",
+    question: "Can you help us identify where AI would actually be useful?",
+    answer: "Yes. We start with the workflow, not the technology. We identify repetitive, expensive or slow processes where automation or AI can create measurable value."
   },
   {
-    question: "Can you redesign an existing website?",
-    answer: "Yes. Cybertech can improve an existing website with better structure, conversion paths, responsiveness, content and technical performance.",
+    question: "How much does a project cost?",
+    answer: "It depends on the scope, complexity and outcome you're targeting. After understanding your requirements, we'll recommend an appropriate approach and provide a clear proposal."
   },
   {
-    question: "Do you build software and apps as well as marketing campaigns?",
-    answer: "Yes. The service mix includes software development, web development, mobile app development, AI solutions and machine learning/data work.",
+    question: "How long does a project take?",
+    answer: "Timelines vary by scope. A focused landing page may take weeks, while custom software or AI systems can require several development phases. We'll establish the expected timeline before work begins."
   },
+  {
+    question: "What happens after I contact you?",
+    answer: "We'll review your requirement, discuss the opportunity with you and recommend the next practical step. No complicated process."
+  }
 ];
 
 export default function FAQSection() {
@@ -92,8 +88,8 @@ export default function FAQSection() {
                     }`}
                   >
                     <div className="bg-[#FFEDE8] rounded-md p-6 md:p-10 flex flex-col sm:flex-row gap-6 md:gap-10">
-                      <div className="text-4xl md:text-5xl font-extrabold text-[#101828] flex-shrink-0">
-                        A.
+                      <div className="flex-shrink-0 pt-2.5">
+                        <div className="w-3 h-3 rounded-full bg-[#E6332A]" />
                       </div>
                       <div className="text-[#475467] leading-relaxed w-full">
                         <p className={faq.list ? "mb-6" : "mb-0"}>{faq.answer}</p>
