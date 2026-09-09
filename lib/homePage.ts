@@ -1,5 +1,3 @@
-import {sanityClient, sanityConfigured} from '@/lib/sanity';
-
 export type HomePageReason = {
   title: string;
   description: string;
@@ -121,102 +119,6 @@ export const defaultHomePageContent: HomePageContent = {
   testimonialsSubtitle: 'OUR TESTIMONIALS',
 };
 
-const homePageQuery = `*[_type == "homePage"][0]{
-  heroLineOne,
-  heroLineTwo,
-  heroDescription,
-  heroPrimaryCtaLabel,
-  heroPrimaryCtaHref,
-  heroSecondaryCtaLabel,
-  heroSecondaryCtaHref,
-  heroBadgeText,
-  heroCardLabel,
-  heroCardValue,
-  heroCardCaption,
-  heroCardDelta,
-  heroFlowTitle,
-  heroFlowDescription,
-  heroFlowButtonLabel,
-  heroFlowButtonHref,
-  heroBottomCtaLabel,
-  heroBottomCtaHref,
-  partnersHeading,
-  partnerNames,
-  servicesTitle,
-  servicesDescription,
-  whyChooseTitle,
-  whyChooseDescription,
-  whyChooseHighlights[]{
-    title
-  },
-  whyChooseReasons[]{
-    title,
-    "description": description
-  },
-  testimonialsTitle,
-  testimonialsSubtitle
-}`;
-
 export async function getHomePageContent(): Promise<HomePageContent> {
-  if (!sanityConfigured) {
-    return defaultHomePageContent;
-  }
-
-  try {
-    const data =
-      (await sanityClient.fetch<Partial<HomePageContent> | null>(homePageQuery)) || {};
-
-    return {
-      heroLineOne: data.heroLineOne || defaultHomePageContent.heroLineOne,
-      heroLineTwo: data.heroLineTwo || defaultHomePageContent.heroLineTwo,
-      heroDescription: data.heroDescription || defaultHomePageContent.heroDescription,
-      heroPrimaryCtaLabel:
-        data.heroPrimaryCtaLabel || defaultHomePageContent.heroPrimaryCtaLabel,
-      heroPrimaryCtaHref:
-        data.heroPrimaryCtaHref || defaultHomePageContent.heroPrimaryCtaHref,
-      heroSecondaryCtaLabel:
-        data.heroSecondaryCtaLabel || defaultHomePageContent.heroSecondaryCtaLabel,
-      heroSecondaryCtaHref:
-        data.heroSecondaryCtaHref || defaultHomePageContent.heroSecondaryCtaHref,
-      heroBadgeText: data.heroBadgeText || defaultHomePageContent.heroBadgeText,
-      heroCardLabel: data.heroCardLabel || defaultHomePageContent.heroCardLabel,
-      heroCardValue: data.heroCardValue || defaultHomePageContent.heroCardValue,
-      heroCardCaption: data.heroCardCaption || defaultHomePageContent.heroCardCaption,
-      heroCardDelta: data.heroCardDelta || defaultHomePageContent.heroCardDelta,
-      heroFlowTitle: data.heroFlowTitle || defaultHomePageContent.heroFlowTitle,
-      heroFlowDescription:
-        data.heroFlowDescription || defaultHomePageContent.heroFlowDescription,
-      heroFlowButtonLabel:
-        data.heroFlowButtonLabel || defaultHomePageContent.heroFlowButtonLabel,
-      heroFlowButtonHref:
-        data.heroFlowButtonHref || defaultHomePageContent.heroFlowButtonHref,
-      heroBottomCtaLabel:
-        data.heroBottomCtaLabel || defaultHomePageContent.heroBottomCtaLabel,
-      heroBottomCtaHref:
-        data.heroBottomCtaHref || defaultHomePageContent.heroBottomCtaHref,
-      partnersHeading: data.partnersHeading || defaultHomePageContent.partnersHeading,
-      partnerNames: data.partnerNames?.length
-        ? data.partnerNames
-        : defaultHomePageContent.partnerNames,
-      servicesTitle: data.servicesTitle || defaultHomePageContent.servicesTitle,
-      servicesDescription:
-        data.servicesDescription || defaultHomePageContent.servicesDescription,
-      whyChooseTitle: data.whyChooseTitle || defaultHomePageContent.whyChooseTitle,
-      whyChooseDescription:
-        data.whyChooseDescription || defaultHomePageContent.whyChooseDescription,
-      whyChooseHighlights: data.whyChooseHighlights?.length
-        ? data.whyChooseHighlights
-        : defaultHomePageContent.whyChooseHighlights,
-      whyChooseReasons: data.whyChooseReasons?.length
-        ? data.whyChooseReasons
-        : defaultHomePageContent.whyChooseReasons,
-      testimonialsTitle:
-        data.testimonialsTitle || defaultHomePageContent.testimonialsTitle,
-      testimonialsSubtitle:
-        data.testimonialsSubtitle || defaultHomePageContent.testimonialsSubtitle,
-    };
-  } catch (error) {
-    console.error('Failed to fetch home page content from Sanity:', error);
-    return defaultHomePageContent;
-  }
+  return defaultHomePageContent;
 }

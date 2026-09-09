@@ -27,6 +27,8 @@ const simpleLinks = [
   { label: 'Contact', href: '/contact' },
 ];
 
+const mobileLinks = simpleLinks.filter((link) => link.label !== 'About Us');
+
 export default function Navbar() {
   const [open, setOpen] = useState(false);
   const [expanded, setExpanded] = useState<string | null>(null);
@@ -85,7 +87,8 @@ export default function Navbar() {
             </div>
           ))}
         </nav>
-        <Link href="/#enquiry" className="nav-cta">GET STARTED <ArrowUpRight size={16} /></Link>
+        <Link href="/#enquiry" className="nav-cta">BOOK A GROWTH CALL <ArrowUpRight size={16} /></Link>
+        <Link href="/#enquiry" className="nav-mobile-cta">GROWTH CALL <ArrowUpRight size={14} /></Link>
         <button ref={menuButton} className="menu-button" onClick={() => setOpen(!open)} aria-expanded={open} aria-controls="mobile-navigation" aria-label={open ? "Close menu" : "Open menu"}>
           {open ? <X size={22} /> : <Menu size={22} />}
         </button>
@@ -94,11 +97,11 @@ export default function Navbar() {
         <nav aria-label="Mobile navigation">
           <Link href="/#home" onClick={()=>setOpen(false)}>Home</Link>
           {menus.map(menu => <details key={menu.label}><summary>{menu.label}<ChevronDown size={18} /></summary><div><Link href={menu.href} onClick={()=>setOpen(false)}>View {menu.label.toLowerCase()}</Link>{menu.items.map(item=><Link key={item.label} href={item.href} onClick={()=>setOpen(false)}>{item.label}</Link>)}</div></details>)}
-          {simpleLinks.map(item=><Link key={item.label} href={item.href} onClick={()=>setOpen(false)}>{item.label}</Link>)}
+          {mobileLinks.map(item=><Link key={item.label} href={item.href} onClick={()=>setOpen(false)}>{item.label}</Link>)}
         </nav>
         <div className="mobile-menu-actions">
-          <Link href="/#enquiry" className="button button-primary" onClick={() => setOpen(false)}>Tell us about your project</Link>
-          <a href="https://wa.me/917428768779" className="button button-dark" target="_blank" rel="noreferrer" onClick={() => setOpen(false)}>WhatsApp Cybertech</a>
+          <Link href="/#enquiry" className="button button-primary" onClick={() => setOpen(false)}>Book a Growth Call</Link>
+          <a href="https://wa.me/917428768779" className="button button-whatsapp" target="_blank" rel="noreferrer" onClick={() => setOpen(false)}><MessageCircle size={18} /> WhatsApp Cybertech</a>
         </div>
       </div>
     </header>

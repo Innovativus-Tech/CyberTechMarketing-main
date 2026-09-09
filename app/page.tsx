@@ -260,20 +260,24 @@ export default function Home() {
           </Reveal>
           <div className="testimonial-marquee-wrapper" style={{ marginTop: '20px', overflow: 'hidden', padding: '20px 0' }}>
             <div className="testimonial-marquee">
-              {[...testimonials, ...testimonials].map((t, idx) => (
-                <div className="testimonial-card" key={idx}>
-                  <div className="testimonial-stars">
-                    {Array.from({ length: t.rating }).map((_, i) => (
-                      <Star key={i} size={16} fill="currentColor" strokeWidth={0} style={{ color: '#FBBC05' }} />
-                    ))}
-                  </div>
-                  <p className="testimonial-text">{t.text}</p>
-                  <div className="testimonial-author">
-                    <div className="testimonial-avatar" style={{ background: t.avatarColor }}>{t.name.charAt(0)}</div>
-                    <div>
-                      <strong>{t.name}</strong>
+              {[0, 1].map((group) => (
+                <div className="testimonial-marquee-group" key={group} aria-hidden={group === 1}>
+                  {testimonials.map((t) => (
+                    <div className="testimonial-card" key={`${group}-${t.name}`}>
+                      <div className="testimonial-stars">
+                        {Array.from({ length: t.rating }).map((_, i) => (
+                          <Star key={i} size={16} fill="currentColor" strokeWidth={0} style={{ color: '#FBBC05' }} />
+                        ))}
+                      </div>
+                      <p className="testimonial-text">{t.text}</p>
+                      <div className="testimonial-author">
+                        <div className="testimonial-avatar" style={{ background: t.avatarColor }}>{t.name.charAt(0)}</div>
+                        <div>
+                          <strong>{t.name}</strong>
+                        </div>
+                      </div>
                     </div>
-                  </div>
+                  ))}
                 </div>
               ))}
             </div>

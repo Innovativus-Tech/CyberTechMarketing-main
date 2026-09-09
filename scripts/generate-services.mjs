@@ -28,7 +28,7 @@ const services = [
     description: 'Your website is your best salesperson. We develop ultra-fast, responsive, and secure websites that serve as the foundation of your digital growth. From bespoke corporate sites to high-traffic eCommerce platforms, we build to perform.',
     features: [
       { title: 'Modern Frameworks', desc: 'Built with React, Next.js, and Node.js for instantaneous load times and unparalleled SEO.' },
-      { title: 'Headless CMS Integration', desc: 'Empowering your marketing team with easy-to-use content systems like Sanity and Contentful.' },
+      { title: 'Headless CMS Integration', desc: 'Empowering your marketing team with an easy-to-use content system tailored to your publishing workflow.' },
       { title: 'Responsive & Accessible', desc: 'Flawless experiences across all devices, ensuring WCAG compliance and broad accessibility.' },
       { title: 'High-Performance eCommerce', desc: 'Scalable Shopify Plus and custom headless commerce builds that handle massive traffic spikes.' }
     ]

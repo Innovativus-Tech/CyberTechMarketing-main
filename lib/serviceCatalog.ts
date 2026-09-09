@@ -66,7 +66,7 @@ export const serviceCatalog = [
       },
       {
         "title": "Headless CMS Integration",
-        "desc": "Empowering your marketing team with easy-to-use content systems like Sanity and Contentful."
+        "desc": "Empowering your marketing team with an easy-to-use content system tailored to your publishing workflow."
       },
       {
         "title": "Responsive & Accessible",

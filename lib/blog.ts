@@ -1,5 +1,3 @@
-import { sanityClient, sanityConfigured, urlFor } from '@/lib/sanity';
-
 export type BlogPost = {
   slug: string;
   category: string;
@@ -10,22 +8,6 @@ export type BlogPost = {
   image: string;
   accent: string;
   content: string[];
-};
-
-type SanityPost = {
-  slug?: string;
-  category?: string;
-  readTime?: string;
-  title?: string;
-  excerpt?: string;
-  date?: string;
-  image?: unknown;
-  accent?: string;
-  content?: Array<{
-    children?: Array<{
-      text?: string;
-    }>;
-  }>;
 };
 
 export const fallbackBlogPosts: BlogPost[] = [
@@ -109,75 +91,8 @@ export const fallbackBlogPosts: BlogPost[] = [
   },
 ];
 
-const postsQuery = `*[_type == "post"] | order(publishedAt desc) {
-  title,
-  category,
-  readTime,
-  excerpt,
-  accent,
-  "date": publishedAt,
-  "slug": slug.current,
-  image,
-  content
-}`;
-
-function normalizePortableText(blocks: SanityPost['content']) {
-  if (!Array.isArray(blocks)) {
-    return [];
-  }
-
-  return blocks
-    .map((block) =>
-      Array.isArray(block.children)
-        ? block.children
-            .map((child) => child.text?.trim() || '')
-            .filter(Boolean)
-            .join('')
-        : ''
-    )
-    .filter(Boolean);
-}
-
-function mapSanityPost(post: SanityPost): BlogPost | null {
-  if (!post.slug || !post.title || !post.excerpt || !post.category || !post.date) {
-    return null;
-  }
-
-  return {
-    slug: post.slug,
-    category: post.category,
-    readTime: post.readTime || '5 min read',
-    title: post.title,
-    excerpt: post.excerpt,
-    date: post.date,
-    image: post.image
-      ? urlFor(post.image).width(1600).quality(80).url()
-      : fallbackBlogPosts[0].image,
-    accent: post.accent || 'from-red-950 via-red-800 to-rose-500',
-    content: normalizePortableText(post.content),
-  };
-}
-
 export async function getAllPosts() {
-  if (!sanityConfigured) {
-    return fallbackBlogPosts;
-  }
-
-  try {
-    const posts = await sanityClient.fetch<SanityPost[]>(
-      postsQuery,
-      {},
-      { next: { revalidate: 60 } }
-    );
-    const mappedPosts = posts
-      .map(mapSanityPost)
-      .filter((post): post is BlogPost => Boolean(post));
-
-    return mappedPosts.length > 0 ? mappedPosts : fallbackBlogPosts;
-  } catch (error) {
-    console.error('Failed to fetch Sanity posts:', error);
-    return fallbackBlogPosts;
-  }
+  return fallbackBlogPosts;
 }
 
 export async function getPostBySlug(slug: string) {

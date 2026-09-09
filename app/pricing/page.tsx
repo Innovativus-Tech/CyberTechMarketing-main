@@ -1,9 +1,17 @@
-import { getAllPricingPlans } from '@/lib/queries';
-import SanityPricingPlans from '@/components/SanityPricingPlans';
 import Link from 'next/link';
 
-export default async function PricingPage() {
-  const plans = await getAllPricingPlans();
+export default function PricingPage() {
+  const plans: Array<{
+    _id: string;
+    name: string;
+    description?: string;
+    price: string;
+    period?: string;
+    features?: string[];
+    isPopular?: boolean;
+    ctaText?: string;
+    ctaUrl?: string;
+  }> = [];
 
   if (!plans || plans.length === 0) {
     return (

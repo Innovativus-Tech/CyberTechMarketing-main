@@ -4,7 +4,13 @@ import React, { useState } from "react";
 import Reveal from "@/components/Reveal";
 import { Plus, Minus } from "lucide-react";
 
-const faqs = [
+type Faq = {
+  question: string;
+  answer: string;
+  list?: string[];
+};
+
+const faqs: Faq[] = [
   {
     question: "Do you build custom software or only websites?",
     answer: "Both. We build websites, internal platforms, dashboards, portals, APIs, mobile applications and custom business software."

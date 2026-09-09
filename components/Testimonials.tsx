@@ -1,13 +1,4 @@
-import { getAllTestimonials, type TestimonialDocument } from '@/lib/queries';
 import { defaultHomePageContent } from '@/lib/homePage';
-
-const fallbackTestimonials = [
-    { name: "Ananya", text: "As a startup, we needed a digital marketing partner who could understand our unique needs. They not only understood but also delivered outstanding results through their marketing strategies." },
-    { name: "Ajay", text: "Working with Cybertech Marketing has been a game-changer for my business. Their team's expertise and dedication to results have helped us achieve a 200% increase in website traffic. I highly recommend them!" },
-    { name: "Simran", text: "We've been partners for years, and they continue to exceed our expectations. Their campaigns have consistently delivered a high ROI, and their attention to detail is unmatched." },
-    { name: "Rahul", text: "Choosing Cybertech Marketing was one of the best decisions we made for our e-commerce business. Their strategies have propelled us to the top of search engine rankings, resulting in a significant increase in sales." },
-    { name: "Jai", text: "It's a pleasure to work with the team. Their dedication to our success is evident in the consistent growth of our email marketing campaigns. They're responsive, professional, and results-driven." }
-  ];
 
 type TestimonialCard = {
   name: string;
@@ -15,34 +6,26 @@ type TestimonialCard = {
   role?: string;
 };
 
+const fallbackTestimonials: TestimonialCard[] = [
+  { name: "Ananya", text: "As a startup, we needed a digital marketing partner who could understand our unique needs. They not only understood but also delivered outstanding results through their marketing strategies." },
+  { name: "Ajay", text: "Working with Cybertech Marketing has been a game-changer for my business. Their team's expertise and dedication to results have helped us achieve a 200% increase in website traffic. I highly recommend them!" },
+  { name: "Simran", text: "We've been partners for years, and they continue to exceed our expectations. Their campaigns have consistently delivered a high ROI, and their attention to detail is unmatched." },
+  { name: "Rahul", text: "Choosing Cybertech Marketing was one of the best decisions we made for our e-commerce business. Their strategies have propelled us to the top of search engine rankings, resulting in a significant increase in sales." },
+  { name: "Jai", text: "It's a pleasure to work with the team. Their dedication to our success is evident in the consistent growth of our email marketing campaigns. They're responsive, professional, and results-driven." },
+];
+
 type TestimonialsProps = {
   title?: string;
   subtitle?: string;
   testimonials?: TestimonialCard[];
 };
 
-function mapTestimonial(doc: TestimonialDocument): TestimonialCard | null {
-  if (!doc.authorName || !doc.content) {
-    return null;
-  }
-
-  return {
-    name: doc.authorName,
-    text: doc.content,
-    role: doc.authorRole || 'Client',
-  };
-}
-
 export default async function Testimonials({
   title = defaultHomePageContent.testimonialsTitle,
   subtitle = defaultHomePageContent.testimonialsSubtitle,
   testimonials,
 }: TestimonialsProps) {
-  const resolvedTestimonials = testimonials
-    ? testimonials
-    : ((await getAllTestimonials()).map(mapTestimonial).filter(Boolean) as TestimonialCard[]);
-
-  const cards = resolvedTestimonials.length > 0 ? resolvedTestimonials : fallbackTestimonials;
+  const cards = testimonials?.length ? testimonials : fallbackTestimonials;
 
   // Color schemes for variety
   const colorSchemes = [

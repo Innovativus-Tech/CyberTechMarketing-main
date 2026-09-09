@@ -1,6 +1,6 @@
 import Link from 'next/link';
-import { getAllServices, type ServiceDocument } from '@/lib/queries';
 import { defaultHomePageContent } from '@/lib/homePage';
+import { serviceCatalog } from '@/lib/serviceCatalog';
 
 const fallbackServices = [
   {
@@ -75,15 +75,6 @@ type ServicesProps = {
   services?: ServiceCard[];
 };
 
-const iconMap: Record<string, string> = {
-  'digital-marketing': 'DM',
-  'graphic-design': 'GD',
-  'ecommerce-marketing': 'EC',
-  'pay-per-click': 'PC',
-  'web-design': 'WD',
-  'content-writing': 'CW',
-};
-
 const gradientMap: Record<number, string> = {
   0: 'from-red-600 to-orange-600',
   1: 'from-purple-600 to-pink-600',
@@ -93,20 +84,14 @@ const gradientMap: Record<number, string> = {
   5: 'from-amber-600 to-orange-600',
 };
 
-function mapServiceToCard(service: ServiceDocument, index: number): ServiceCard | null {
-  const slug = service.slug?.current;
-
-  if (!slug || !service.title || !service.description) {
-    return null;
-  }
-
+function mapServiceToCard(service: (typeof serviceCatalog)[number], index: number): ServiceCard {
   return {
     title: service.title,
-    desc: service.description,
-    tag: service.cardTag || service.category || 'SERVICE',
-    metric: service.cardMetric || 'EXPERT SOLUTIONS',
-    href: `/services/${slug}`,
-    icon: iconMap[slug] || 'CT',
+    desc: service.subtitle,
+    tag: 'SERVICE',
+    metric: service.headline,
+    href: `/services/${service.slug}`,
+    icon: service.title.split(/\s+/).map((word) => word[0]).slice(0, 2).join(''),
     gradient: gradientMap[index % 6] || 'from-red-600 to-orange-600',
   };
 }
@@ -116,9 +101,7 @@ export default async function Services({
   description = defaultHomePageContent.servicesDescription,
   services,
 }: ServicesProps) {
-  const resolvedServices = services
-    ? services
-    : ((await getAllServices()).map((s, i) => mapServiceToCard(s, i)).filter(Boolean) as ServiceCard[]);
+  const resolvedServices = services || serviceCatalog.map(mapServiceToCard);
 
   const cards = resolvedServices.length > 0 ? resolvedServices : fallbackServices;
 
