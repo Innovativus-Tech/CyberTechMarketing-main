@@ -1937,8 +1937,8 @@ details p {
 
 .about-v2-layout {
   display: grid;
-  grid-template-columns: .92fr 1.08fr;
-  gap: 60px;
+  grid-template-columns: minmax(0, .9fr) minmax(0, 1.1fr);
+  gap: clamp(44px, 5vw, 76px);
   align-items: center;
 }
 
@@ -1951,11 +1951,11 @@ details p {
 }
 
 .about-v2-copy h2 {
-  margin: 16px 0;
-  font-size: 3.35rem;
-  line-height: 1.06;
+  margin: 14px 0 0;
+  font-size: 3rem;
+  line-height: 1.08;
   font-weight: 900;
-  max-width: 660px;
+  max-width: 570px;
 }
 
 .about-v2-copy h2 em {
@@ -1971,24 +1971,26 @@ details p {
 }
 
 .about-v2-content {
-  margin-top: 24px;
+  margin-top: 30px;
   display: grid;
   gap: 0;
-  max-width: 680px;
+  max-width: 620px;
 }
 .about-v2-content p {
   color: #b8c4d4;
-  font-size: 1.06rem;
-  line-height: 1.7;
+  font-size: 1rem;
+  line-height: 1.72;
   margin: 0;
-  padding: 16px 0;
+  padding: 17px 2px;
   border-bottom: 1px solid rgba(255, 255, 255, .09);
 }
 .about-v2-content p.hook {
-  font-size: 1.18rem;
+  display: grid;
+  gap: 4px;
+  font-size: 1.12rem;
   font-weight: 700;
   color: #ffffff;
-  line-height: 1.45;
+  line-height: 1.48;
   letter-spacing: 0;
   margin-bottom: 8px;
   padding: 18px 20px;
@@ -1998,7 +2000,7 @@ details p {
   background: rgba(255, 255, 255, .045);
 }
 .about-v2-content p.highlight {
-  padding: 14px 0;
+  padding: 17px 2px;
   color: #ffb7a8;
   font-weight: 800;
 }

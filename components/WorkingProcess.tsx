@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect } from "react";
 import Reveal from "@/components/Reveal";
 
 const steps = [
@@ -33,27 +33,21 @@ const steps = [
 
 export default function WorkingProcess() {
   const [activeIdx, setActiveIdx] = useState(0);
-  const [isHovered, setIsHovered] = useState(false);
-  const intervalRef = useRef<NodeJS.Timeout | null>(null);
 
   useEffect(() => {
-    if (!isHovered) {
-      intervalRef.current = setInterval(() => {
-        setActiveIdx((prev) => (prev + 1) % steps.length);
-      }, 3500);
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      return;
     }
-    return () => {
-      if (intervalRef.current) clearInterval(intervalRef.current);
-    };
-  }, [isHovered]);
+
+    const interval = window.setInterval(() => {
+      setActiveIdx((prev) => (prev + 1) % steps.length);
+    }, 2800);
+
+    return () => window.clearInterval(interval);
+  }, []);
 
   return (
-    <section 
-      className="py-24 bg-[#FFF8F6] relative overflow-hidden" 
-      id="process"
-      onMouseEnter={() => setIsHovered(true)}
-      onMouseLeave={() => setIsHovered(false)}
-    >
+    <section className="py-24 bg-[#FFF8F6] relative overflow-hidden" id="process">
       {/* Decorative background line */}
       <div className="absolute left-0 top-12 pointer-events-none hidden lg:block opacity-70">
         <svg width="150" height="250" viewBox="0 0 150 250" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -83,6 +77,9 @@ export default function WorkingProcess() {
                   <path d="M180 52a128 128 0 0 1 121 86" />
                   <path d="M301 138l-17-2 11 13" />
                 </svg>
+                <span className={`process-orbit-runner process-orbit-runner-${activeIdx + 1}`} aria-hidden="true">
+                  <span />
+                </span>
                 <div className="process-orbit-core">
                   <span>CYBERTECH</span>
                   <strong>Growth<br />in motion</strong>
@@ -102,7 +99,7 @@ export default function WorkingProcess() {
                   </button>
                 ))}
               </div>
-              <div className="process-orbit-caption">
+              <div className="process-orbit-caption" aria-live="polite">
                 <span>{steps[activeIdx].id} / 05</span>
                 <p>{steps[activeIdx].description}</p>
               </div>
@@ -116,17 +113,19 @@ export default function WorkingProcess() {
                 {steps.map((step, idx) => {
                   const isActive = activeIdx === idx;
                   return (
-                    <div
+                    <button
                       key={step.id}
+                      type="button"
                       onClick={() => setActiveIdx(idx)}
                       className={`process-diagram-card cursor-pointer ${isActive ? "is-active" : ""}`}
+                      aria-pressed={isActive}
                     >
                       <span className="process-diagram-index">{step.id}</span>
                       <span className="process-diagram-title">
                         {step.title}
                       </span>
                       <span className="process-diagram-toggle" aria-hidden="true">{isActive ? "−" : "+"}</span>
-                    </div>
+                    </button>
                   );
                 })}
               </div>

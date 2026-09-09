@@ -180,8 +180,8 @@ export default function Home() {
             <h2>One Partner. <em>Strategy, Technology &amp; Growth.</em></h2>
             <div className="about-v2-content">
               <p className="hook">
-                Most businesses don&apos;t have a technology problem.<br/>
-                They have a fragmentation problem.
+                <span>Most businesses don&apos;t have a technology problem.</span>
+                <span>They have a fragmentation problem.</span>
               </p>
               <p>Marketing works separately from the website. The website sits apart from sales. Operations run on spreadsheets. Data lives in different systems. And everyone has a different idea of what &quot;growth&quot; means.</p>
               <p className="highlight">Cybertech brings those pieces together.</p>
