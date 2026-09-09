@@ -120,7 +120,7 @@ export default function Home() {
           <div className="automation-flow-inner">
             <div className="flow-chart" aria-label="Attract to Convert to Automate to Scale">
               {automationFlowSteps.map((step, index) => (
-                <div className="flow-chart-item" key={step}>
+                <div className="flow-chart-item" key={step} style={{ '--flow-step': index } as React.CSSProperties}>
                   <div className="flow-node">
                     <span className="flow-node-index">0{index + 1}</span>
                     <strong>{step}</strong>
@@ -292,7 +292,6 @@ export default function Home() {
       <section className="section section-accent" id="enquiry">
         <div className="site-container contact-band contact-start">
           <Reveal className="contact-intro" direction="left">
-            <p className="eyebrow"><span /> You Are Here</p>
             <h2>Have a Business Problem You Want to Solve?</h2>
             <div style={{ display: 'flex', flexDirection: 'column', gap: '14px', marginBottom: '28px' }}>
               <p style={{ fontWeight: 700, color: '#101828', fontSize: '1.05rem' }}>Tell us what you&apos;re trying to grow, build or automate.</p>
