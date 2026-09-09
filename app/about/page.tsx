@@ -38,9 +38,9 @@ export default function AboutPage() {
                     <span className="avatar-circle" style={{background: 'linear-gradient(135deg, #e6332a, #ff7a3d)'}}>CT</span>
                     <span className="avatar-circle" style={{background: 'linear-gradient(135deg, #315a8f, #4a8fd4)'}}>DM</span>
                     <span className="avatar-circle" style={{background: 'linear-gradient(135deg, #202838, #3a4a60)'}}>AI</span>
-                    <span className="avatar-circle avatar-count">50+</span>
+                    <span className="avatar-circle avatar-count">80+</span>
                   </div>
-                  <span className="about-v2-label">Happy Customers</span>
+                  <span className="about-v2-label">Happy Clients</span>
                 </div>
                 <a className="button button-primary about-v2-cta" href="/contact">Learn More <ArrowRight size={16} /></a>
               </div>
@@ -49,12 +49,12 @@ export default function AboutPage() {
                   <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5"><circle cx="12" cy="12" r="10"/><path d="M2 12h20"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
                 </div>
                 <div className="about-v2-stat">
-                  <strong>50+</strong>
+                  <strong>1000+</strong>
                   <span>Projects Done</span>
                 </div>
                 <div className="about-v2-stat">
-                  <strong>100%</strong>
-                  <span>Delivery Focus</span>
+                  <strong>80+</strong>
+                  <span>Clients</span>
                 </div>
               </div>
             </div>

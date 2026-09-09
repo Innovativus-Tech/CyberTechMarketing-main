@@ -12,45 +12,57 @@ import WorkingProcess from "@/components/WorkingProcess";
 const services = [
   {
     title: "Digital Marketing & Growth",
-    description: "Performance campaigns, SEO, content systems and conversion paths built to generate qualified demand.",
+    subheading: "Get Found. Get Leads. Grow.",
+    description: "Build a predictable pipeline with SEO, paid media, content and conversion-focused campaigns designed around your ideal customers.",
     Icon: Megaphone,
-    bullets: ["Growth strategy", "Paid media funnels", "SEO and content", "Conversion improvement"],
+    bullets: ["SEO", "Paid Advertising", "Content Strategy", "Lead Generation", "Conversion Funnels", "Growth Strategy"],
+    cta: "Explore Growth Services",
   },
   {
     title: "Web Development",
-    description: "Modern websites and landing pages with fast load times, clear journeys and responsive execution.",
+    subheading: "Don't Just Look Professional. Convert.",
+    description: <><span style={{display:'block', marginBottom:'8px'}}>Your website should do more than explain what you do. It should build trust, answer objections and turn the right visitors into enquiries.</span><span style={{display:'block'}}>We build fast, responsive websites and landing pages engineered for performance and conversion.</span></>,
     Icon: LayoutTemplate,
-    bullets: ["Corporate websites", "Landing pages", "CMS-ready builds", "Speed optimization"],
+    bullets: ["Corporate Websites", "Landing Pages", "CMS Development", "Website Redesigns", "Conversion Optimization"],
+    cta: "Build My Website",
   },
   {
     title: "Software Development",
-    description: "Custom business software, dashboards, portals and systems that make operations easier to run.",
+    subheading: "Replace Manual Work With Software That Works.",
+    description: <><span style={{display:'block', marginBottom:'8px'}}>Stop stitching your business together with spreadsheets, disconnected tools and repetitive processes.</span><span style={{display:'block'}}>We build custom platforms, dashboards and internal systems around the way your business actually operates.</span></>,
     Icon: Code2,
-    bullets: ["Custom platforms", "Admin dashboards", "API integrations", "Workflow tools"],
+    bullets: ["Custom Platforms", "Business Dashboards", "Portals", "API Integrations", "Internal Tools"],
+    cta: "Build My Solution",
   },
   {
-    title: "AI & Intelligent Solutions",
-    description: "AI assistants and automation layers that remove repetitive work and make teams faster.",
+    title: "AI & Automation",
+    subheading: "Put AI to Work. Not Just on Your Pitch Deck.",
+    description: <><span style={{display:'block', marginBottom:'8px'}}>Turn repetitive work into automated workflows and give your team intelligent systems that work around the clock.</span><span style={{display:'block'}}>From AI assistants to lead qualification and process automation, we identify where AI can create measurable leverage.</span></>,
     Icon: Bot,
-    bullets: ["AI assistants", "Process automation", "Lead qualification", "Knowledge workflows"],
+    bullets: ["AI Assistants", "Workflow Automation", "Lead Qualification", "AI Integrations", "Intelligent Processes"],
+    cta: "Find My AI Opportunity",
   },
   {
-    title: "Machine Learning & Data",
-    description: "Data pipelines, reporting systems and predictive models for sharper business decisions.",
+    title: "Data & Machine Learning",
+    subheading: "Turn Your Data Into Better Decisions.",
+    description: <><span style={{display:'block', marginBottom:'8px'}}>Your business already has data. The opportunity is making it useful.</span><span style={{display:'block'}}>We build reporting systems, data pipelines and predictive models that help teams understand what's happening—and what to do next.</span></>,
     Icon: BrainCircuit,
-    bullets: ["Data dashboards", "Prediction models", "Reporting pipelines", "Insight automation"],
+    bullets: ["Data Pipelines", "Dashboards", "Reporting", "Predictive Models", "Business Intelligence"],
+    cta: "Unlock My Data",
   },
   {
     title: "Mobile App Development",
-    description: "Mobile products for iOS and Android with clean UX, stable foundations and scalable delivery.",
+    subheading: "Build an App People Actually Want to Use.",
+    description: "From idea to launch, we create reliable mobile experiences designed around your users, your business model and your growth plans.",
     Icon: Smartphone,
-    bullets: ["iOS and Android", "Product UX", "App integrations", "Release support"],
+    bullets: ["iOS", "Android", "Cross-Platform Apps", "Product UX", "API Integrations", "App Development"],
+    cta: "Build My App",
   },
 ];
 
 const funFacts = [
-  { value: "50+", label: "Projects Completed" },
-  { value: "30+", label: "Happy Clients" },
+  { value: "1000+", label: "Projects Done" },
+  { value: "80+", label: "Happy Clients" },
   { value: "6", label: "Core Services" },
   { value: "100%", label: "Delivery Focus" },
 ];
@@ -79,18 +91,38 @@ const testimonials = [
   },
 ];
 
+const automationFlowSteps = ["Attract", "Convert", "Automate", "Scale"];
+
 export default function Home() {
   return (
     <>
       {/* HERO */}
       <Hero />
 
-      {/* PARTNERS MARQUEE */}
-      <section className="logo-marquee" aria-label="Cybertech focus areas">
-        <div className="ticker-track">
-          {["Performance Marketing", "Custom Web Apps", "Web Development", "Software Solutions", "Enterprise Automation", "AI Systems", "Mobile Apps", "Data Intelligence", "Performance Marketing", "Custom Web Apps", "Web Development", "Software Solutions"].map((item, index) => (
-            <span key={`${item}-${index}`}>{item}</span>
-          ))}
+      {/* AUTOMATION FLOW */}
+      <section className="automation-flow-banner" aria-label="Cybertech growth process">
+        <div className="site-container">
+          <div className="automation-flow-inner">
+            <div className="flow-chart" aria-label="Attract to Convert to Automate to Scale">
+              {automationFlowSteps.map((step, index) => (
+                <div className="flow-chart-item" key={step}>
+                  <div className="flow-node">
+                    <span className="flow-node-index">0{index + 1}</span>
+                    <strong>{step}</strong>
+                  </div>
+                  {index < automationFlowSteps.length - 1 && (
+                    <div className="flow-connector" aria-hidden="true">
+                      <i />
+                    </div>
+                  )}
+                </div>
+              ))}
+            </div>
+            <div className="flow-banner-copy">
+              <p>From generating demand to building the technology behind your business, Cybertech connects the pieces into one growth system.</p>
+              <strong>Strategy &middot; Marketing &middot; Websites &middot; Software &middot; AI &middot; Data</strong>
+            </div>
+          </div>
         </div>
       </section>
 
@@ -99,8 +131,8 @@ export default function Home() {
         <div className="site-container">
           <Reveal className="section-heading" direction="up">
             <p className="eyebrow"><span /> Our Services</p>
-            <h2>How we can <em>help</em> you</h2>
-            <p>Cybertech Marketing brings growth, software and intelligence together so your brand can attract, convert, operate and scale with confidence.</p>
+            <h2>Everything You Need to <em>Build, Grow & Scale</em> Digitally.</h2>
+            <p>From your first customer acquisition campaign to the software running your operations, we bring strategy, execution and technology together around measurable business outcomes.</p>
           </Reveal>
           <div className="services-card-grid">
             {services.map((service, idx) => (
@@ -111,13 +143,15 @@ export default function Home() {
                     <span className="svc-card-index">0{idx + 1}</span>
                   </div>
                   <h3>{service.title}</h3>
+                  {service.subheading && <h4 style={{ fontSize: '19px', fontWeight: 900, margin: '14px 0 10px', background: 'linear-gradient(135deg, var(--red), var(--orange))', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', letterSpacing: '-0.5px' }}>{service.subheading}</h4>}
                   <p className="svc-card-description">{service.description}</p>
+                  <p style={{ fontWeight: 600, fontSize: '15px', marginBottom: '12px' }}>What we do:</p>
                   <ul className="svc-card-bullets">
-                    {service.bullets.slice(0, 3).map((bullet) => (
+                    {service.bullets.map((bullet) => (
                       <li key={bullet}><CheckCircle2 size={17} />{bullet}</li>
                     ))}
                   </ul>
-                  <span className="svc-card-action">Explore service <ArrowRight size={17} /></span>
+                  <span className="svc-card-action">{service.cta || "Explore service"} <ArrowRight size={17} /></span>
                 </Link>
               </Reveal>
             ))}
@@ -130,8 +164,17 @@ export default function Home() {
         <div className="site-container about-v2-layout">
           <Reveal className="about-v2-copy" direction="left">
             <p className="eyebrow"><span /> About Us</p>
-            <h2>Cybertech <em>Mission &amp; Goal</em></h2>
-            <p>Our mission is to help businesses build a stronger digital engine: one where marketing, websites, software, AI and data work together instead of living in separate silos. With a commitment to excellence and customer satisfaction we strive.</p>
+            <h2>One Partner. <em>Strategy, Technology &amp; Growth.</em></h2>
+            <div className="about-v2-content">
+              <p className="hook">
+                Most businesses don&apos;t have a technology problem.<br/>
+                They have a fragmentation problem.
+              </p>
+              <p>Marketing works separately from the website. The website sits apart from sales. Operations run on spreadsheets. Data lives in different systems. And everyone has a different idea of what &quot;growth&quot; means.</p>
+              <p className="highlight">Cybertech brings those pieces together.</p>
+              <p>We combine marketing, web development, software, AI and data to build digital systems that work as one.</p>
+              <p>So instead of hiring another vendor to solve another isolated problem, you get one team focused on the bigger picture, and the business outcome.</p>
+            </div>
           </Reveal>
           <Reveal className="about-v2-visual" direction="right">
             <div className="about-v2-image">
@@ -150,9 +193,9 @@ export default function Home() {
                     <span className="avatar-circle" style={{background: 'linear-gradient(135deg, #e6332a, #ff7a3d)'}}>CT</span>
                     <span className="avatar-circle" style={{background: 'linear-gradient(135deg, #ff7a3d, #e6332a)'}}>DM</span>
                     <span className="avatar-circle" style={{background: 'linear-gradient(135deg, #202838, #3a4a60)'}}>AI</span>
-                    <span className="avatar-circle avatar-count">50+</span>
+                    <span className="avatar-circle avatar-count">80+</span>
                   </div>
-                  <span className="about-v2-label">Happy Customers</span>
+                  <span className="about-v2-label">Happy Clients</span>
                 </div>
                 <a className="button button-primary about-v2-cta" href="#enquiry">Learn More <ArrowRight size={16} /></a>
               </div>
@@ -161,12 +204,12 @@ export default function Home() {
                   <Globe size={24} />
                 </div>
                 <div className="about-v2-stat">
-                  <strong>50+</strong>
+                  <strong>1000+</strong>
                   <span>Projects Done</span>
                 </div>
                 <div className="about-v2-stat">
-                  <strong>100%</strong>
-                  <span>Delivery Focus</span>
+                  <strong>80+</strong>
+                  <span>Clients</span>
                 </div>
               </div>
             </div>
@@ -232,17 +275,30 @@ export default function Home() {
         <div className="site-container contact-band contact-start">
           <Reveal className="contact-intro" direction="left">
             <p className="eyebrow"><span /> You Are Here</p>
-            <h2>Let&apos;s start your journey to digital growth.</h2>
-            <p>Tell Cybertech Marketing what you want to grow, build or automate. We will review the requirement and get back to you.</p>
+            <h2>Have a Business Problem You Want to Solve?</h2>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '14px', marginBottom: '28px' }}>
+              <p style={{ fontWeight: 700, color: '#101828', fontSize: '1.05rem' }}>Tell us what you&apos;re trying to grow, build or automate.</p>
+              <p>You don&apos;t need a perfect brief. Tell us what&apos;s not working, what you&apos;re trying to achieve, or what you&apos;d like to build.</p>
+              <p>We&apos;ll review it, ask the right questions and help you identify the next practical step.</p>
+            </div>
             <div className="start-steps">
               <span><Target size={18} /> Share your requirements</span>
               <span><Workflow size={18} /> Discuss them with experts</span>
               <span><ShieldCheck size={18} /> Get a clear next step</span>
             </div>
-            <div className="contact-methods">
-              <a href="mailto:info@cybertechmarketing.com">info@cybertechmarketing.com</a>
-              <a href="tel:+917428768779">+91 74287 68779</a>
-              <a href="https://wa.me/917428768779" target="_blank" rel="noreferrer">WhatsApp Cybertech</a>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '20px', marginTop: '36px' }}>
+              <div style={{ display: 'flex', gap: '16px', flexWrap: 'wrap' }}>
+                <a className="button button-primary" href="/#enquiry" style={{ padding: '14px 24px', fontSize: '14px' }}>
+                  Book a Growth Call <ArrowRight size={16} />
+                </a>
+                <a className="button button-ghost" href="https://wa.me/917428768779" target="_blank" rel="noreferrer" style={{ padding: '14px 24px', fontSize: '14px' }}>
+                  WhatsApp Cybertech <ArrowRight size={16} />
+                </a>
+              </div>
+              <div style={{ marginTop: '12px' }}>
+                <p style={{ margin: '0 0 4px', fontSize: '0.95rem', color: '#667085', fontWeight: 600 }}>Prefer email?</p>
+                <a href="mailto:info@cybertechmarketing.com" style={{ fontSize: '1.1rem', fontWeight: 800, color: '#E6332A', borderBottom: '2px solid #E6332A', display: 'inline-block', paddingBottom: '2px' }}>info@cybertechmarketing.com</a>
+              </div>
             </div>
           </Reveal>
           <Reveal className="form-panel" direction="right">

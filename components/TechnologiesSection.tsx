@@ -60,8 +60,14 @@ export default function TechnologiesSection() {
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 text-center">
         <Reveal direction="up">
           <p className="eyebrow justify-center"><span /> Technology capability</p>
-          <h2 className="text-4xl md:text-5xl font-extrabold text-[#101828] mb-5">Tools selected for the <span className="text-[#E6332A]">right outcome.</span></h2>
-          <p className="text-[#667085] text-lg leading-relaxed max-w-3xl mx-auto mb-10">We choose maintainable technologies around performance, security, integration needs and your team’s long-term ownership.</p>
+          <h2 className="text-4xl md:text-5xl font-extrabold text-[#101828] mb-5" style={{ letterSpacing: '-1px' }}>Technology That Serves the <span className="text-[#E6332A]">Business.</span></h2>
+          <div className="text-[#667085] text-lg leading-relaxed max-w-3xl mx-auto mb-10">
+            <p className="font-semibold text-[#101828] mb-2 text-xl" style={{ lineHeight: '1.4' }}>
+              We don&apos;t choose technology because it&apos;s fashionable.<br/>
+              We choose it because it solves the problem.
+            </p>
+            <p>Every solution is built around the right balance of performance, security, scalability, integrations and long-term maintainability.</p>
+          </div>
         </Reveal>
 
         <Reveal direction="up" delay={0.1}>

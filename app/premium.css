@@ -42,9 +42,9 @@
 .process-orbit-wrap{max-width:510px;margin-top:6px;}
 .process-orbit{position:relative;width:min(100%,430px);aspect-ratio:1;margin:0 auto;}
 .process-orbit-svg{position:absolute;inset:0;width:100%;height:100%;overflow:visible;}
-.process-orbit-svg circle{fill:none;stroke:#f0c9c1;stroke-width:1.5;stroke-dasharray:3 9;}
-.process-orbit-svg path{fill:none;stroke:var(--red);stroke-width:2;stroke-linecap:round;stroke-linejoin:round;}
-.process-orbit-core{position:absolute;left:50%;top:50%;width:150px;height:150px;transform:translate(-50%,-50%);display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;border-radius:50%;background:linear-gradient(145deg,#111827,#303744);color:#fff;box-shadow:0 18px 40px rgba(16,24,40,.18);}
+.process-orbit-svg circle{fill:none;stroke:#f0c9c1;stroke-width:1.5;stroke-dasharray:3 9;transform-origin:50% 50%;animation:orbit-spin 40s linear infinite;}
+.process-orbit-svg path{fill:none;stroke:var(--red);stroke-width:2;stroke-linecap:round;stroke-linejoin:round;animation:orbit-pulse 2s ease-in-out infinite alternate;}
+.process-orbit-core{position:absolute;left:50%;top:50%;width:150px;height:150px;transform:translate(-50%,-50%);display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;border-radius:50%;background:linear-gradient(145deg,#111827,#303744);color:#fff;box-shadow:0 18px 40px rgba(16,24,40,.18), 0 0 0px rgba(230,51,42,0);animation:core-float 4s ease-in-out infinite;}
 .process-orbit-core span{font-size:9px;letter-spacing:.22em;color:#ff9b82;font-weight:800;}
 .process-orbit-core strong{font-size:22px;line-height:1.05;letter-spacing:-.04em;margin:8px 0;}
 .process-orbit-core small{font-size:9px;letter-spacing:.08em;color:#d0d5dd;}
@@ -214,3 +214,15 @@ html,body{max-width:100%;overflow-x:hidden;}
 @media(max-width:1050px){.services-index-hero-grid{gap:42px;}.services-index-grid{grid-template-columns:1fr;}.services-index-card{grid-template-columns:38% 62%;}.blog-index-card.is-featured{grid-template-columns:1fr 1fr;}}
 @media(max-width:900px){.mobile-menu.is-open{top:74px;max-height:calc(100dvh - 74px);}.services-index-hero{padding-top:135px;}.services-index-hero-grid{grid-template-columns:1fr;}.services-index-hero-image{max-width:680px;}.blog-post-hero{min-height:560px;}.blog-post-body{padding:60px 0 80px;}.blog-sidebar-cta{position:static;}.blog-related-grid{grid-template-columns:repeat(2,minmax(0,1fr))!important;}}
 @media(max-width:700px){.svc-card-link-wrap{min-height:0;padding:24px 22px;}.services-index-hero{padding:120px 0 58px;}.services-index-hero h1{font-size:42px;letter-spacing:-1.7px;}.services-index-hero-image img{height:300px;}.services-index-card{grid-template-columns:1fr;}.services-index-image{min-height:230px;}.services-index-copy{padding:25px;}.blog-index-hero{padding:125px 0 58px;}.blog-index-hero h1{font-size:43px;letter-spacing:-1.8px;}.blog-index-grid{grid-template-columns:1fr;}.blog-index-featured{grid-column:auto;}.blog-index-card,.blog-index-card.is-featured{grid-template-columns:1fr;grid-template-rows:230px 1fr;}.blog-index-card.is-featured .blog-index-copy{padding:28px;}.blog-index-card.is-featured h2{font-size:27px;}.blog-post-hero{min-height:590px;}.blog-post-hero-content{padding-top:145px;padding-bottom:52px;}.blog-post-hero h1{font-size:40px;letter-spacing:-1.5px;}.blog-post-hero-content>p{font-size:16px;}.blog-article{padding:26px!important;}.blog-article-lead{font-size:18px;}.blog-article-section p{font-size:16px;}.blog-article-section h2{font-size:25px;}.blog-article-cta{align-items:flex-start;flex-direction:column;padding:24px;}.blog-article-cta .button{width:100%;}.blog-related-grid{grid-template-columns:1fr!important;}}
+
+@keyframes orbit-spin {
+  100% { transform: rotate(360deg); }
+}
+@keyframes orbit-pulse {
+  0% { opacity: 0.5; stroke-width: 1.5; }
+  100% { opacity: 1; stroke-width: 2.5; }
+}
+@keyframes core-float {
+  0%, 100% { transform: translate(-50%, -50%) translateY(0); box-shadow: 0 18px 40px rgba(16,24,40,.18), 0 0 0px rgba(230,51,42,0); }
+  50% { transform: translate(-50%, -50%) translateY(-6px); box-shadow: 0 25px 40px rgba(16,24,40,.12), 0 0 35px rgba(230,51,42,0.3); }
+}

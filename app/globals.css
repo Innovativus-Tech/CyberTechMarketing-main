@@ -1258,6 +1258,257 @@ details p {
   box-shadow: 0 8px 24px rgba(230, 51, 42, .25);
 }
 
+/* AUTOMATION FLOW BANNER */
+.automation-flow-banner {
+  background:
+    radial-gradient(circle at 12% 50%, rgba(230, 51, 42, .18), transparent 28%),
+    radial-gradient(circle at 88% 50%, rgba(255, 122, 61, .13), transparent 28%),
+    #101118;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  padding: 58px 0 60px;
+  overflow: hidden;
+  position: relative;
+}
+
+.automation-flow-banner::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(255, 255, 255, .025) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, .025) 1px, transparent 1px);
+  background-size: 56px 56px;
+  pointer-events: none;
+}
+
+.automation-flow-inner {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  gap: 30px;
+  justify-items: center;
+  text-align: center;
+}
+
+.flow-chart {
+  position: relative;
+  width: 100%;
+  max-width: 1120px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.flow-chart-item {
+  display: flex;
+  align-items: center;
+  flex: 1 1 0;
+  min-width: 0;
+}
+
+.flow-chart-item:last-child {
+  flex: 0 1 auto;
+}
+
+.flow-node {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  width: 190px;
+  min-height: 82px;
+  padding: 16px 18px;
+  border: 1px solid rgba(255, 255, 255, .17);
+  border-radius: 8px;
+  color: #fff;
+  background: #1b1c26;
+  box-shadow:
+    0 16px 34px rgba(0, 0, 0, .28),
+    inset 0 1px 0 rgba(255, 255, 255, .08);
+  transition: transform .3s ease, border-color .3s ease, box-shadow .3s ease;
+}
+
+.flow-node:hover {
+  transform: translateY(-3px);
+  border-color: rgba(255, 122, 61, .68);
+  box-shadow:
+    0 18px 42px rgba(230, 51, 42, .18),
+    inset 0 1px 0 rgba(255, 255, 255, .12);
+}
+
+.flow-node-index {
+  display: inline-grid;
+  place-items: center;
+  flex: 0 0 auto;
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  color: #fff;
+  background: linear-gradient(135deg, var(--red), var(--orange));
+  box-shadow: 0 8px 20px rgba(230, 51, 42, .3);
+  font-size: .76rem;
+  font-weight: 900;
+}
+
+.flow-node strong {
+  font-size: 1.1rem;
+  line-height: 1;
+  font-weight: 950;
+  letter-spacing: 0;
+  text-transform: uppercase;
+}
+
+.flow-connector {
+  flex: 1 1 56px;
+  min-width: 32px;
+  height: 2px;
+  margin: 0 12px;
+  background: linear-gradient(90deg, rgba(255, 255, 255, .2), rgba(230, 51, 42, .82), rgba(255, 122, 61, .88));
+  position: relative;
+  box-shadow: 0 0 16px rgba(230, 51, 42, .2);
+}
+
+.flow-connector::after {
+  content: "";
+  position: absolute;
+  right: 0;
+  top: 50%;
+  width: 9px;
+  height: 9px;
+  border-top: 2px solid rgba(255, 122, 61, .95);
+  border-right: 2px solid rgba(255, 122, 61, .95);
+  transform: translateY(-50%) rotate(45deg);
+}
+
+.flow-connector i {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+}
+
+.flow-connector i::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: -70%;
+  width: 55%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, .9), transparent);
+  animation: flow-pulse 2.4s linear infinite;
+}
+
+.flow-banner-copy {
+  max-width: 850px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.flow-banner-copy p {
+  margin: 0 auto 14px;
+  color: rgba(255, 255, 255, .9);
+  font-size: 1.16rem;
+  line-height: 1.6;
+  font-weight: 650;
+}
+
+.flow-banner-copy strong {
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  max-width: 100%;
+  padding: 11px 18px;
+  border: 1px solid rgba(255, 122, 61, .28);
+  border-radius: 999px;
+  color: #ffb199;
+  background: rgba(230, 51, 42, .08);
+  font-size: .96rem;
+  line-height: 1.45;
+  font-weight: 900;
+}
+
+@media (max-width: 1040px) {
+  .flow-chart {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 16px;
+  }
+
+  .flow-chart-item,
+  .flow-chart-item:last-child {
+    flex: initial;
+  }
+
+  .flow-node {
+    width: 100%;
+  }
+
+  .flow-connector {
+    display: none;
+  }
+}
+
+@media (max-width: 640px) {
+  .automation-flow-banner {
+    padding: 46px 0 42px;
+  }
+
+  .automation-flow-inner {
+    gap: 24px;
+  }
+
+  .flow-chart {
+    grid-template-columns: 1fr;
+    gap: 10px;
+  }
+
+  .flow-chart-item {
+    position: relative;
+    display: block;
+  }
+
+  .flow-node {
+    justify-content: flex-start;
+    min-height: 70px;
+    padding: 15px 18px;
+  }
+
+  .flow-node strong {
+    font-size: 1.05rem;
+  }
+
+  .flow-connector {
+    display: block;
+    width: 2px;
+    min-width: 0;
+    height: 18px;
+    margin: 0 0 0 36px;
+    background: linear-gradient(180deg, rgba(230, 51, 42, .88), rgba(255, 122, 61, .88));
+  }
+
+  .flow-connector::after {
+    top: auto;
+    right: auto;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%) rotate(135deg);
+  }
+
+  .flow-banner-copy p {
+    font-size: 1rem;
+    line-height: 1.65;
+  }
+
+  .flow-banner-copy strong {
+    display: flex;
+    padding: 10px 14px;
+    border-radius: 8px;
+    font-size: .9rem;
+  }
+}
+
 .service-showcase {
   display: grid;
   gap: 14px;
@@ -1609,11 +1860,13 @@ details p {
 }
 
 .svc-card h3 {
-  margin: 0 0 18px;
-  font-size: 1.35rem;
-  line-height: 1.2;
+  margin: 0 0 12px;
+  font-size: 24px;
+  line-height: 1.25;
   font-weight: 900;
-  color: var(--ink);
+  color: #0b0f19;
+  letter-spacing: -0.8px;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
 }
 
 .svc-card-bullets {
@@ -1679,6 +1932,31 @@ details p {
   font-size: 1.06rem;
   line-height: 1.75;
   margin-bottom: 0;
+}
+
+.about-v2-content {
+  margin-top: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+.about-v2-content p {
+  color: #b8c4d4;
+  font-size: 1.06rem;
+  line-height: 1.75;
+  margin: 0;
+}
+.about-v2-content p.hook {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: #ffffff;
+  line-height: 1.45;
+  letter-spacing: -0.2px;
+  margin-bottom: 6px;
+}
+.about-v2-content p.highlight {
+  font-weight: 600;
+  color: #e6e9ef;
 }
 
 .about-v2-visual {
@@ -2504,7 +2782,7 @@ details p {
   .services-card-grid { grid-template-columns: 1fr; gap: 16px; }
   .svc-card { padding: 24px 20px; }
   .svc-card-icon { width: 52px; height: 52px; }
-  .svc-card h3 { font-size: 1.25rem; }
+  .svc-card h3 { font-size: 1.5rem; letter-spacing: -0.5px; }
   .svc-card-bullets li { font-size: 13px; padding: 10px 0; }
   .about-v2-image, .about-page-image { width: 100%; margin: 0; }
   .about-v2-stats-top, .about-page-stats-top { 
